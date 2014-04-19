@@ -95,12 +95,12 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
     /**
      * Sorts the items alphabetically based on their titles. 
      *
-     * @param  mTempItems The list to be sorted.
-     * @return mTempItems The sorted list.
+     * @param  mTempList The list to be sorted.
+     * @return mTempList The sorted list.
      */
-    private ArrayList <DrawerItem> sorted(ArrayList <DrawerItem> mTempItems) {
+    private ArrayList <DrawerItem> sorted(ArrayList <DrawerItem> mTempList) {
 
-        Collections.sort(mTempItems, new Comparator <DrawerItem> () {
+        Collections.sort(mTempList, new Comparator <DrawerItem> () {
 
             @Override
             public int compare(DrawerItem first, DrawerItem second) {
@@ -110,7 +110,7 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
 
         });
 
-        return mTempItems;
+        return mTempList;
 
     }
 
