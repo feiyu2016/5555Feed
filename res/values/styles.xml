@@ -41,7 +41,7 @@
     <style name="Text_Style_Large" parent="@android:style/TextAppearance.Large">
         <item name="android:textSize">22sp</item>
         <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textColor">#FF878787</item>
+        <item name="android:textColor">#FF000000</item>
     </style>
 
 </resources>
