@@ -1,9 +1,5 @@
 package no.fjeld.feed;
 
-import com.google.gson.*;
-
-import java.util.*;
-
 import android.app.*;
 import android.content.*;
 import android.graphics.*;
@@ -18,6 +14,10 @@ import android.view.GestureDetector.*;
 import android.view.inputmethod.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
+
+import com.google.gson.*;
+
+import java.util.*;
 
 public class NavigationDrawer {
 
@@ -91,6 +91,7 @@ public class NavigationDrawer {
         mDrawerListView = (ListView) view.findViewById(R.id.drawer_list);
         addViews(); 
 
+        mDrawerListView.setOnItemClickListener(new DrawerClickListener());
         mDrawerListView.setOnItemLongClickListener(new DrawerLongClickListener());
 
     }
@@ -223,7 +224,6 @@ public class NavigationDrawer {
         return mDrawerToggle;
     }
 
-
     /** 
      * The LongClickListener for the Navigation Drawers ListView.
      */
@@ -243,6 +243,19 @@ public class NavigationDrawer {
             }
 
             return true;
+
+        }
+
+    }
+
+    /**
+     * The ClickListener for the Navigation Drawers ListView.
+     */
+    private class DrawerClickListener implements OnItemClickListener {
+    
+        @Override
+        public void onItemClick(AdapterView <?> parent, View view, 
+                int position, long id) {
 
         }
 
