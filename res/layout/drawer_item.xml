@@ -6,7 +6,7 @@
     android:background="@color/bg_drawer_item" >
     
     <TextView
-        android:id="@+id/drawer_item_text"
+        android:id="@+id/feed_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
