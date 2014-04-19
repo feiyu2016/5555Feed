@@ -21,7 +21,7 @@ public class FeedActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        init();
+        initApp();
 
         mApp.getNavDrawer().getDrawerLayout().openDrawer(Gravity.START);
 
@@ -45,14 +45,14 @@ public class FeedActivity extends Activity {
 
     }
 
-    public void init() {
+    public void initApp() {
     
-        mActivity = this;
         mView = getWindow().getDecorView();
         mApp = (FeedApplication) getApplication();
-   
+  
+        mApp.mFeedActivity = this; 
         mApp.mActionBar = getActionBar();
-        mApp.mNavDrawer = new NavigationDrawer(mActivity, mView, mApp);
+        mApp.mNavDrawer = new NavigationDrawer(mView, mApp);
 
     }
 

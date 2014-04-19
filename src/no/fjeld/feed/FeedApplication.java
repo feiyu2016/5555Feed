@@ -4,6 +4,7 @@ public class FeedApplication extends android.app.Application {
 
     private static FeedApplication singleton;
 
+    public android.app.Activity mFeedActivity;
     public android.app.ActionBar mActionBar;
     public NavigationDrawer mNavDrawer;
     public android.webkit.WebView mWebView;
@@ -16,6 +17,10 @@ public class FeedApplication extends android.app.Application {
 
     public FeedApplication getInstance() {
         return singleton;
+    }
+
+    public android.app.Activity getFeedActivity() {
+        return mFeedActivity;
     }
 
     public android.app.ActionBar getActionBar() {

@@ -138,6 +138,9 @@ public class NewFeed extends AsyncTask <String, Integer, String> {
 
     }
 
+    /**
+     * Adds the new Feed to the Drawer-list.
+     */
     public void addFeed(String mFeedName, String mEncoding) {
 
         mApp.getNavDrawer().getDrawerAdapter().getDrawerList().add(

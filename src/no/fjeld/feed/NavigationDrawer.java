@@ -21,7 +21,6 @@ import java.util.*;
 
 public class NavigationDrawer {
 
-    private Activity activity;
     private View view;
     private FeedApplication mApp;
 
@@ -32,13 +31,11 @@ public class NavigationDrawer {
 
     /**
      * Constructor for the class NavgigationDrawer.
-     *
-     * @param activity The FeedActivity.
-     * @param view     The FeedActivity content view.
+     * @param view  The FeedActivity content view.
+     * @param mApp  The Application-object for this app.
      */
-    public NavigationDrawer(Activity activity, View view, FeedApplication mApp) {
+    public NavigationDrawer(View view, FeedApplication mApp) {
 
-        this.activity = activity;
         this.view = view;
         this.mApp = mApp;
 
@@ -68,15 +65,15 @@ public class NavigationDrawer {
      */
     private void initDrawerToggle() {
 
-        mDrawerToggle = new ActionBarDrawerToggle(activity, mDrawerLayout, 
+        mDrawerToggle = new ActionBarDrawerToggle(mApp.getFeedActivity(), mDrawerLayout, 
                 R.drawable.ic_navigation_drawer, R.string.drawer_open, R.string.drawer_closed) {
 
             public void onDrawerClosed(View mainView) {
-                activity.getActionBar().setSubtitle(R.string.drawer_closed);
+                mApp.getActionBar().setSubtitle(R.string.drawer_closed);
             }
 
             public void onDrawerOpened(View drawerView) {
-                activity.getActionBar().setSubtitle(R.string.drawer_open);
+                mApp.getActionBar().setSubtitle(R.string.drawer_open);
             }
 
         };
@@ -140,14 +137,15 @@ public class NavigationDrawer {
     private LinearLayout getView(int mLayoutResId, int mTextResId, 
             int mStringResId, int mImgResId) {
 
-        LayoutInflater inflater = (LayoutInflater) activity.getSystemService(
-                Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) mApp.getFeedActivity()
+            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         LinearLayout mListItem = (LinearLayout) inflater.inflate(
                 mLayoutResId, null);
 
         TextView mItemText = (TextView) mListItem.findViewById(mTextResId);
-        mItemText.setText(activity.getResources().getString(mStringResId));
+        mItemText.setText(mApp.getFeedActivity().getResources()
+                .getString(mStringResId));
     
         if (mImgResId != 0) {
        
@@ -167,7 +165,7 @@ public class NavigationDrawer {
     private void initDrawerAdapter() {
 
         mDrawerAdapter = new DrawerAdapter(
-                activity, R.layout.drawer_item, getDrawerList());
+                mApp.getFeedActivity(), R.layout.drawer_item, getDrawerList());
 
     }
 
@@ -180,7 +178,7 @@ public class NavigationDrawer {
 
         Gson mGson = new GsonBuilder().setPrettyPrinting().create();
         SharedPreferences mSharedPrefs = PreferenceManager.
-            getDefaultSharedPreferences(activity.getBaseContext());
+            getDefaultSharedPreferences(mApp.getFeedActivity().getBaseContext());
 
         Set <String> mDrawerSet = mSharedPrefs.
             getStringSet("drawer_items", new LinkedHashSet <String> ());
