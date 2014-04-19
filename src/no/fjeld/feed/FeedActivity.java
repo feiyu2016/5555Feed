@@ -11,7 +11,9 @@ import android.widget.AdapterView.*;
 
 public class FeedActivity extends Activity {
 
-    private FeedApplication mApplication;
+    private FeedActivity mActivity;
+    private FeedApplication mApp;
+    private View mView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +21,12 @@ public class FeedActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        mApplication = (FeedApplication) getApplication();
+        mActivity = this;
+        mView = getWindow().getDecorView();
+        mApp = (FeedApplication) getApplication();
+
+        mApp.mActionBar = getActionBar();
+        mApp.mNavDrawer = new NavigationDrawer(mActivity, mView, mApp);
 
     }
 
@@ -27,11 +34,15 @@ public class FeedActivity extends Activity {
     protected void onPostCreate(Bundle savedInstanceState) {
 
         super.onPostCreate(savedInstanceState);
+        mApp.mNavDrawer.getDrawerToggle().syncState();
 
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (mApp.mNavDrawer.getDrawerToggle().onOptionsItemSelected(item))
+            return true;
 
         return super.onOptionsItemSelected(item);
 

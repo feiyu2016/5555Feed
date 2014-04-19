@@ -4,9 +4,9 @@ public class FeedApplication extends android.app.Application {
 
     private static FeedApplication singleton;
 
-    private android.app.ActionBar mActionBar;
-    private NavigationDrawer mNavDrawer;
-    private android.webkit.WebView mWebView;
+    public android.app.ActionBar mActionBar;
+    public NavigationDrawer mNavDrawer;
+    public android.webkit.WebView mWebView;
 
     @Override
     public void onCreate() {

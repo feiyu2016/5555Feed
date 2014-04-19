@@ -23,13 +23,13 @@ public class NavigationDrawer {
 
     private Activity activity;
     private View view;
-
+    private FeedApplication mApp;
+    
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerListView;
     private DrawerAdapter mDrawerAdapter;
 
-    private FeedApplication mApplication;
 
     /**
      * Constructor for the class NavgigationDrawer.
@@ -37,11 +37,11 @@ public class NavigationDrawer {
      * @param activity The FeedActivity.
      * @param view     The FeedActivity content view.
      */
-    public NavigationDrawer(Activity activity, View view, FeedApplication mApplication) {
+    public NavigationDrawer(Activity activity, View view, FeedApplication mApp) {
 
         this.activity = activity;
         this.view = view;
-        this.mApplication = mApplication;
+        this.mApp = mApp;
 
         initDrawerLayout();
         initDrawerToggle();
@@ -51,7 +51,7 @@ public class NavigationDrawer {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerListView.setAdapter(mDrawerAdapter);
 
-        mApplication.getActionBar().setDisplayHomeAsUpEnabled(true);
+        mApp.getActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -147,6 +147,13 @@ public class NavigationDrawer {
 
         return mTempList;
 
+    }
+
+    /**
+     * Returns the DrawerLayouts DrawerToggle.
+     */
+    public ActionBarDrawerToggle getDrawerToggle() {
+        return mDrawerToggle;
     }
 
 }
