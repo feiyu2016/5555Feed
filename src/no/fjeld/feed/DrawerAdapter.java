@@ -11,7 +11,7 @@ import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
 
-class DrawerAdapter extends ArrayAdapter <DrawerItem> {
+public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
 
     private Activity mActivity;
     private ArrayList <DrawerItem> mDrawerList;
@@ -67,9 +67,8 @@ class DrawerAdapter extends ArrayAdapter <DrawerItem> {
     }
 
     /**
-     * Overrides the notifyDataSetChanged to save
-     * the DrawerList to SharedPreferences when a new 
-     * item is added or removed.
+     * Overrides the notifyDataSetChanged to save the DrawerList 
+     * to SharedPreferences when a new feed is added or removed.
      */
     @Override
     public void notifyDataSetChanged() {
@@ -94,12 +93,12 @@ class DrawerAdapter extends ArrayAdapter <DrawerItem> {
     }
 
     /**
-     * Sorts the items alphabetically based on their names. 
+     * Sorts the items alphabetically based on their titles. 
      *
-     * @param  mDrawerItems The list to be sorted.
-     * @return mDrawerItems The sorted list.
+     * @param  mTempItems The list to be sorted.
+     * @return mTempItems The sorted list.
      */
-    public ArrayList <DrawerItem> sorted(ArrayList <DrawerItem> mTempItems) {
+    private ArrayList <DrawerItem> sorted(ArrayList <DrawerItem> mTempItems) {
 
         Collections.sort(mTempItems, new Comparator <DrawerItem> () {
 
