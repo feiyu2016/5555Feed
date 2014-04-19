@@ -231,6 +231,13 @@ public class NavigationDrawer {
         return mDrawerToggle;
     }
 
+    /**
+     * Returns the ListViews adapter.
+     */
+    public DrawerAdapter getDrawerAdapter() {
+        return mDrawerAdapter;
+    }
+
     /** 
      * The LongClickListener for the Navigation Drawers ListView.
      */
