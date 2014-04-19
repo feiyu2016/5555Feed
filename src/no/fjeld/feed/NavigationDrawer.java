@@ -30,7 +30,6 @@ public class NavigationDrawer {
     private ListView mDrawerListView;
     private DrawerAdapter mDrawerAdapter;
 
-
     /**
      * Constructor for the class NavgigationDrawer.
      *
@@ -92,8 +91,14 @@ public class NavigationDrawer {
         mDrawerListView = (ListView) view.findViewById(R.id.drawer_list);
         addViews(); 
 
+        mDrawerListView.setOnItemLongClickListener(new DrawerLongClickListener());
+
     }
 
+    /**
+     * Adds header- and footer-views to the ListView in the
+     * NavigationDrawer.
+     */
     private void addViews() {
 
         mDrawerListView.addHeaderView(getView(R.layout.drawer_item,
@@ -120,6 +125,17 @@ public class NavigationDrawer {
 
     } 
 
+    /**
+     * Returns an inflated LinearLayout with the correct content
+     * according to the parameters.
+     *
+     * @param  mLayoutResId The layout-xml to be inflated.
+     * @param  mTextResId   The TextView to be set.
+     * @param  mStringResId The String-resource for the TextView.
+     * @param  mImgResId    The Drawable-resource for the layout.
+     *
+     * @return mListItem    The new LinearLayout.
+     */
     private LinearLayout getView(int mLayoutResId, int mTextResId, 
             int mStringResId, int mImgResId) {
 
@@ -205,6 +221,31 @@ public class NavigationDrawer {
      */
     public ActionBarDrawerToggle getDrawerToggle() {
         return mDrawerToggle;
+    }
+
+
+    /** 
+     * The LongClickListener for the Navigation Drawers ListView.
+     */
+    private class DrawerLongClickListener implements OnItemLongClickListener {
+
+        @Override
+        public boolean onItemLongClick(AdapterView <?> parent, View view,
+                int position, long id) {
+
+            position -= 3;
+
+            if (position > -1 && position < mDrawerAdapter.getDrawerList().size()) {
+                
+                mDrawerAdapter.getDrawerList().remove(position);
+                mDrawerAdapter.notifyDataSetChanged();
+
+            }
+
+            return true;
+
+        }
+
     }
 
 }
