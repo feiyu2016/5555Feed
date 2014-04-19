@@ -21,12 +21,9 @@ public class FeedActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        mActivity = this;
-        mView = getWindow().getDecorView();
-        mApp = (FeedApplication) getApplication();
+        init();
 
-        mApp.mActionBar = getActionBar();
-        mApp.mNavDrawer = new NavigationDrawer(mActivity, mView, mApp);
+        mApp.getNavDrawer().getDrawerLayout().openDrawer(Gravity.START);
 
     }
 
@@ -45,6 +42,17 @@ public class FeedActivity extends Activity {
             return true;
 
         return super.onOptionsItemSelected(item);
+
+    }
+
+    public void init() {
+    
+        mActivity = this;
+        mView = getWindow().getDecorView();
+        mApp = (FeedApplication) getApplication();
+   
+        mApp.mActionBar = getActionBar();
+        mApp.mNavDrawer = new NavigationDrawer(mActivity, mView, mApp);
 
     }
 

@@ -218,6 +218,13 @@ public class NavigationDrawer {
     }
 
     /**
+     * Returns the DrawerLayout for the NavDrawer.
+     */
+    public DrawerLayout getDrawerLayout() {
+        return mDrawerLayout;
+    }
+
+    /**
      * Returns the DrawerLayouts DrawerToggle.
      */
     public ActionBarDrawerToggle getDrawerToggle() {
