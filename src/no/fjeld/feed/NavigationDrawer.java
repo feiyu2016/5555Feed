@@ -1,8 +1,8 @@
 package no.fjeld.feed;
 
-import java.util.*;
-
 import com.google.gson.*;
+
+import java.util.*;
 
 import android.app.*;
 import android.content.*;
@@ -24,7 +24,7 @@ public class NavigationDrawer {
     private Activity activity;
     private View view;
     private FeedApplication mApp;
-    
+
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerListView;
@@ -90,6 +90,57 @@ public class NavigationDrawer {
     private void initDrawerListView() {
 
         mDrawerListView = (ListView) view.findViewById(R.id.drawer_list);
+        addViews(); 
+
+    }
+
+    private void addViews() {
+
+        mDrawerListView.addHeaderView(getView(R.layout.drawer_item,
+                    R.id.drawer_item_text,
+                    R.string.drawer_header_all_feeds, 0));
+
+        mDrawerListView.addHeaderView(getView(R.layout.drawer_item,
+                    R.id.drawer_item_text,
+                    R.string.drawer_header_casual_feed, 0));
+
+        mDrawerListView.addHeaderView(getView(R.layout.drawer_group,
+                    R.id.drawer_group_text,
+                    R.string.drawer_group_subfeeds, 0));
+
+        mDrawerListView.addFooterView(getView(R.layout.drawer_footer,
+                    R.id.drawer_footer_text,
+                    R.string.drawer_footer_preferences,
+                    R.drawable.ic_icon_settings));
+
+        mDrawerListView.addFooterView(getView(R.layout.drawer_footer,
+                    R.id.drawer_footer_text,
+                    R.string.drawer_footer_about,
+                    R.drawable.ic_icon_about));
+
+    } 
+
+    private LinearLayout getView(int mLayoutResId, int mTextResId, 
+            int mStringResId, int mImgResId) {
+
+        LayoutInflater inflater = (LayoutInflater) activity.getSystemService(
+                Context.LAYOUT_INFLATER_SERVICE);
+
+        LinearLayout mListItem = (LinearLayout) inflater.inflate(
+                mLayoutResId, null);
+
+        TextView mItemText = (TextView) mListItem.findViewById(mTextResId);
+        mItemText.setText(activity.getResources().getString(mStringResId));
+    
+        if (mImgResId != 0) {
+       
+            ImageView mItemImage = (ImageView) mListItem.findViewById(
+                    R.id.drawer_footer_image);
+            mItemImage.setImageResource(mImgResId);
+        
+        }
+
+        return mListItem;
 
     }
 

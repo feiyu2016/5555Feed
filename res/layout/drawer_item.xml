@@ -6,7 +6,7 @@
     android:background="@color/bg_drawer_item" >
     
     <TextView
-        android:id="@+id/feed_name"
+        android:id="@+id/drawer_item_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?android:attr/listPreferredItemHeight" 

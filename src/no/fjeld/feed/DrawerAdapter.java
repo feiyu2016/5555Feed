@@ -43,7 +43,7 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
 
             mViewHolder = new ViewHolder();
             mViewHolder.mFeedName = (TextView) view.findViewById(
-                    R.id.feed_name);
+                    R.id.drawer_item_text);
 
             view.setTag(mViewHolder);
 
