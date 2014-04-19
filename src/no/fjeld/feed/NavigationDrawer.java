@@ -177,6 +177,7 @@ public class NavigationDrawer {
         ArrayList <DrawerItem> mDrawerList = new ArrayList <DrawerItem> (); 
 
         Gson mGson = new GsonBuilder().setPrettyPrinting().create();
+
         SharedPreferences mSharedPrefs = PreferenceManager.
             getDefaultSharedPreferences(mApp.getFeedActivity().getBaseContext());
 
