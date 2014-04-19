@@ -7,6 +7,7 @@ public class FeedApplication extends android.app.Application {
     public android.app.Activity mFeedActivity;
     public android.app.ActionBar mActionBar;
     public NavigationDrawer mNavDrawer;
+    public SwipeRefresh mSwipeRefresh;
     public android.webkit.WebView mWebView;
 
     @Override
@@ -29,6 +30,10 @@ public class FeedApplication extends android.app.Application {
 
     public NavigationDrawer getNavDrawer() {
         return mNavDrawer;
+    }
+
+    public SwipeRefresh getSwipeRefresh() {
+        return mSwipeRefresh;
     }
 
     public android.webkit.WebView getWebView() {

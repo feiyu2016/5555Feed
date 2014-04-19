@@ -5,20 +5,20 @@ import android.os.*;
 import android.support.v4.widget.*;
 import android.view.*;
 
-public class SwipeToRefresh implements SwipeRefreshLayout.OnRefreshListener {
+public class SwipeRefresh implements SwipeRefreshLayout.OnRefreshListener {
 
     private View view;
     private FeedApplication mApp;
-    
+
     private SwipeRefreshLayout mSwipeLayout;
-    
+
     /**
      * Constructor for the class "SwipeToRefresh".
      *
      * @param view  The apps main-view.
      * @param mApp  The Application-object for this app.
      */
-    public SwipeToRefresh(Activity activity, FeedApplication mApp, View view) {
+    public SwipeRefresh(View view, FeedApplication mApp) {
 
         this.view = view;
         this.mApp = mApp;
@@ -57,7 +57,7 @@ public class SwipeToRefresh implements SwipeRefreshLayout.OnRefreshListener {
                 R.color.background,
                 android.R.color.holo_blue_light,
                 R.color.background);
-    
+
     }
 
     /**
