@@ -1,0 +1,4 @@
+<transition xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:drawable="@color/background_unfaded"/>
+    <item android:drawable="@color/background_faded"/>
+</transition>

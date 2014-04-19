@@ -1,0 +1,47 @@
+<resources>
+
+    <!-- Default theme for the application -->
+    <style name="DefaultTheme" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/ActionBar_Style</item>
+        <item name="android:textAppearanceSmall">@style/Text_Style_Small</item>
+        <item name="android:textAppearanceMedium">@style/Text_Style_Medium</item>
+        <item name="android:textAppearanceLarge">@style/Text_Style_Large</item>
+        <item name="android:textColorPrimary">#FF000000</item>
+        <item name="android:textColorSecondary">#FF878787</item>
+    </style>
+
+    <!-- Styles for the Action Bar -->
+    <style name="ActionBar_Style" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
+        <item name="android:background">@drawable/bg_action_bar</item>
+        <item name="android:titleTextStyle">@style/ActionBar_Title</item>
+        <item name="android:subtitleTextStyle">@style/ActionBar_Subtitle</item>
+    </style>
+
+    <style name="ActionBar_Title" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/accent_text</item>
+    </style>
+
+    <style name="ActionBar_Subtitle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle">
+        <item name="android:textColor">@color/accent_text</item>
+    </style>
+
+    <!-- Custom TextStyles --> 
+    <style name="Text_Style_Small" parent="@android:style/TextAppearance.Small">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">#FF878787</item>
+    </style>
+    
+    <style name="Text_Style_Medium" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">#FF000000</item>
+    </style>
+   
+    <style name="Text_Style_Large" parent="@android:style/TextAppearance.Large">
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">#FF878787</item>
+    </style>
+
+</resources>

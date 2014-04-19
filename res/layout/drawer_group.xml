@@ -1,0 +1,58 @@
+<!-- The group that is shown in the NavigationDrawer -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    android:background="@android:color/white" >
+
+    <!-- This layout needs to be here to get a horizontal 
+         orientation for the TextViews. -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2" >
+
+        <!-- The "My feed"-textview -->
+        <TextView
+            android:id="@+id/drawer_group_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="8dp"
+            android:paddingTop="8dp"
+            android:textAppearance="?android:attr/textAppearanceSmall" /> 
+
+        <!-- The "New Feed"-layout. -->
+        <LinearLayout
+            android:id="@+id/drawer_group_new_feed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right" 
+            android:background="@color/bg_drawer_item" >
+            
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_gravity="bottom"
+                android:paddingBottom="4dp"
+                android:src="@drawable/ic_action_new_feed" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dp"
+                android:paddingTop="8dp"
+                android:paddingRight="8dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/drawer_group_new_feed" /> 
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include 
+        layout="@layout/drawer_group_divider" />
+
+</LinearLayout>

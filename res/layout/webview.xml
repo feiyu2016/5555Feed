@@ -1,0 +1,24 @@
+<!-- Layout for the class WebViewActivity -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <!-- The WebView that displays the webpage. -->
+    <WebView 
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- The ProgressBar that shows the loading progress 
+         for the webpage. -->
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:id="@+id/webview_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-7dp"
+        android:background="@android:color/transparent"
+        android:indeterminate="false"
+        android:max="100" />
+
+</FrameLayout>

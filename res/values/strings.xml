@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App name / Action Bar-titles -->
+    <string name="app_name">Feed</string>
+    <string name="preference_title">Preferences</string>
+
+    <string name="drawer_closed">All feeds</string>
+    <string name="drawer_open">Options</string>
+
+    <!-- DrawerList Strings -->
+    <string name="drawer_header_all_feeds">All feeds</string>
+    <string name="drawer_header_casual_feed">Casual feed</string>
+    
+    <string name="drawer_group_subfeeds">MY FEEDS</string>
+    <string name="drawer_group_new_feed">ADD FEED</string>
+
+    <string name="drawer_footer_preferences">PREFERENCES</string>
+    <string name="drawer_footer_about">ABOUT</string>   
+
+    <!-- String for the New Feed-dialog -->
+    <string name="new_feed_title">Add a new feed</string>
+    <string name="new_feed_hint">RSS-link</string>
+    <string name="new_feed_ok">Ok</string>
+    <string name="new_feed_cancel">Cancel</string>
+    <string name="invalid_feed_message">Invalid RSS-link</string>
+    <string name="invalid_feed_ok">Ok</string>
+
+    <!-- DragAction strings -->
+    <string name="drag_read_now">Read now</string>
+    <string name="drag_read_later">Read later</string>
+
+    <!-- Preference Strings -->
+    <string name="preference_textsize_title">Textsize</string>
+    <string name="preference_textsize_summary">Textsize for the items in the feed</string>
+
+    <string-array name="preference_textsize_entries">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>    
+    </string-array>
+    
+    <string name="preference_open_in_title">Open links in app</string>
+    <string name="preference_open_in_summary">Open links in the app or the default browser</string>
+
+    <string name="preference_images_title">Download images</string>
+    <string name="preference_images_summary">Reduce data usage by not downloading images</string>
+
+</resources>
