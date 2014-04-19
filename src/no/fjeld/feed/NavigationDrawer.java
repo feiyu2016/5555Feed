@@ -31,6 +31,7 @@ public class NavigationDrawer {
 
     /**
      * Constructor for the class NavgigationDrawer.
+     *
      * @param view  The FeedActivity content view.
      * @param mApp  The Application-object for this app.
      */
