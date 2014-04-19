@@ -19,7 +19,7 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
     public DrawerAdapter(Activity mActivity, int mResourceView, 
             ArrayList <DrawerItem> mDrawerList) {
 
-        super(activity, mResourceView, mDrawerList);
+        super(mActivity, mResourceView, mDrawerList);
         this.mActivity = mActivity;
         this.mDrawerList = mDrawerList; 
 
@@ -37,7 +37,7 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
 
         if (view == null) {
 
-            view = ((LayoutInflater) activity.getSystemService(Context.
+            view = ((LayoutInflater) mActivity.getSystemService(Context.
                         LAYOUT_INFLATER_SERVICE)).inflate(
                         R.layout.drawer_item, null);
 
@@ -73,20 +73,20 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
     @Override
     public void notifyDataSetChanged() {
 
-        Set <String> mDrawerItemSet = new LinkedHashSet <String> ();
+        Set <String> mDrawerSet = new LinkedHashSet <String> ();
 
         Gson mGson = new GsonBuilder().setPrettyPrinting().create();
 
         SharedPreferences mSharedPrefs = PreferenceManager
             .getDefaultSharedPreferences(mActivity.getBaseContext());
 
-        for (int i = 0; i < list.size(); i++)
-            mDrawerItemSet.add(mGson.toJson(mDrawerItems.get(i))); 
+        for (int i = 0; i < mDrawerList.size(); i++)
+            mDrawerSet.add(mGson.toJson(mDrawerList.get(i))); 
 
         mSharedPrefs.edit().putStringSet(
-                "drawer_items", mDrawerItemSet).commit();
+                "drawer_items", mDrawerSet).commit();
 
-        mDrawerItems = sorted(mDrawerItems);
+        mDrawerList = sorted(mDrawerList);
 
         super.notifyDataSetChanged();
     

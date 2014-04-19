@@ -38,7 +38,7 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
 
         if (view == null) {
 
-            view = ((LayoutInflater) activity.getSystemService(Context.
+            view = ((LayoutInflater) mActivity.getSystemService(Context.
                         LAYOUT_INFLATER_SERVICE)).inflate(R.layout.list_item, null);
 
             mViewHolder = new ViewHolder();
