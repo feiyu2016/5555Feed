@@ -11,11 +11,15 @@ import android.widget.AdapterView.*;
 
 public class FeedActivity extends Activity {
 
+    private FeedApplication mApplication;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        mApplication = (FeedApplication) getApplication();
 
     }
 
