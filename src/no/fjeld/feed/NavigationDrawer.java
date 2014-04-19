@@ -100,6 +100,7 @@ public class NavigationDrawer {
      */
     private void addViews() {
 
+        /* Headers */
         mDrawerListView.addHeaderView(getView(R.layout.drawer_item,
                     R.id.drawer_item_text,
                     R.string.drawer_header_all_feeds, 0));
@@ -112,6 +113,11 @@ public class NavigationDrawer {
                     R.id.drawer_group_text,
                     R.string.drawer_group_subfeeds, 0));
 
+        /* Footers */
+        mDrawerListView.addFooterView(((LayoutInflater) mApp.getFeedActivity()
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(
+                    R.layout.drawer_footer_divider, null));
+        
         mDrawerListView.addFooterView(getView(R.layout.drawer_footer,
                     R.id.drawer_footer_text,
                     R.string.drawer_footer_preferences,
@@ -121,7 +127,7 @@ public class NavigationDrawer {
                     R.id.drawer_footer_text,
                     R.string.drawer_footer_about,
                     R.drawable.ic_icon_about));
-
+    
     } 
 
     /**
@@ -147,13 +153,13 @@ public class NavigationDrawer {
         TextView mItemText = (TextView) mListItem.findViewById(mTextResId);
         mItemText.setText(mApp.getFeedActivity().getResources()
                 .getString(mStringResId));
-    
+
         if (mImgResId != 0) {
-       
+
             ImageView mItemImage = (ImageView) mListItem.findViewById(
                     R.id.drawer_footer_image);
             mItemImage.setImageResource(mImgResId);
-        
+
         }
 
         return mListItem;
@@ -238,6 +244,22 @@ public class NavigationDrawer {
         return mDrawerAdapter;
     }
 
+    public void drawerItemClicked(int position) {
+
+        int mDrawerSize = mDrawerListView.getChildCount();
+
+        if (position == 0) {
+            System.out.println("All feeds");
+        } else if (position == 1) {
+            System.out.println("Casual feed");
+        } else if (position == mDrawerSize - 2) {
+            System.out.println("Preferences");
+        } else if (position == mDrawerSize - 1) {
+            System.out.println("About");
+        }
+
+    }
+
     /** 
      * The LongClickListener for the Navigation Drawers ListView.
      */
@@ -250,7 +272,7 @@ public class NavigationDrawer {
             position -= 3;
 
             if (position > -1 && position < mDrawerAdapter.getDrawerList().size()) {
-                
+
                 mDrawerAdapter.getDrawerList().remove(position);
                 mDrawerAdapter.notifyDataSetChanged();
 
@@ -266,11 +288,11 @@ public class NavigationDrawer {
      * The ClickListener for the Navigation Drawers ListView.
      */
     private class DrawerClickListener implements OnItemClickListener {
-    
+
         @Override
         public void onItemClick(AdapterView <?> parent, View view, 
                 int position, long id) {
-
+            drawerItemClicked(position);
         }
 
     }
