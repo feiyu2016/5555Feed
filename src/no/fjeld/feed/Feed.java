@@ -36,6 +36,8 @@ public class Feed {
         initFeedListView();
         initFeedAdapter();
 
+        mFeedListView.setAdapter(mFeedAdapter);
+
     }
 
     /**
@@ -45,8 +47,14 @@ public class Feed {
 
         mFeedListView = (ListView) view.findViewById(R.id.feed_list);
 
+        View mListMargin = ((LayoutInflater) activity.getSystemService(Context.
+                    LAYOUT_INFLATER_SERVICE)).inflate(R.layout.list_margin, null);
+
+        mFeedList.addHeaderView(mListMargin);
+        mFeedList.addFooterView(mListMargin);
+
     }
-    
+
     /**
      * Initializes the ListViews adapter.
      */
@@ -55,6 +63,13 @@ public class Feed {
         mFeedAdapter = new FeedAdapter(mApp.getFeedActivity(), 
                 R.layout.list_item, new ArrayList <FeedItem> ()); 
 
+    }
+
+    /**
+     * Returns the ListViews adapter.
+     */
+    public FeedAdapter getFeedAdapter() {
+        return mFeedAdapter;
     }
 
 }
