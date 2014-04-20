@@ -22,21 +22,20 @@ public class FeedDragListener implements View.OnDragListener {
 
     private FeedItem mFeedItem;
 
-    private LinearLayout mPopupView;
+    private TransitionDrawable mTrans;
 
+    private LinearLayout mPopupView;
     private TextView mReadNow;
     private TextView mReadLater;
 
     private Rect mReadNowRect;
     private Rect mReadLaterRect;
 
-    private TransitionDrawable mTrans;
-
     private int x;
     private int y;
 
     public FeedDragListener(View mView, FeedApplication mApp) {
-    
+
         this.mView = mView;   
         this.mApp = mApp;
 
@@ -63,13 +62,13 @@ public class FeedDragListener implements View.OnDragListener {
                 /** The user drags across the screen. */
             case DragEvent.ACTION_DRAG_LOCATION:
 
-                /* Read now */
+                /* Read now - highlights the button */
                 if(mReadNowRect.contains(x, y))
                     mReadNow.setBackgroundResource(R.color.accent_dark);
                 else if(!mReadNowRect.contains(x, y))
                     mReadNow.setBackgroundResource(R.color.accent_light);
 
-                /* Read later */
+                /* Read later - highlights the button */
                 if(mReadLaterRect.contains(x, y))
                     mReadLater.setBackgroundResource(R.color.accent_dark);
                 else if(!mReadLaterRect.contains(x, y))
@@ -83,24 +82,21 @@ public class FeedDragListener implements View.OnDragListener {
                 int position = mApp.getFeed().getFeedAdapter().
                     getFeedList().indexOf(mFeedItem) + 1;
 
-                if (mReadNowRect.contains(x, y))
-                    //readNow(position);
-                if (mReadLaterRect.contains(x, y))
-                    //readLater(position);
-                
-                return true;
-
-                /** The DragEvent has ended. */
-            case DragEvent.ACTION_DRAG_ENDED:
-
                 setView(View.GONE, R.anim.slide_out_left);
                 mTrans.reverseTransition(100);
+
+                if (mReadNowRect.contains(x, y))
+                    mApp.getFeed().readNow(mFeedItem.getUrl());
+                
+                if (mReadLaterRect.contains(x, y))
+                    mApp.getFeed().readLater(
+                            mFeedItem.getTitle(), mFeedItem.getUrl());
 
                 return true;
 
         }
 
-        return false;
+        return true;
 
     }
 
