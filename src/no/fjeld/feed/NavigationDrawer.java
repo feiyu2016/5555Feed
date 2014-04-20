@@ -248,7 +248,7 @@ public class NavigationDrawer {
      * Gets called from the OnItemClickListener when the user has 
      * clicked one of the items in the drawer.
      */
-    public void drawerItemClicked(int position) {
+    private void drawerItemClicked(int position) {
 
         int mDrawerSize = mDrawerListView.getChildCount();
 
@@ -268,6 +268,21 @@ public class NavigationDrawer {
 
         } else if (position > 1 && position < mDrawerSize - 2) { // Feed
 
+
+        }
+
+    }
+
+    /**
+     * The ClickListener for the Navigation Drawers ListView.
+     */
+    private class DrawerClickListener implements OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView <?> parent, View view, 
+                int position, long id) {
+
+            drawerItemClicked(position);
 
         }
 
@@ -293,19 +308,6 @@ public class NavigationDrawer {
 
             return true;
 
-        }
-
-    }
-
-    /**
-     * The ClickListener for the Navigation Drawers ListView.
-     */
-    private class DrawerClickListener implements OnItemClickListener {
-
-        @Override
-        public void onItemClick(AdapterView <?> parent, View view, 
-                int position, long id) {
-            drawerItemClicked(position);
         }
 
     }
