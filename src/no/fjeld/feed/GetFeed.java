@@ -116,21 +116,21 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
             /* Iterates through the Document */
             for (int i = 0; i < mNodeList.getLength(); i++) {
 
-                mTitle = ((Element) mNodeList.item(i)).getElementsByTagName(
-                        "title").item(0).getTextContent();
+                mTitle = getValue(mNodeList.item(i), "title"); 
+                mDescription = getValue(mNodeList.item(i), "description");
+                mLink = getValue(mNodeList.item(i), "link");
 
-                mDescription = ((Element) mNodeList.item(i)).getElementsByTagName(
-                        "description").item(0).getTextContent();
-
-                mLink = ((Element) mNodeList.item(i)).getElementsByTagName(
-                        "link").item(0).getTextContent();
-
-                mPubDate = ((Element) mNodeList.item(i)).getElementsByTagName(
-                        "pubDate").item(0).getTextContent();
+                mPubDate = (getValue(mNodeList.item(i), "pubDate") != null)
+                    ? getValue(mNodeList.item(i), "pubDate")
+                    : getValue(mNodeList.item(i), "dc:date"); 
 
                 mImgUrl = (getEnclosure((Element) mNodeList.item(i)) != null) 
                     ? getEnclosure((Element) mNodeList.item(i))
                     : getUrl(mDescription); 
+
+                /* Executes a new AsyncTask to get the image */
+                new GetImage().execute(mImgUrl, mTitle, mDescription, mLink,
+                        mPubDate);
 
             }
 
@@ -139,6 +139,17 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
         } 
 
     } 
+
+    /* Gets the text-value from an element with the given tag. */
+    private String getValue(Node node, String tag) {
+
+        try {
+            return ((Element) node).getElementsByTagName(tag).item(0).getTextContent();
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
 
     /**
      * If there is an enclosure-url in the item, this function will return
@@ -185,12 +196,22 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
      */
     private class GetImage extends AsyncTask <String, Integer, Bitmap> {
 
+        private String mTitle;
+        private String mDescription;
+        private String mUrl;
+        private Date mPubDate;
+
         @Override
         protected void onPreExecute() {
         }
 
         @Override
         protected Bitmap doInBackground(String ... args) {
+
+            mTitle = stripHtml(args[1]);
+            mDescription = stripHtml(args[2]);
+            mUrl = args[3];
+            mPubDate = stringToDate(args[4]);
 
             try {
 
@@ -213,7 +234,11 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
         }
 
         @Override
-        protected void onPostExecute(Bitmap image) {
+        protected void onPostExecute(Bitmap mImage) {
+
+            mApp.getFeed().getFeedList().get(position)
+                .add(new FeedItem(mTitle, mDescription, 
+                            mUrl, mPubDate, mImage, mFeedName));
 
         }
 
@@ -241,7 +266,7 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
         /**
          * Converts a string containing a date to a Date-object.
          */
-        private String stringToDate(String mPubDate) {
+        private Date stringToDate(String mPubDate) {
 
             try {
 

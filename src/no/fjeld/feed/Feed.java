@@ -22,8 +22,8 @@ public class Feed {
     private ListView mFeedListView;
     private FeedAdapter mFeedAdapter;
 
-    private ArrayList <ArrayList <FeedItem>> mFeeds;
-    private ArrayList <FeedItem> mFeedsCombined;
+    private ArrayList <ArrayList <FeedItem>> mFeedList;
+    private ArrayList <FeedItem> mFeedsCombinedList;
 
     /**
      * Constructor for the class Feed.
@@ -41,8 +41,15 @@ public class Feed {
 
         mFeedListView.setAdapter(mFeedAdapter);
 
-        mFeeds = new ArrayList <ArrayList <FeedItem>> ();  
-        mFeedsCombined = new ArrayList <FeedItem> ();
+        mFeedList = new ArrayList <ArrayList <FeedItem>> ();
+
+        /* Adds the same number of ArrayLists to the mFeedList as 
+         * there are items in the drawerlist */
+        for (int i = 0; i < mApp.getNavDrawer().getDrawerAdapter()
+                .getDrawerList().size(); i++)
+            mFeedList.add(new ArrayList <FeedItem> ()); 
+
+        mFeedsCombinedList = new ArrayList <FeedItem> ();
 
     }
 
@@ -111,6 +118,21 @@ public class Feed {
     }
 
     /**
+     * Returns the ArrayList containing lists of FeedItems.
+     */
+    public ArrayList <ArrayList <FeedItem>> getFeedList() {
+        return mFeedList;
+    }
+
+    /**
+     * Returns the list that should contain the FeedItems
+     * from the lists of mFeedList.
+     */
+    public ArrayList <FeedItem> getFeedsCombinedList() {
+        return mFeedsCombinedList;
+    }
+
+    /**
      * Gets called from the NavigationDrawer-class when a feed is clicked.
      *
      * @param mFeedname The feeds title
@@ -120,6 +142,8 @@ public class Feed {
      */
     public void loadFeed(String mFeedName, String mUrl, String mEncoding, 
             int position) {
+
+        mFeedList.get(position).clear();
 
         new GetFeed(mApp, mFeedName, mEncoding, position).execute(mUrl);            
 

@@ -45,6 +45,7 @@ public class FeedActivity extends Activity {
 
     }
 
+
     public void initApp() {
     
         mView = getWindow().getDecorView();
