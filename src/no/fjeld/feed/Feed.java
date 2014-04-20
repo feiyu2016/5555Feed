@@ -25,6 +25,8 @@ public class Feed {
     private ArrayList <ArrayList <FeedItem>> mFeedList;
     private ArrayList <FeedItem> mFeedsCombinedList;
 
+    private int lastFeedPosition;
+
     /**
      * Constructor for the class Feed.
      *
@@ -56,7 +58,7 @@ public class Feed {
     /**
      * Initializes the ListView.
      */
-    public void initFeedListView() {
+    private void initFeedListView() {
 
         mFeedListView = (ListView) view.findViewById(R.id.feed_list);
 
@@ -91,7 +93,7 @@ public class Feed {
     /**
      * Initializes the ListViews adapter.
      */
-    public void initFeedAdapter() {
+    private void initFeedAdapter() {
 
         mFeedAdapter = new FeedAdapter(mApp.getFeedActivity(), 
                 R.layout.list_item, new ArrayList <FeedItem> () {
@@ -162,24 +164,38 @@ public class Feed {
     public void loadFeed(String mFeedName, String mUrl, String mEncoding, 
             int position) {
 
-        mFeedList.get(position).clear();
+        if (position != lastFeedPosition)
+            mFeedAdapter.getFeedList().clear();
 
-        new GetFeed(mApp, mFeedName, mEncoding, position).execute(mUrl);            
+        if (mFeedList.get(position).size() > 0) {
+
+            for (FeedItem item : mFeedList.get(position))
+               mFeedAdapter.getFeedList().add(item); 
+
+            mFeedAdapter.notifyDataSetChanged();
+
+        } else {
+
+            new GetFeed(mApp, mFeedName, mEncoding, position).execute(mUrl);            
+    
+        }
+
+        lastFeedPosition = position;
 
     }
 
     /**
      * Gets called from the DragListener if the user has chosen to read
-     * an the article.
+     * the article.
      */
     public void readNow(String url) {
 
         Activity activity = mApp.getFeedActivity();
 
-        SharedPreferences prefs = PreferenceManager
+        SharedPreferences mSharedPrefs = PreferenceManager
             .getDefaultSharedPreferences(activity.getBaseContext());
 
-        if (prefs.getBoolean("preference_open_in", true)) 
+        if (mSharedPrefs.getBoolean("preference_open_in", true)) 
             activity.startActivity(new Intent(activity, WebViewActivity.class)
                     .putExtra("url", url));
         else
@@ -188,6 +204,10 @@ public class Feed {
 
     }
 
+    /**
+     * Gets called from the DragListener if the user has chosen to read
+     * the article later.
+     */
     public void readLater(String title, String url) {
 
 
