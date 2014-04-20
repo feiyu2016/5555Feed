@@ -168,4 +168,29 @@ public class Feed {
 
     }
 
+    /**
+     * Gets called from the DragListener if the user has chosen to read
+     * an the article.
+     */
+    public void readNow(String url) {
+
+        Activity activity = mApp.getFeedActivity();
+
+        SharedPreferences prefs = PreferenceManager
+            .getDefaultSharedPreferences(activity.getBaseContext());
+
+        if (prefs.getBoolean("preference_open_in", true)) 
+            activity.startActivity(new Intent(activity, WebViewActivity.class)
+                    .putExtra("url", url));
+        else
+            activity.startActivity(new Intent(Intent.ACTION_VIEW, 
+                        Uri.parse(url)));
+
+    }
+
+    public void readLater(String title, String url) {
+
+
+    }
+
 }
