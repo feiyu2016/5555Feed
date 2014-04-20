@@ -16,6 +16,12 @@ import android.widget.AdapterView.*;
 
 public class Feed {
 
+    private View view;
+    private FeedApplication mApp;
+
+    private ListView mFeedListView;
+    private FeedAdapter mFeedAdapter;
+
     /**
      * Constructor for the class Feed.
      *
@@ -24,8 +30,31 @@ public class Feed {
      */
     public Feed(View view, FeedApplication mApp) {
 
+        this.view = view;
+        this.mApp = mApp;
+
+        initFeedListView();
+        initFeedAdapter();
 
     }
 
+    /**
+     * Initializes the ListView.
+     */
+    public void initFeedListView() {
+
+        mFeedListView = (ListView) view.findViewById(R.id.feed_list);
+
+    }
+    
+    /**
+     * Initializes the ListViews adapter.
+     */
+    public void initFeedAdapter() {
+
+        mFeedAdapter = new FeedAdapter(mApp.getFeedActivity(), 
+                R.layout.list_item, new ArrayList <FeedItem> ()); 
+
+    }
 
 }
