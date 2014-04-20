@@ -240,6 +240,12 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
                 .add(new FeedItem(mTitle, mDescription, 
                             mUrl, mPubDate, mImage, mFeedName));
 
+            mApp.getFeed().getFeedAdapter().getFeedList()
+                .add(new FeedItem(mTitle, mDescription, 
+                            mUrl, mPubDate, mImage, mFeedName));
+
+            mApp.getFeed().getFeedAdapter().notifyDataSetChanged();
+
         }
 
         /**

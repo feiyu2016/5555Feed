@@ -67,6 +67,25 @@ public class Feed {
         mFeedListView.addHeaderView(mListMargin);
         mFeedListView.addFooterView(mListMargin);
 
+        /* If the user does a LongClick on a item, the DragListener 
+         * for the list will be called. */
+        mFeedListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView <?> parent, View view,
+                int position, long id) {
+
+                view.startDrag(null, new View.DragShadowBuilder(),
+                    mFeedListView.getItemAtPosition(position), 0);
+
+                return true;
+
+            }
+
+        });
+
+        mFeedListView.setOnDragListener(new FeedDragListener(view, mApp));
+
     }
 
     /**
