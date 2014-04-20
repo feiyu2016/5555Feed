@@ -52,6 +52,7 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
 
     @Override
     protected void onPreExecute() {
+        System.out.println("Loads feed");
     }
 
     @Override
@@ -92,7 +93,10 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
 
     }
 
-
+    /**
+     * Parses the feed and calls the "GetImage"-class to download 
+     * images/insert the items in the FeedList.
+     */
     private void parseFeed(String feed) {
 
         String mTitle;
@@ -100,6 +104,10 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
         String mLink;
         String mPubDate;
         String mImgUrl;
+
+        SharedPreferences mSharedPrefs = PreferenceManager
+            .getDefaultSharedPreferences(mApp.getFeedActivity()
+                    .getBaseContext());
 
         try {
 
@@ -128,9 +136,13 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
                     ? getEnclosure((Element) mNodeList.item(i))
                     : getUrl(mDescription); 
 
-                /* Executes a new AsyncTask to get the image */
-                new GetImage().execute(mImgUrl, mTitle, mDescription, mLink,
-                        mPubDate);
+                /* Checks if the user has chosen to download images */
+                if (mSharedPrefs.getBoolean("preference_images", true))
+                    new GetImage().execute(mImgUrl, mTitle, mDescription, mLink,
+                            mPubDate);
+                else
+                    new GetImage().execute(null, mTitle, mDescription, mLink,
+                            mPubDate);
 
             }
 
@@ -140,7 +152,9 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
 
     } 
 
-    /* Gets the text-value from an element with the given tag. */
+    /** 
+     * Gets the text-value from an element with the given tag. 
+     */
     private String getValue(Node node, String tag) {
 
         try {
