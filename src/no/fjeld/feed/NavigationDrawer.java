@@ -202,7 +202,7 @@ public class NavigationDrawer {
     }
 
     /**
-     * Sorts the items alphabetically based on their titles. 
+     * Sorts the mTempList-list alphabetically based on the feedname. 
      *
      * @param  mTempItems The list to be sorted.
      * @return mTempItems The sorted list.
@@ -244,18 +244,31 @@ public class NavigationDrawer {
         return mDrawerAdapter;
     }
 
+    /**
+     * Gets called from the OnItemClickListener when the user has 
+     * clicked one of the items in the drawer.
+     */
     public void drawerItemClicked(int position) {
 
         int mDrawerSize = mDrawerListView.getChildCount();
 
-        if (position == 0) {
-            System.out.println("All feeds");
-        } else if (position == 1) {
-            System.out.println("Casual feed");
-        } else if (position == mDrawerSize - 2) {
-            System.out.println("Preferences");
-        } else if (position == mDrawerSize - 1) {
-            System.out.println("About");
+        if (position == 0) {                        // All feeds
+
+
+        } else if (position == 1) {                 // Casual feeds
+
+
+        } else if (position == mDrawerSize - 2) {   // Preferences
+
+            mApp.getFeedActivity().startActivity(new Intent(
+                        mApp.getFeedActivity(), PreferencesActivity.class));
+
+        } else if (position == mDrawerSize - 1) {   // About
+
+
+        } else if (position > 1 && position < mDrawerSize - 2) { // Feed
+
+
         }
 
     }
