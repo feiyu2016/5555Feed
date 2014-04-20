@@ -79,15 +79,17 @@ public class FeedDragListener implements View.OnDragListener {
                 /** The user releases the hold. */
             case DragEvent.ACTION_DROP:
 
-                int position = mApp.getFeed().getFeedAdapter().
-                    getFeedList().indexOf(mFeedItem) + 1;
-
                 setView(View.GONE, R.anim.slide_out_left);
                 mTrans.reverseTransition(100);
 
+                int position = mApp.getFeed().getFeedAdapter().
+                    getFeedList().indexOf(mFeedItem) + 1;
+
+                /* Read now - calls readNow() in Feed */
                 if (mReadNowRect.contains(x, y))
                     mApp.getFeed().readNow(mFeedItem.getUrl());
-                
+
+                /* Read later - calls readLater() in Feed */
                 if (mReadLaterRect.contains(x, y))
                     mApp.getFeed().readLater(
                             mFeedItem.getTitle(), mFeedItem.getUrl());
