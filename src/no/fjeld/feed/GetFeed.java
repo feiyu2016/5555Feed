@@ -179,4 +179,23 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
 
     }
 
+    private class GetImage extends AsyncTask <String, Integer, Bitmap> {
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected Bitmap doInBackground(String ... args) {
+
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap image) {
+        
+        }
+
+    }
+
 }
