@@ -87,7 +87,7 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
 
     @Override
     protected void onPostExecute(String feed) {
-      
+
         parseFeed(feed);
 
     }
@@ -139,7 +139,7 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
         } 
 
     } 
-   
+
     /**
      * If there is an enclosure-url in the item, this function will return
      * the the value of that tag.
@@ -150,10 +150,10 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
 
         for (int i = 0; i < list.getLength(); i++) {
             if (list.item(i).getAttributes().getLength() > 0) {
-        
+
                 return list.item(i).getAttributes().getNamedItem("url")
                     .getTextContent();
-        
+
             }
         }
 
@@ -179,21 +179,88 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
 
     }
 
+    /**
+     * Is called from "onPostExecute()" in GetFeed, to retrieve
+     * a Bitmap-object from a provided url.
+     */
     private class GetImage extends AsyncTask <String, Integer, Bitmap> {
 
         @Override
         protected void onPreExecute() {
-
         }
 
         @Override
         protected Bitmap doInBackground(String ... args) {
 
+            try {
+
+                HttpURLConnection mConnection = (HttpURLConnection) 
+                    new URL(args[0]).openConnection();
+
+                if (mConnection.getResponseCode() != 200)
+                    throw new Exception("Error in connection.");
+
+                InputStream mInputStream = mConnection.getInputStream();
+
+                return BitmapFactory.decodeStream(mInputStream);
+
+            }
+
+            catch (Exception e) {
+                return null;
+            }
+
         }
 
         @Override
         protected void onPostExecute(Bitmap image) {
-        
+
+        }
+
+        /**
+         * Strips the "html"-string of remaining
+         * debris from the parsing.
+         */
+        public String stripHtml(String html) {
+
+            try {
+
+                return Html.fromHtml(html).toString()
+                    .replace('\n', (char) 32)
+                    .replace((char) 160, (char) 32)
+                    .replace((char) 8211, (char) 32)
+                    .replace((char) 65532, (char) 32)
+                    .trim();
+
+            } catch (Exception e) {
+                return null;
+            }
+
+        }
+
+        /**
+         * Converts a string containing a date to a Date-object.
+         */
+        private String stringToDate(String mPubDate) {
+
+            try {
+
+                SimpleDateFormat format = new SimpleDateFormat(
+                        "dd MMM yyyy HH mm ss", Locale.US);
+
+                mPubDate = mPubDate.substring(5, 25).trim();
+
+                byte [] bytes = mPubDate.getBytes("ISO-8859-1");
+
+                mPubDate = new String(bytes, "UTF-8").replaceAll(
+                        "\\W", " ");
+
+                return format.parse(mPubDate);
+
+            } catch (Exception e) {
+                return null;
+            }    
+
         }
 
     }
