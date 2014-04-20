@@ -266,8 +266,17 @@ public class NavigationDrawer {
         } else if (position == mDrawerSize - 1) {   // About
 
 
-        } else if (position > 1 && position < mDrawerSize - 2) { // Feed
+        } else if (position > 2 && position < mDrawerSize - 2) { // Feed
 
+            DrawerItem mDrawerItem = mDrawerAdapter
+                .getDrawerList().get(position - 3);
+
+            String mFeedName = mDrawerItem.getFeedName();
+            String mUrl      = mDrawerItem.getUrl();
+            String mEncoding = mDrawerItem.getEncoding();
+            
+            mApp.getFeed().loadFeed(mFeedName, mUrl, 
+                    mEncoding, position - 3); 
 
         }
 

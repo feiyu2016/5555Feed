@@ -22,8 +22,8 @@ public class Feed {
     private ListView mFeedListView;
     private FeedAdapter mFeedAdapter;
 
-    private ArrayList <FeedItem> feedsCombined;
-    private ArrayList <ArrayList <FeedItem>> allFeeds;
+    private ArrayList <ArrayList <FeedItem>> mFeeds;
+    private ArrayList <FeedItem> mFeedsCombined;
 
     /**
      * Constructor for the class Feed.
@@ -40,6 +40,9 @@ public class Feed {
         initFeedAdapter();
 
         mFeedListView.setAdapter(mFeedAdapter);
+
+        mFeeds = new ArrayList <ArrayList <FeedItem>> ();  
+        mFeedsCombined = new ArrayList <FeedItem> ();
 
     }
 
@@ -72,12 +75,14 @@ public class Feed {
 
                         boolean added = false;
 
+                        /* If the item is already in the list, don't add it. */
                         for (int i = 0; i < super.size() - 1; i++) {
                             if (item.getTitle().equals(super.get(i).getTitle())) {
                                 return false;       
                             }
                         }
 
+                        /* Adds the items by date */
                         for (int i = 0; i < super.size() - 1; i++) {
                             if (item.compareTo(super.get(i)) >= 0) {
                                 super.add(i, item);
@@ -103,6 +108,21 @@ public class Feed {
      */
     public FeedAdapter getFeedAdapter() {
         return mFeedAdapter;
+    }
+
+    /**
+     * Gets called from the NavigationDrawer-class when a feed is clicked.
+     *
+     * @param mFeedname The feeds title
+     * @param mUrl      The feeds url
+     * @param mEncoding The feeds encoding
+     * @param position  The feeds position
+     */
+    public void loadFeed(String mFeedName, String mUrl, String mEncoding, 
+            int position) {
+
+            
+
     }
 
 }
