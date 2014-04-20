@@ -121,7 +121,7 @@ public class Feed {
     public void loadFeed(String mFeedName, String mUrl, String mEncoding, 
             int position) {
 
-            
+        new GetFeed(mApp, mFeedName, mEncoding, position).execute(mUrl);            
 
     }
 
