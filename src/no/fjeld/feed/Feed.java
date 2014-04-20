@@ -22,6 +22,9 @@ public class Feed {
     private ListView mFeedListView;
     private FeedAdapter mFeedAdapter;
 
+    private ArrayList <FeedItem> feedsCombined;
+    private ArrayList <ArrayList <FeedItem>> allFeeds;
+
     /**
      * Constructor for the class Feed.
      *
@@ -47,11 +50,12 @@ public class Feed {
 
         mFeedListView = (ListView) view.findViewById(R.id.feed_list);
 
-        View mListMargin = ((LayoutInflater) activity.getSystemService(Context.
-                    LAYOUT_INFLATER_SERVICE)).inflate(R.layout.list_margin, null);
+        View mListMargin = ((LayoutInflater) mApp.getFeedActivity()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+            .inflate(R.layout.list_margin, null);
 
-        mFeedList.addHeaderView(mListMargin);
-        mFeedList.addFooterView(mListMargin);
+        mFeedListView.addHeaderView(mListMargin);
+        mFeedListView.addFooterView(mListMargin);
 
     }
 
@@ -61,7 +65,36 @@ public class Feed {
     public void initFeedAdapter() {
 
         mFeedAdapter = new FeedAdapter(mApp.getFeedActivity(), 
-                R.layout.list_item, new ArrayList <FeedItem> ()); 
+                R.layout.list_item, new ArrayList <FeedItem> () {
+
+                    @Override
+                    public boolean add(FeedItem item) {
+
+                        boolean added = false;
+
+                        for (int i = 0; i < super.size() - 1; i++) {
+                            if (item.getTitle().equals(super.get(i).getTitle())) {
+                                return false;       
+                            }
+                        }
+
+                        for (int i = 0; i < super.size() - 1; i++) {
+                            if (item.compareTo(super.get(i)) >= 0) {
+                                super.add(i, item);
+                                added = true;
+                                break;
+                            }
+                        }
+
+                        if (!added) {
+                            super.add(item);
+                        }
+
+                        return true;
+
+                    }
+
+                }); 
 
     }
 
