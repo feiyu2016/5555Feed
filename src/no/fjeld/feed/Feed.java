@@ -176,7 +176,8 @@ public class Feed {
 
         } else {
 
-            new GetFeed(mApp, mFeedName, mEncoding, position).execute(mUrl);            
+            mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(true);
+            new GetFeed(mApp, mFeedName, mEncoding, position).execute(mUrl); 
     
         }
 

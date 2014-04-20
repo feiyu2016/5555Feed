@@ -27,10 +27,14 @@ import org.xml.sax.*;
 
 public class GetFeed extends AsyncTask <String, Integer, String> {
 
+    private static final int MAX_FEEDITEMS = 20;
+
     private FeedApplication mApp;
     private String mFeedName;
     private String mEncoding;
     private int position;
+
+    private int mNodeListLength;
 
     /**
      * Constructor for the class "GetFeed".
@@ -52,7 +56,6 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
 
     @Override
     protected void onPreExecute() {
-        System.out.println("Loads feed");
     }
 
     @Override
@@ -120,6 +123,7 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
             mDocument.getDocumentElement().normalize();
 
             NodeList mNodeList = mDocument.getElementsByTagName("item");
+            mNodeListLength = mNodeList.getLength();
 
             /* Iterates through the Document */
             for (int i = 0; i < mNodeList.getLength(); i++) {
@@ -138,11 +142,14 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
 
                 /* Checks if the user has chosen to download images */
                 if (mSharedPrefs.getBoolean("preference_images", true))
-                    new GetImage().execute(mImgUrl, mTitle, mDescription, mLink,
+                    new GetImage(i).execute(mImgUrl, mTitle, mDescription, mLink,
                             mPubDate);
                 else
-                    new GetImage().execute(null, mTitle, mDescription, mLink,
+                    new GetImage(i).execute(null, mTitle, mDescription, mLink,
                             mPubDate);
+
+                if (i == MAX_FEEDITEMS)
+                    break;
 
             }
 
@@ -215,6 +222,14 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
         private String mUrl;
         private Date mPubDate;
 
+        private int itemNumber;
+
+        GetImage(int itemNumber) {
+
+            this.itemNumber = itemNumber;
+
+        }
+
         @Override
         protected void onPreExecute() {
         }
@@ -259,6 +274,9 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
                             mUrl, mPubDate, mImage, mFeedName));
 
             mApp.getFeed().getFeedAdapter().notifyDataSetChanged();
+
+            if (itemNumber == mNodeListLength - 1 || itemNumber == MAX_FEEDITEMS - 1)
+                mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(false);
 
         }
 
