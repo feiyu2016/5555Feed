@@ -1,11 +1,15 @@
 package no.fjeld.feed;
 
 import android.app.*;
+import android.content.*;
 import android.graphics.*;
 import android.os.*;
+import android.preference.*;
 import android.view.*;
 import android.webkit.*;
 import android.widget.*;
+
+import java.util.*;
 
 public class WebViewActivity extends Activity {
 
@@ -31,7 +35,7 @@ public class WebViewActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.webview, menu);
 
@@ -42,8 +46,31 @@ public class WebViewActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        finish();
+        if (item.getItemId() == R.id.mark_as_read)
+            markAsRead();
+        else
+            finish();
+
         return super.onOptionsItemSelected(item);
+
+    }
+
+    /**
+     * If the user presses the "Mark as read"-button in the ActionBar,
+     * the title of this article will be put into a StringSet in the
+     * SharedPreferences.
+     */
+    private void markAsRead() {
+
+        SharedPreferences mSharedPrefs = PreferenceManager
+            .getDefaultSharedPreferences(mApp.getFeedActivity().getBaseContext());
+
+        Set <String> mReadSet = mSharedPrefs.
+            getStringSet("read_items", new LinkedHashSet <String> ());
+
+        mReadSet.add(getIntent().getExtras().getString("title"));
+
+        mSharedPrefs.edit().putStringSet("read_items", mReadSet).commit();
 
     }
 

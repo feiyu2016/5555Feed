@@ -87,7 +87,8 @@ public class FeedDragListener implements View.OnDragListener {
 
                 /* Read now - calls readNow() in Feed */
                 if (mReadNowRect.contains(x, y))
-                    mApp.getFeed().readNow(mFeedItem.getUrl());
+                    mApp.getFeed().readNow(
+                            mFeedItem.getTitle(), mFeedItem.getUrl());
 
                 /* Read later - calls readLater() in Feed */
                 if (mReadLaterRect.contains(x, y))

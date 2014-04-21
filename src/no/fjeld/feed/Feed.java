@@ -1,7 +1,5 @@
 package no.fjeld.feed;
 
-import java.util.*;
-
 import android.app.*;
 import android.content.*;
 import android.graphics.*;
@@ -13,6 +11,8 @@ import android.view.*;
 import android.view.animation.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
+
+import java.util.*;
 
 public class Feed {
 
@@ -93,14 +93,19 @@ public class Feed {
                     @Override
                     public boolean add(FeedItem item) {
 
-                        SharedPreferences mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(mApp.getFeedActivity().getBaseContext());
-                        Set <String> mReadItems = mSharedPrefs.getStringSet("read_items", new LinkedHashSet <String> ());
+                        SharedPreferences mSharedPrefs = PreferenceManager
+                            .getDefaultSharedPreferences(
+                             mApp.getFeedActivity().getBaseContext());
+                        
+                        Set <String> mReadSet = mSharedPrefs
+                            .getStringSet("read_items", 
+                             new LinkedHashSet <String> ());
 
                         boolean added = false;
 
                         /* If the item is marked as read, don't add it. */
-                        for (String title : mReadItems) {
-                            if (item.getFeed().equals(title)) {
+                        for (String title : mReadSet) {
+                            if (title.equals(item.getTitle())) {
                                 return false;
                             }
                         }
@@ -181,7 +186,7 @@ public class Feed {
      * Gets called from the DragListener if the user has chosen to read
      * the article.
      */
-    public void readNow(String url) {
+    public void readNow(String title, String url) {
 
         Activity activity = mApp.getFeedActivity();
 
@@ -190,7 +195,7 @@ public class Feed {
 
         if (mSharedPrefs.getBoolean("preference_open_in", true)) 
             activity.startActivity(new Intent(activity, WebViewActivity.class)
-                    .putExtra("url", url));
+                    .putExtra("title", title).putExtra("url", url));
         else
             activity.startActivity(new Intent(Intent.ACTION_VIEW, 
                         Uri.parse(url)));
@@ -203,24 +208,6 @@ public class Feed {
      */
     public void readLater(String title, String url) {
 
-
-    }
-
-    /**
-     * Gets called from the DragListener if the user has chosen the
-     * "Mark as read"-option.
-     */
-    public void markAsRead(String title) {
-
-        SharedPreferences mSharedPrefs = PreferenceManager
-            .getDefaultSharedPreferences(mApp.getFeedActivity().getBaseContext());
-
-        Set <String> mReadSet = mSharedPrefs.
-            getStringSet("read_items", new LinkedHashSet <String> ());
-
-        mReadSet.add(title);
-
-        mSharedPrefs.edit().putStringSet("read_items", mReadSet).commit();
 
     }
 
