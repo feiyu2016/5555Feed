@@ -9,6 +9,7 @@
     <string name="drawer_open">Options</string>
 
     <string name="mark_as_read">Mark as read</string>
+    <string name="marked_as_read">Marked as read</string>
 
     <!-- DrawerList Strings -->
     <string name="drawer_header_all_feeds">All feeds</string>

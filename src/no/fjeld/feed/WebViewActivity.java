@@ -72,6 +72,8 @@ public class WebViewActivity extends Activity {
 
         mSharedPrefs.edit().putStringSet("read_items", mReadSet).commit();
 
+        Toast.makeText(this, R.string.marked_as_read, Toast.LENGTH_SHORT).show();
+
     }
 
     /**
