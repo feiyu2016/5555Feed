@@ -24,8 +24,18 @@ public class WebViewActivity extends Activity {
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         mProgressBar = (ProgressBar) findViewById (R.id.webview_progress);
-       
+
         initWebView();
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.webview, menu);
+
+        return true;
 
     }
 
@@ -82,7 +92,7 @@ public class WebViewActivity extends Activity {
      * when a page is loading.
      */
     private class MyWebChromeClient extends android.webkit.WebChromeClient {
-        
+
         @Override
         public void onProgressChanged(WebView view, int progress) {
             mProgressBar.setProgress(progress);
