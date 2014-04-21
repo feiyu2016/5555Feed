@@ -276,7 +276,7 @@ public class NavigationDrawer {
             String mEncoding = mDrawerItem.getEncoding();
             
             mApp.getFeed().loadFeed(mFeedName, mUrl, 
-                    mEncoding, position - 3); 
+                    mEncoding, position - 3, false); 
 
         }
 

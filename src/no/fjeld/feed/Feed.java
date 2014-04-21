@@ -25,7 +25,7 @@ public class Feed {
     private ArrayList <ArrayList <FeedItem>> mFeedList;
     private ArrayList <FeedItem> mFeedsCombinedList;
 
-    private int lastFeedPosition;
+    public int lastFeedPosition;
 
     /**
      * Constructor for the class Feed.
@@ -162,12 +162,12 @@ public class Feed {
      * @param position  The feeds position
      */
     public void loadFeed(String mFeedName, String mUrl, String mEncoding, 
-            int position) {
+            int position, boolean shouldRefresh) {
 
         if (position != lastFeedPosition)
             mFeedAdapter.getFeedList().clear();
 
-        if (mFeedList.get(position).size() > 0) {
+        if (mFeedList.get(position).size() > 0 && !shouldRefresh) {
 
             for (FeedItem item : mFeedList.get(position))
                mFeedAdapter.getFeedList().add(item); 
