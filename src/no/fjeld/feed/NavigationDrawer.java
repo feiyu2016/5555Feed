@@ -370,7 +370,7 @@ public class NavigationDrawer {
                     TextView mTextView = (TextView) lastClickedView.findViewById(
                             R.id.drawer_item_text);
                     mTextView.setTypeface(((TextView) view.findViewById(
-                            R.id.drawer_item_text).getTypeface(), 
+                            R.id.drawer_item_text)).getTypeface(), 
                             Typeface.NORMAL);
 
                 }

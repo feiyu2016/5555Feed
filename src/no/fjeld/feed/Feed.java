@@ -95,14 +95,14 @@ public class Feed {
                         boolean added = false;
 
                         /* If the item is already in the list, don't add it. */
-                        for (int i = 0; i < super.size() - 1; i++) {
+                        for (int i = 0; i < super.size(); i++) {
                             if (item.getTitle().equals(super.get(i).getTitle())) {
                                 return false;       
                             }
                         }
 
                         /* Adds the items by date */
-                        for (int i = 0; i < super.size() - 1; i++) {
+                        for (int i = 0; i < super.size(); i++) {
                             if (item.compareTo(super.get(i)) >= 0) {
                                 super.add(i, item);
                                 added = true;
