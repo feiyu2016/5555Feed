@@ -60,6 +60,9 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
 
     }
 
+    /**
+     * Returns the adapters ArrayList.
+     */
     public ArrayList <DrawerItem> getDrawerList() {
 
         return mDrawerList;

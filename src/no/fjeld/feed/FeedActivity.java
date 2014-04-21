@@ -11,9 +11,8 @@ import android.widget.AdapterView.*;
 
 public class FeedActivity extends Activity {
 
-    private FeedActivity mActivity;
-    private FeedApplication mApp;
     private View mView;
+    private FeedApplication mApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -62,6 +62,12 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
 
     }
 
+    /**
+     * Sets the text and bitmaps for the FeedItem.
+     *
+     * If the Bitmap in the item is null, the 
+     * ImageView-visibility is set to Gone.
+     */
     private void setItemView(ViewHolder mViewHolder, FeedItem mFeedItem) {
 
         mViewHolder.mTitle.setText(mFeedItem.getTitle());
