@@ -284,12 +284,7 @@ public class NavigationDrawer {
             DrawerItem mDrawerItem = mDrawerAdapter
                 .getDrawerList().get(position - 3);
 
-            String mFeedName = mDrawerItem.getFeedName();
-            String mUrl      = mDrawerItem.getUrl();
-            String mEncoding = mDrawerItem.getEncoding();
-
-            mApp.getFeed().loadFeed(mFeedName, mUrl, 
-                    mEncoding, position - 3, false); 
+            mApp.getFeed().loadFeed(mDrawerItem, false); 
 
         }
 

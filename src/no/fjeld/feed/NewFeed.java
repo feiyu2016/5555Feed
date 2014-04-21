@@ -5,6 +5,7 @@ import android.content.*;
 import android.os.*;
 
 import java.io.*;
+import java.util.*;
 import javax.xml.parsers.*;
 
 import org.apache.http.HttpResponse;
@@ -144,7 +145,7 @@ public class NewFeed extends AsyncTask <String, Integer, String> {
     public void addFeed(String mFeedName, String mEncoding) {
 
         mApp.getNavDrawer().getDrawerAdapter().getDrawerList().add(
-                new DrawerItem(mFeedName, mUrl, mEncoding)); 
+                new DrawerItem(mFeedName, mUrl, mEncoding, new ArrayList <FeedItem> ())); 
 
         mApp.getNavDrawer().getDrawerAdapter().notifyDataSetChanged();
 

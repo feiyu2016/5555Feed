@@ -22,10 +22,9 @@ public class Feed {
     private ListView mFeedListView;
     private FeedAdapter mFeedAdapter;
 
-    private ArrayList <ArrayList <FeedItem>> mFeedList;
     private ArrayList <FeedItem> mFeedsCombinedList;
 
-    public int lastFeedPosition;
+    public DrawerItem lastDrawerItem;
 
     /**
      * Constructor for the class Feed.
@@ -42,15 +41,7 @@ public class Feed {
         initFeedAdapter();
 
         mFeedListView.setAdapter(mFeedAdapter);
-
-        mFeedList = new ArrayList <ArrayList <FeedItem>> ();
-
-        /* Adds the same number of ArrayLists to the mFeedList as 
-         * there are items in the drawerlist */
-        for (int i = 0; i < mApp.getNavDrawer().getDrawerAdapter()
-                .getDrawerList().size(); i++)
-            mFeedList.add(new ArrayList <FeedItem> ()); 
-
+            
         mFeedsCombinedList = new ArrayList <FeedItem> ();
 
     }
@@ -139,13 +130,6 @@ public class Feed {
     }
 
     /**
-     * Returns the ArrayList containing lists of FeedItems.
-     */
-    public ArrayList <ArrayList <FeedItem>> getFeedList() {
-        return mFeedList;
-    }
-
-    /**
      * Returns the list that should contain the FeedItems
      * from the lists of mFeedList.
      */
@@ -156,32 +140,29 @@ public class Feed {
     /**
      * Gets called from the NavigationDrawer-class when a feed is clicked.
      *
-     * @param mFeedname The feeds title
-     * @param mUrl      The feeds url
-     * @param mEncoding The feeds encoding
-     * @param position  The feeds position
+     * @param item          The DrawerItem-object clicked
+     * @param shouldRefresh If the app should force a refresh
      */
-    public void loadFeed(String mFeedName, String mUrl, String mEncoding, 
-            int position, boolean shouldRefresh) {
+    public void loadFeed(DrawerItem item, boolean shouldRefresh) {
 
-        if (position != lastFeedPosition)
+        if (item != lastDrawerItem)
             mFeedAdapter.getFeedList().clear();
 
-        if (mFeedList.get(position).size() > 0 && !shouldRefresh) {
+        if (item.getFeedList().size() > 0 && !shouldRefresh) {
 
-            for (FeedItem item : mFeedList.get(position))
-               mFeedAdapter.getFeedList().add(item); 
+            for (FeedItem feedItem : item.getFeedList())
+               mFeedAdapter.getFeedList().add(feedItem); 
 
             mFeedAdapter.notifyDataSetChanged();
 
         } else {
 
             mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(true);
-            new GetFeed(mApp, mFeedName, mEncoding, position).execute(mUrl); 
+            new GetFeed(mApp, item).execute(item.getUrl()); 
     
         }
 
-        lastFeedPosition = position;
+        lastDrawerItem = item;
 
     }
 

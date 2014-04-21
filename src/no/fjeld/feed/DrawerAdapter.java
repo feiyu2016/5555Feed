@@ -80,8 +80,12 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
         SharedPreferences mSharedPrefs = PreferenceManager
             .getDefaultSharedPreferences(mActivity.getBaseContext());
 
-        for (int i = 0; i < mDrawerList.size(); i++)
+        for (int i = 0; i < mDrawerList.size(); i++) {
+            
+            mDrawerList.get(i).getFeedList().clear();
             mDrawerSet.add(mGson.toJson(mDrawerList.get(i))); 
+
+        }
 
         mSharedPrefs.edit().putStringSet(
                 "drawer_items", mDrawerSet).commit();

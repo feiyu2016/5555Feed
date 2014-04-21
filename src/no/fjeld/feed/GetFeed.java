@@ -32,25 +32,22 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
     private FeedApplication mApp;
     private String mFeedName;
     private String mEncoding;
-    private int position;
+    private ArrayList <FeedItem> mFeedList;
 
     private int mNodeListLength;
 
     /**
      * Constructor for the class "GetFeed".
      *
-     * @param mApp      The application-object for this app.
-     * @param mFeedName The feedname for the feed to get.
-     * @param mEncoding The encoding for the feed.
-     * @param position  The position in the drawerlist.
+     * @param mApp        The application-object for this app.
+     * @param mDrawerItem The DrawerItem-object clicked.
      */
-    public GetFeed(FeedApplication mApp, String mFeedName, String mEncoding, 
-            int position) {
+    public GetFeed(FeedApplication mApp, DrawerItem mDrawerItem) {
 
         this.mApp = mApp;
-        this.mFeedName = mFeedName;
-        this.mEncoding = mEncoding;
-        this.position = position;
+        this.mFeedName = mDrawerItem.getFeedName();
+        this.mEncoding = mDrawerItem.getEncoding();
+        this.mFeedList = mDrawerItem.getFeedList();
 
     }
 
@@ -265,8 +262,7 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
         @Override
         protected void onPostExecute(Bitmap mImage) {
 
-            mApp.getFeed().getFeedList().get(position)
-                .add(new FeedItem(mTitle, mDescription, 
+            mFeedList.add(new FeedItem(mTitle, mDescription, 
                             mUrl, mPubDate, mImage, mFeedName));
 
             mApp.getFeed().getFeedAdapter().getFeedList()
