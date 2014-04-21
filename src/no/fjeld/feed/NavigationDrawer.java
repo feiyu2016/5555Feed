@@ -117,7 +117,7 @@ public class NavigationDrawer {
         mDrawerListView.addFooterView(((LayoutInflater) mApp.getFeedActivity()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(
                     R.layout.drawer_footer_divider, null));
-        
+
         mDrawerListView.addFooterView(getView(R.layout.drawer_footer,
                     R.id.drawer_footer_text,
                     R.string.drawer_footer_preferences,
@@ -127,7 +127,7 @@ public class NavigationDrawer {
                     R.id.drawer_footer_text,
                     R.string.drawer_footer_about,
                     R.drawable.ic_icon_about));
-    
+
     } 
 
     /**
@@ -159,6 +159,19 @@ public class NavigationDrawer {
             ImageView mItemImage = (ImageView) mListItem.findViewById(
                     R.id.drawer_footer_image);
             mItemImage.setImageResource(mImgResId);
+
+        }
+
+        /* This is the case where we add the "Add Feed"-button */
+        if (mStringResId == R.string.drawer_group_subfeeds) {
+
+            ((LinearLayout) mListItem.findViewById(R.id.drawer_group_new_feed))
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        newFeed();
+                    }
+                });
 
         }
 
@@ -274,11 +287,59 @@ public class NavigationDrawer {
             String mFeedName = mDrawerItem.getFeedName();
             String mUrl      = mDrawerItem.getUrl();
             String mEncoding = mDrawerItem.getEncoding();
-            
+
             mApp.getFeed().loadFeed(mFeedName, mUrl, 
                     mEncoding, position - 3, false); 
 
         }
+
+    }
+
+    public void newFeed() {
+
+        final Activity activity = mApp.getFeedActivity();
+
+        final EditText mInput = new EditText(activity);
+        mInput.setHint(R.string.new_feed_hint);
+
+        /* Shows the keyboard */
+        mInput.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                ((InputMethodManager) activity.getSystemService(
+                    Context.INPUT_METHOD_SERVICE)).showSoftInput(mInput, 0);
+            }
+
+        }, 50); 
+
+        /* The dialog */
+        AlertDialog.Builder mDialog = new AlertDialog.Builder(
+                new ContextThemeWrapper(activity, R.style.DefaultTheme));
+        mDialog.setTitle(R.string.new_feed_title);
+        mDialog.setView(mInput);
+
+        /* The "OK"-button */
+        mDialog.setPositiveButton(R.string.new_feed_ok,
+                new DialogInterface.OnClickListener() {
+
+                    @Override 
+                    public void onClick(DialogInterface dialog, int button) {
+                        NewFeed newFeed = new NewFeed(mApp);
+                        newFeed.execute(mInput.getText().toString());
+                    }
+
+                });
+
+        /* The "Cancel"-button */
+        mDialog.setNegativeButton(R.string.new_feed_cancel, 
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int button) {
+                    }
+                });
+
+        mDialog.show();
 
     }
 
