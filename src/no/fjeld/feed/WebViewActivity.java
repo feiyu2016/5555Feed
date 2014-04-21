@@ -72,6 +72,20 @@ public class WebViewActivity extends Activity {
 
         mSharedPrefs.edit().putStringSet("read_items", mReadSet).commit();
 
+        ArrayList <FeedItem> mFeedList = mApp.getFeed().getFeedAdapter()
+            .getFeedList();
+
+        for (int i = 0; i < mFeedList.size(); i++) {
+            if (mFeedList.get(i).getTitle().equals(
+                        getIntent().getExtras().getString("title"))) {
+                
+                mFeedList.remove(i);
+                mApp.getFeed().getFeedAdapter().notifyDataSetChanged();
+                break;
+
+            }
+        }
+
         Toast.makeText(this, R.string.marked_as_read, Toast.LENGTH_SHORT).show();
 
     }
