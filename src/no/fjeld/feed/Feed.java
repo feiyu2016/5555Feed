@@ -195,4 +195,22 @@ public class Feed {
 
     }
 
+    /**
+     * Gets called from the DragListener if the user has chosen the
+     * "Mark as read"-option.
+     */
+    public void markAsRead(String title) {
+
+        SharedPreferences mSharedPrefs = PreferenceManager
+            .getDefaultSharedPreferences(mApp.getFeedActivity().getBaseContext());
+
+        Set <String> mReadSet = mSharedPrefs.
+            getStringSet("read_items", new LinkedHashSet <String> ());
+
+        mReadSet.add(title);
+
+        mSharedPrefs.edit().putStringSet("read_items", mReadSet).commit();
+
+    }
+
 }
