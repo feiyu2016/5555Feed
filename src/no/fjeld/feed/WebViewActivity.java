@@ -9,6 +9,8 @@ import android.widget.*;
 
 public class WebViewActivity extends Activity {
 
+    private FeedApplication mApp;
+
     private WebView mWebView;
     private ProgressBar mProgressBar;
 
@@ -18,9 +20,11 @@ public class WebViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
 
+        mApp = FeedApplication.getInstance();
+
         getActionBar().setDisplayHomeAsUpEnabled(true);
         mProgressBar = (ProgressBar) findViewById (R.id.webview_progress);
-        
+       
         initWebView();
 
     }

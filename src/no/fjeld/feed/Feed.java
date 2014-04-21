@@ -41,7 +41,7 @@ public class Feed {
         initFeedAdapter();
 
         mFeedListView.setAdapter(mFeedAdapter);
-            
+
         mFeedsCombinedList = new ArrayList <FeedItem> ();
 
     }
@@ -86,13 +86,24 @@ public class Feed {
      */
     private void initFeedAdapter() {
 
+
         mFeedAdapter = new FeedAdapter(mApp.getFeedActivity(), 
                 R.layout.list_item, new ArrayList <FeedItem> () {
 
                     @Override
                     public boolean add(FeedItem item) {
 
+                        SharedPreferences mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(mApp.getFeedActivity().getBaseContext());
+                        Set <String> mReadItems = mSharedPrefs.getStringSet("read_items", new LinkedHashSet <String> ());
+
                         boolean added = false;
+
+                        /* If the item is marked as read, don't add it. */
+                        for (String title : mReadItems) {
+                            if (item.getFeed().equals(title)) {
+                                return false;
+                            }
+                        }
 
                         /* If the item is already in the list, don't add it. */
                         for (int i = 0; i < super.size(); i++) {
@@ -151,7 +162,7 @@ public class Feed {
         if (item.getFeedList().size() > 0 && !shouldRefresh) {
 
             for (FeedItem feedItem : item.getFeedList())
-               mFeedAdapter.getFeedList().add(feedItem); 
+                mFeedAdapter.getFeedList().add(feedItem); 
 
             mFeedAdapter.notifyDataSetChanged();
 
@@ -159,7 +170,7 @@ public class Feed {
 
             mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(true);
             new GetFeed(mApp, item).execute(item.getUrl()); 
-    
+
         }
 
         lastDrawerItem = item;

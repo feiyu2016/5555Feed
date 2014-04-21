@@ -17,7 +17,7 @@ public class FeedApplication extends android.app.Application {
         singleton = this;
     }
 
-    public FeedApplication getInstance() {
+    public static FeedApplication getInstance() {
         return singleton;
     }
 
