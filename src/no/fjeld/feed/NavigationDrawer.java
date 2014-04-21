@@ -290,6 +290,7 @@ public class NavigationDrawer {
 
     }
 
+
     public void newFeed() {
 
         final Activity activity = mApp.getFeedActivity();
@@ -343,11 +344,44 @@ public class NavigationDrawer {
      */
     private class DrawerClickListener implements OnItemClickListener {
 
+        private View lastClickedView;
+
         @Override
         public void onItemClick(AdapterView <?> parent, View view, 
                 int position, long id) {
 
+            setItemView(view, position);
             drawerItemClicked(position);
+
+        }
+
+        /**
+         * Sets the clicked views fontstyle to bold on click,
+         * and reset the last clicked.
+         */
+        public void setItemView(View view, int position) {
+
+            int listSize = mDrawerListView.getCount();
+
+            if (position != 2 && position <= listSize - 3) {
+
+                if (lastClickedView != null) {
+
+                    TextView mTextView = (TextView) lastClickedView.findViewById(
+                            R.id.drawer_item_text);
+                    mTextView.setTypeface(((TextView) view.findViewById(
+                            R.id.drawer_item_text).getTypeface(), 
+                            Typeface.NORMAL);
+
+                }
+
+                TextView mTextView = (TextView) view.findViewById(
+                        R.id.drawer_item_text);
+                mTextView.setTypeface(mTextView.getTypeface(), Typeface.BOLD);
+
+                lastClickedView = view;
+
+            }
 
         }
 
