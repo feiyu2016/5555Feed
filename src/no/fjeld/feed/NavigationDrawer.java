@@ -70,7 +70,12 @@ public class NavigationDrawer {
                 R.drawable.ic_navigation_drawer, R.string.drawer_open, R.string.drawer_closed) {
 
             public void onDrawerClosed(View mainView) {
-                mApp.getActionBar().setSubtitle(R.string.drawer_closed);
+            
+                DrawerItem drawerItem = mApp.getFeed().lastDrawerItem;
+            
+                if (drawerItem != null)
+                    mApp.getActionBar().setSubtitle(drawerItem.getFeedName());
+            
             }
 
             public void onDrawerOpened(View drawerView) {
@@ -290,7 +295,12 @@ public class NavigationDrawer {
 
     }
 
-
+    /**
+     * Displays a dialog which prompts the user for an
+     * url. 
+     * The url will be sent to the NewFeed-class, and from
+     * there a new DrawerItem will be called.
+     */ 
     public void newFeed() {
 
         final Activity activity = mApp.getFeedActivity();
