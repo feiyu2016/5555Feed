@@ -2,6 +2,9 @@
 <PreferenceScreen 
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <PreferenceCategory
+        android:title="@string/preference_category_general" />
+
     <!-- Preference for whether to open links in the app
          or in the default browser. -->
     <CheckBoxPreference
