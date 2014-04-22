@@ -112,7 +112,7 @@ public class NavigationDrawer {
 
         mDrawerListView.addHeaderView(getView(R.layout.drawer_item,
                     R.id.drawer_item_text,
-                    R.string.drawer_header_casual_feed, 0));
+                    R.string.drawer_header_saved_items, 0));
 
         mDrawerListView.addHeaderView(getView(R.layout.drawer_group,
                     R.id.drawer_group_text,
@@ -273,7 +273,7 @@ public class NavigationDrawer {
         if (position == 0) {                        // All feeds
 
 
-        } else if (position == 1) {                 // Casual feeds
+        } else if (position == 1) {                 // Saved items 
 
 
         } else if (position == mDrawerSize - 2) {   // Preferences

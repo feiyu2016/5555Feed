@@ -13,7 +13,7 @@
 
     <!-- DrawerList Strings -->
     <string name="drawer_header_all_feeds">All feeds</string>
-    <string name="drawer_header_casual_feed">Casual feed</string>
+    <string name="drawer_header_saved_items">Saved items</string>
     
     <string name="drawer_group_subfeeds">MY FEEDS</string>
     <string name="drawer_group_new_feed">ADD FEED</string>
@@ -34,8 +34,8 @@
     <string name="drag_read_later">Read later</string>
 
     <!-- Preference Strings -->
-    <string name="preference_textsize_title">Textsize</string>
-    <string name="preference_textsize_summary">Textsize for the items in the feed</string>
+    <string name="preference_textsize_title">Text size</string>
+    <string name="preference_textsize_summary">Text size for the items in the feed</string>
 
     <string-array name="preference_textsize_entries">
         <item>Small</item>
