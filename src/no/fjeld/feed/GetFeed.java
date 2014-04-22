@@ -27,8 +27,6 @@ import org.xml.sax.*;
 
 public class GetFeed extends AsyncTask <String, Integer, String> {
 
-    private static final int MAX_FEEDITEMS = 20;
-
     private FeedApplication mApp;
     private String mFeedName;
     private String mEncoding;
@@ -144,9 +142,6 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
                 else
                     new GetImage(i).execute(null, mTitle, mDescription, mLink,
                             mPubDate);
-
-                if (i == MAX_FEEDITEMS)
-                    break;
 
             }
 
@@ -271,7 +266,7 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
 
             mApp.getFeed().getFeedAdapter().notifyDataSetChanged();
 
-            if (itemNumber == mNodeListLength - 1 || itemNumber == MAX_FEEDITEMS - 1)
+            if (itemNumber == mNodeListLength - 1)
                 mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(false);
 
         }

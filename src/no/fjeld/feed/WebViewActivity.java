@@ -59,6 +59,7 @@ public class WebViewActivity extends Activity {
      * If the user presses the "Mark as read"-button in the ActionBar,
      * the title of this article will be put into a StringSet in the
      * SharedPreferences.
+     * The item will also be removed from the ListView.
      */
     private void markAsRead() {
 
