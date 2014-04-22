@@ -8,6 +8,7 @@
         <item name="android:textAppearanceLarge">@style/Text_Style_Large</item>
         <item name="android:textColorPrimary">#FF000000</item>
         <item name="android:textColorSecondary">#FF878787</item>
+        <item name="android:selectableItemBackground">@color/bg_ab_item</item>
     </style>
 
     <!-- Styles for the Action Bar -->
