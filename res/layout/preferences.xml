@@ -2,16 +2,6 @@
 <PreferenceScreen 
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <!-- Preference for textsize. -->
-    <ListPreference
-        android:key="preference_textsize"
-        android:title="@string/preference_textsize_title"
-        android:summary="@string/preference_textsize_summary"
-        android:entries="@array/preference_textsize_entries"
-        android:entryValues="@array/preference_textsize_entries"
-        android:defaultValue="Medium"
-        android:dialogTitle="" />
-
     <!-- Preference for whether to open links in the app
          or in the default browser. -->
     <CheckBoxPreference

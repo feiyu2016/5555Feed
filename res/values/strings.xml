@@ -34,15 +34,6 @@
     <string name="drag_read_later">Read later</string>
 
     <!-- Preference Strings -->
-    <string name="preference_textsize_title">Text size</string>
-    <string name="preference_textsize_summary">Text size for the items in the feed</string>
-
-    <string-array name="preference_textsize_entries">
-        <item>Small</item>
-        <item>Medium</item>
-        <item>Large</item>    
-    </string-array>
-    
     <string name="preference_open_in_title">Open links in app</string>
     <string name="preference_open_in_summary">Open links in the app or the default browser</string>
 
