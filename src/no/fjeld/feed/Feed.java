@@ -16,6 +16,8 @@ import java.util.*;
 
 public class Feed {
 
+    private final static int MAX_FEEDITEMS = 20;
+
     private View view;
     private FeedApplication mApp;
 
@@ -86,10 +88,10 @@ public class Feed {
      */
     private void initFeedAdapter() {
 
-
         mFeedAdapter = new FeedAdapter(mApp.getFeedActivity(), 
                 R.layout.list_item, new ArrayList <FeedItem> () {
 
+                    // This function should be cleaned up.
                     @Override
                     public boolean add(FeedItem item) {
 
@@ -102,6 +104,9 @@ public class Feed {
                              new LinkedHashSet <String> ());
 
                         boolean added = false;
+
+                        if (super.size() == 20)
+                            return false;
 
                         /* If the item is marked as read, don't add it. */
                         for (String title : mReadSet) {
