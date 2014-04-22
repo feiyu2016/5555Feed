@@ -257,14 +257,18 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
         @Override
         protected void onPostExecute(Bitmap mImage) {
 
-            mFeedList.add(new FeedItem(mTitle, mDescription, 
-                            mUrl, mPubDate, mImage, mFeedName));
+            if (mTitle.length() > 5) { 
 
-            mApp.getFeed().getFeedAdapter().getFeedList()
-                .add(new FeedItem(mTitle, mDescription, 
-                            mUrl, mPubDate, mImage, mFeedName));
+                mFeedList.add(new FeedItem(mTitle, mDescription, 
+                                mUrl, mPubDate, mImage, mFeedName));
 
-            mApp.getFeed().getFeedAdapter().notifyDataSetChanged();
+                mApp.getFeed().getFeedAdapter().getFeedList()
+                    .add(new FeedItem(mTitle, mDescription, 
+                                mUrl, mPubDate, mImage, mFeedName));
+
+                mApp.getFeed().getFeedAdapter().notifyDataSetChanged();
+
+            }
 
             if (itemNumber == mNodeListLength - 1)
                 mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(false);
