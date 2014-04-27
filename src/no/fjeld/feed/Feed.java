@@ -224,7 +224,7 @@ public class Feed {
         FeedItem mFeedItem = mFeedAdapter.getFeedList().get(position);
         mReadSet.add(mFeedItem.getTitle());
 
-        mSharedPrefs.edit()putStringSet(mReadSet).commit();
+        mSharedPrefs.edit().putStringSet("read_items", mReadSet).commit();
 
     }
 

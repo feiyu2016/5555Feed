@@ -48,7 +48,7 @@ public class FeedActivity extends Activity {
         boolean drawerOpen = mApp.mNavDrawer.getDrawerLayout()
             .isDrawerOpen(Gravity.LEFT);
         
-        menu.findItem(R.id.action_clear_all).setVisible(!drawerOpen);
+        menu.findItem(R.id.action_mark_all).setVisible(!drawerOpen);
 
         return super.onPrepareOptionsMenu(menu);
 
@@ -60,9 +60,17 @@ public class FeedActivity extends Activity {
         if (mApp.mNavDrawer.getDrawerToggle().onOptionsItemSelected(item))
             return true;
 
+        if (item.getItemId() == R.id.action_mark_all) {
+
+            for (int i = 0; i < mApp.getFeed().getFeedAdapter().getFeedList().size(); i++)
+                mApp.getFeed().markAsRead(i);
+
+        }
+
         return super.onOptionsItemSelected(item);
 
     }
+
 
     private void initApp() {
     
