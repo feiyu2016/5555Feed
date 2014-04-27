@@ -8,6 +8,9 @@
     <string name="drawer_closed">All feeds</string>
     <string name="drawer_open">Options</string>
 
+    <!-- Action Bar overflow-titles -->
+    <string name="action_clear_all">Clear all</string>
+
     <!-- DrawerList Strings -->
     <string name="drawer_header_all_feeds">All feeds</string>
     <string name="drawer_header_saved_items">Saved items</string>

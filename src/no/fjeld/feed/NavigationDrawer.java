@@ -75,11 +75,16 @@ public class NavigationDrawer {
             
                 if (drawerItem != null)
                     mApp.getActionBar().setSubtitle(drawerItem.getFeedName());
-            
+        
+                mApp.getFeedActivity().invalidateOptionsMenu();
+
             }
 
             public void onDrawerOpened(View drawerView) {
+           
                 mApp.getActionBar().setSubtitle(R.string.drawer_open);
+                mApp.getFeedActivity().invalidateOptionsMenu();
+
             }
 
         };
@@ -271,9 +276,12 @@ public class NavigationDrawer {
         int mDrawerSize = mDrawerListView.getChildCount();
 
         if (position == 0) {                        // All feeds
-
+            
+            mDrawerLayout.closeDrawer(Gravity.LEFT);
 
         } else if (position == 1) {                 // Saved items 
+
+            mDrawerLayout.closeDrawer(Gravity.LEFT);
 
 
         } else if (position == mDrawerSize - 2) {   // Preferences
@@ -285,6 +293,8 @@ public class NavigationDrawer {
 
 
         } else if (position > 2 && position < mDrawerSize - 2) { // Feed
+
+            mDrawerLayout.closeDrawer(Gravity.LEFT);
 
             DrawerItem mDrawerItem = mDrawerAdapter
                 .getDrawerList().get(position - 3);

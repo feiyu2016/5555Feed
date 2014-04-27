@@ -36,9 +36,7 @@ public class WebViewActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.webview, menu);
-
+        getMenuInflater().inflate(R.menu.webview, menu);
         return true;
 
     }

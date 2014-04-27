@@ -96,46 +96,46 @@ public class Feed {
                     public boolean add(FeedItem item) {
 
                         SharedPreferences mSharedPrefs = PreferenceManager
-                            .getDefaultSharedPreferences(
-                             mApp.getFeedActivity().getBaseContext());
-                        
-                        Set <String> mReadSet = mSharedPrefs
-                            .getStringSet("read_items", 
-                             new LinkedHashSet <String> ());
+            .getDefaultSharedPreferences(
+                mApp.getFeedActivity().getBaseContext());
 
-                        boolean added = false;
+        Set <String> mReadSet = mSharedPrefs
+            .getStringSet("read_items", 
+                new LinkedHashSet <String> ());
 
-                        if (super.size() == 20)
-                            return false;
+        boolean added = false;
 
-                        /* If the item is marked as read, don't add it. */
-                        for (String title : mReadSet) {
-                            if (title.equals(item.getTitle())) {
-                                return false;
-                            }
-                        }
+        if (super.size() == 20)
+            return false;
 
-                        /* If the item is already in the list, don't add it. */
-                        for (int i = 0; i < super.size(); i++) {
-                            if (item.getTitle().equals(super.get(i).getTitle())) {
-                                return false;       
-                            }
-                        }
+        /* If the item is marked as read, don't add it. */
+        for (String title : mReadSet) {
+            if (title.equals(item.getTitle())) {
+                return false;
+            }
+        }
 
-                        /* Adds the items by date */
-                        for (int i = 0; i < super.size(); i++) {
-                            if (item.compareTo(super.get(i)) >= 0) {
-                                super.add(i, item);
-                                added = true;
-                                break;
-                            }
-                        }
+        /* If the item is already in the list, don't add it. */
+        for (int i = 0; i < super.size(); i++) {
+            if (item.getTitle().equals(super.get(i).getTitle())) {
+                return false;       
+            }
+        }
 
-                        if (!added) {
-                            super.add(item);
-                        }
+        /* Adds the items by date */
+        for (int i = 0; i < super.size(); i++) {
+            if (item.compareTo(super.get(i)) >= 0) {
+                super.add(i, item);
+                added = true;
+                break;
+            }
+        }
 
-                        return true;
+        if (!added) {
+            super.add(item);
+        }
+
+        return true;
 
                     }
 

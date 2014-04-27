@@ -35,6 +35,26 @@ public class FeedActivity extends Activity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        boolean drawerOpen = mApp.mNavDrawer.getDrawerLayout()
+            .isDrawerOpen(Gravity.LEFT);
+        
+        menu.findItem(R.id.action_clear_all).setVisible(!drawerOpen);
+
+        return super.onPrepareOptionsMenu(menu);
+
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (mApp.mNavDrawer.getDrawerToggle().onOptionsItemSelected(item))
@@ -43,7 +63,6 @@ public class FeedActivity extends Activity {
         return super.onOptionsItemSelected(item);
 
     }
-
 
     private void initApp() {
     
