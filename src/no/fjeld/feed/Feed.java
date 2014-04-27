@@ -96,46 +96,46 @@ public class Feed {
                     public boolean add(FeedItem item) {
 
                         SharedPreferences mSharedPrefs = PreferenceManager
-            .getDefaultSharedPreferences(
-                mApp.getFeedActivity().getBaseContext());
+                            .getDefaultSharedPreferences(
+                                mApp.getFeedActivity().getBaseContext());
 
-        Set <String> mReadSet = mSharedPrefs
-            .getStringSet("read_items", 
-                new LinkedHashSet <String> ());
+                        Set <String> mReadSet = mSharedPrefs
+                            .getStringSet("read_items", 
+                                new LinkedHashSet <String> ());
 
-        boolean added = false;
+                        boolean added = false;
 
-        if (super.size() == 20)
-            return false;
+                        if (super.size() == 20)
+                            return false;
 
-        /* If the item is marked as read, don't add it. */
-        for (String title : mReadSet) {
-            if (title.equals(item.getTitle())) {
-                return false;
-            }
-        }
+                        /* If the item is marked as read, don't add it. */
+                        for (String title : mReadSet) {
+                            if (title.equals(item.getTitle())) {
+                                return false;
+                            }
+                        }
 
-        /* If the item is already in the list, don't add it. */
-        for (int i = 0; i < super.size(); i++) {
-            if (item.getTitle().equals(super.get(i).getTitle())) {
-                return false;       
-            }
-        }
+                        /* If the item is already in the list, don't add it. */
+                        for (int i = 0; i < super.size(); i++) {
+                            if (item.getTitle().equals(super.get(i).getTitle())) {
+                                return false;       
+                            }
+                        }
 
-        /* Adds the items by date */
-        for (int i = 0; i < super.size(); i++) {
-            if (item.compareTo(super.get(i)) >= 0) {
-                super.add(i, item);
-                added = true;
-                break;
-            }
-        }
+                        /* Adds the items by date */
+                        for (int i = 0; i < super.size(); i++) {
+                            if (item.compareTo(super.get(i)) >= 0) {
+                                super.add(i, item);
+                                added = true;
+                                break;
+                            }
+                        }
 
-        if (!added) {
-            super.add(item);
-        }
+                        if (!added) {
+                            super.add(item);
+                        }
 
-        return true;
+                        return true;
 
                     }
 
