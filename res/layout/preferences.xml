@@ -20,4 +20,17 @@
         android:summary="@string/preference_images_summary"
         android:defaultValue="true" />
 
+    <PreferenceCategory
+        android:title="@string/preference_category_clean_up" />
+
+    <Preference
+        android:key="preference_clear_read"
+        android:title="@string/preference_clear_read_title"
+        android:summary="@string/preference_clear_read_summary" />
+    
+    <Preference
+        android:key="preference_clear_saved"
+        android:title="@string/preference_clear_saved_title"
+        android:summary="@string/preference_clear_saved_summary" />
+
 </PreferenceScreen>

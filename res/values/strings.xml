@@ -39,11 +39,18 @@
 
     <!-- Preference Strings -->
     <string name="preference_category_general">General</string>
+    <string name="preference_category_clean_up">Clean up</string>
 
     <string name="preference_open_in_title">Open links in app</string>
     <string name="preference_open_in_summary">Open links in the app or the default browser</string>
 
     <string name="preference_images_title">Download images</string>
     <string name="preference_images_summary">Reduce data usage by not downloading images</string>
+
+    <string name="preference_clear_read_title">Clear read articles</string>
+    <string name="preference_clear_read_summary">Deletes your \"Marked as read\" articles</string>
+
+    <string name="preference_clear_saved_title">Clear saved articles</string>
+    <string name="preference_clear_saved_summary">Deletes your \"Read later\" articles</string>
 
 </resources>
