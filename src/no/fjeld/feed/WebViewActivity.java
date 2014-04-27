@@ -13,8 +13,6 @@ import java.util.*;
 
 public class WebViewActivity extends Activity {
 
-    private FeedApplication mApp;
-
     private WebView mWebView;
     private ProgressBar mProgressBar;
 
@@ -24,8 +22,6 @@ public class WebViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
 
-        mApp = FeedApplication.getInstance();
-
         getActionBar().setDisplayHomeAsUpEnabled(true);
         mProgressBar = (ProgressBar) findViewById (R.id.webview_progress);
 
@@ -34,58 +30,10 @@ public class WebViewActivity extends Activity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.webview, menu);
-        return true;
-
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == R.id.mark_as_read)
-            markAsRead();
-        else
-            finish();
-
+            
+        finish();
         return super.onOptionsItemSelected(item);
-
-    }
-
-    /**
-     * If the user presses the "Mark as read"-button in the ActionBar,
-     * the title of this article will be put into a StringSet in the
-     * SharedPreferences.
-     * The item will also be removed from the ListView.
-     */
-    private void markAsRead() {
-
-        SharedPreferences mSharedPrefs = PreferenceManager
-            .getDefaultSharedPreferences(mApp.getFeedActivity().getBaseContext());
-
-        Set <String> mReadSet = mSharedPrefs.
-            getStringSet("read_items", new LinkedHashSet <String> ());
-
-        mReadSet.add(getIntent().getExtras().getString("title"));
-
-        mSharedPrefs.edit().putStringSet("read_items", mReadSet).commit();
-
-        ArrayList <FeedItem> mFeedList = mApp.getFeed().getFeedAdapter()
-            .getFeedList();
-
-        for (int i = 0; i < mFeedList.size(); i++) {
-            if (mFeedList.get(i).getTitle().equals(
-                        getIntent().getExtras().getString("title"))) {
-                
-                mFeedList.remove(i);
-                mApp.getFeed().getFeedAdapter().notifyDataSetChanged();
-                break;
-
-            }
-        }
-
-        Toast.makeText(this, R.string.marked_as_read, Toast.LENGTH_SHORT).show();
 
     }
 

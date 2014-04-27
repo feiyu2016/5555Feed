@@ -4,6 +4,8 @@
     <style name="DefaultTheme" parent="@android:style/Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/ActionBar_Style</item>
         <item name="android:actionOverflowButtonStyle">@style/ActionBar_Overflow</item>
+        <item name="android:itemTextAppearance">@style/Text_Style_Medium</item>
+        <item name="android:itemBackground">@color/bg_drawer_item</item>
         <item name="android:textAppearanceSmall">@style/Text_Style_Small</item>
         <item name="android:textAppearanceMedium">@style/Text_Style_Medium</item>
         <item name="android:textAppearanceLarge">@style/Text_Style_Large</item>
@@ -31,8 +33,7 @@
         <item name="android:src">@drawable/ic_action_overflow</item>
     </style>
 
-
-    <!-- Custom TextStyles --> 
+    <!-- Custom TextStyles -->
     <style name="Text_Style_Small" parent="@android:style/TextAppearance.Small">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">sans-serif</item>

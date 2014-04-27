@@ -26,6 +26,8 @@ public class Feed {
 
     private ArrayList <FeedItem> mFeedsCombinedList;
 
+    private SharedPreferences mSharedPrefs;
+
     public DrawerItem lastDrawerItem;
 
     /**
@@ -43,6 +45,9 @@ public class Feed {
         initFeedAdapter();
 
         mFeedListView.setAdapter(mFeedAdapter);
+
+        mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(
+                mApp.getFeedActivity().getBaseContext());
 
         mFeedsCombinedList = new ArrayList <FeedItem> ();
 
@@ -95,10 +100,6 @@ public class Feed {
                     @Override
                     public boolean add(FeedItem item) {
 
-                        SharedPreferences mSharedPrefs = PreferenceManager
-                            .getDefaultSharedPreferences(
-                                mApp.getFeedActivity().getBaseContext());
-
                         Set <String> mReadSet = mSharedPrefs
                             .getStringSet("read_items", 
                                 new LinkedHashSet <String> ());
@@ -111,6 +112,7 @@ public class Feed {
                         /* If the item is marked as read, don't add it. */
                         for (String title : mReadSet) {
                             if (title.equals(item.getTitle())) {
+                                System.out.println(title);
                                 return false;
                             }
                         }
@@ -195,9 +197,6 @@ public class Feed {
 
         Activity activity = mApp.getFeedActivity();
 
-        SharedPreferences mSharedPrefs = PreferenceManager
-            .getDefaultSharedPreferences(activity.getBaseContext());
-
         if (mSharedPrefs.getBoolean("preference_open_in", true)) 
             activity.startActivity(new Intent(activity, WebViewActivity.class)
                     .putExtra("title", title).putExtra("url", url));
@@ -213,6 +212,19 @@ public class Feed {
      */
     public void readLater(String title, String url) {
 
+
+    }
+
+
+    public void markAsRead(int position) {
+
+        Set <String> mReadSet = mSharedPrefs.getStringSet("read_items", 
+                new LinkedHashSet <String> ());
+
+        FeedItem mFeedItem = mFeedAdapter.getFeedList().get(position);
+        mReadSet.add(mFeedItem.getTitle());
+
+        mSharedPrefs.edit()putStringSet(mReadSet).commit();
 
     }
 
