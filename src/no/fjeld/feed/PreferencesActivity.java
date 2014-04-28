@@ -1,13 +1,16 @@
 package no.fjeld.feed;
 
+import android.content.*;
 import android.os.*;
 import android.preference.*;
 import android.preference.Preference.*;
 import android.view.*;
 
+import java.util.*;
+
 public class PreferencesActivity extends PreferenceActivity {
 
-    FeedApplication mApp;
+    private FeedApplication mApp;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -17,7 +20,7 @@ public class PreferencesActivity extends PreferenceActivity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         mApp = (FeedApplication) getApplication();
-       
+        
         getFragmentManager().beginTransaction().replace(
                 android.R.id.content, new PreferenceFrag()).commit();
 
@@ -31,13 +34,17 @@ public class PreferencesActivity extends PreferenceActivity {
 
     }
 
-    public static class PreferenceFrag extends PreferenceFragment {
+    private class PreferenceFrag extends PreferenceFragment {
+
+        private SharedPreferences mSharedPrefs;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
 
             super.onCreate(savedInstanceState);         
             addPreferencesFromResource(R.layout.preferences);
+
+            mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
             initPrefs();
 
@@ -53,7 +60,9 @@ public class PreferencesActivity extends PreferenceActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
 
+                    mSharedPrefs.edit().putStringSet("read_items", new LinkedHashSet <String> ()).commit();
                     return true;
+
                 }
 
             });
@@ -63,7 +72,9 @@ public class PreferencesActivity extends PreferenceActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
 
+                    mSharedPrefs.edit().putStringSet("saved_items", new LinkedHashSet <String> ()).commit();
                     return true;
+
                 }
 
             });
