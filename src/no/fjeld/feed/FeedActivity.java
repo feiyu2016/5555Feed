@@ -3,6 +3,7 @@ package no.fjeld.feed;
 import android.app.*;
 import android.content.*;
 import android.os.*;
+import android.preference.*;
 import android.support.v4.app.*;
 import android.support.v4.widget.*;
 import android.view.*;
@@ -47,7 +48,7 @@ public class FeedActivity extends Activity {
 
         boolean drawerOpen = mApp.mNavDrawer.getDrawerLayout()
             .isDrawerOpen(Gravity.LEFT);
-        
+
         menu.findItem(R.id.action_mark_all).setVisible(!drawerOpen);
 
         return super.onPrepareOptionsMenu(menu);
@@ -60,12 +61,8 @@ public class FeedActivity extends Activity {
         if (mApp.mNavDrawer.getDrawerToggle().onOptionsItemSelected(item))
             return true;
 
-        if (item.getItemId() == R.id.action_mark_all) {
-
-            for (int i = 0; i < mApp.getFeed().getFeedAdapter().getFeedList().size(); i++)
-                mApp.getFeed().markAsRead(i);
-
-        }
+        if (item.getItemId() == R.id.action_mark_all) 
+            mApp.getFeed().markAllAsRead();
 
         return super.onOptionsItemSelected(item);
 
@@ -73,10 +70,10 @@ public class FeedActivity extends Activity {
 
 
     private void initApp() {
-    
+
         mView = getWindow().getDecorView();
         mApp = (FeedApplication) getApplication();
-  
+
         mApp.mFeedActivity = this; 
         mApp.mActionBar = getActionBar();
         mApp.mNavDrawer = new NavigationDrawer(mView, mApp);
@@ -84,5 +81,7 @@ public class FeedActivity extends Activity {
         mApp.mFeed = new Feed(mView, mApp);
 
     }
+
+
 
 }
