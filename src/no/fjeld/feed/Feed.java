@@ -216,13 +216,15 @@ public class Feed {
     }
 
 
-    public void markAsRead(int position) {
+    public void markAllAsRead() {
 
         Set <String> mReadSet = mSharedPrefs.getStringSet("read_items", 
                 new LinkedHashSet <String> ());
 
-        FeedItem mFeedItem = mFeedAdapter.getFeedList().get(position);
-        mReadSet.add(mFeedItem.getTitle());
+        ArrayList <FeedItem> mFeedList = mFeedAdapter.getFeedList();
+
+        for (int i = 0; i < mFeedList.size(); i++)
+           mReadSet.add(mFeedList.get(i).getTitle()); 
 
         mSharedPrefs.edit().putStringSet("read_items", mReadSet).commit();
 
