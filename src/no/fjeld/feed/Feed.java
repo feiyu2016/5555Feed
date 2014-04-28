@@ -210,7 +210,7 @@ public class Feed {
      * Gets called from the DragListener if the user has chosen to read
      * the article later.
      */
-    public void readLater(String title, String url) {
+    public void readLater(FeedItem mFeedItem) {
 
 
     }
@@ -227,6 +227,9 @@ public class Feed {
            mReadSet.add(mFeedList.get(i).getTitle()); 
 
         mSharedPrefs.edit().putStringSet("read_items", mReadSet).commit();
+
+        mFeedList.clear();
+        mFeedAdapter.notifyDataSetChanged();
 
     }
 

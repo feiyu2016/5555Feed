@@ -92,8 +92,7 @@ public class FeedDragListener implements View.OnDragListener {
 
                 /* Read later - calls readLater() in Feed */
                 if (mReadLaterRect.contains(x, y))
-                    mApp.getFeed().readLater(
-                            mFeedItem.getTitle(), mFeedItem.getUrl());
+                    mApp.getFeed().readLater(mFeedItem);
 
                 return true;
 
