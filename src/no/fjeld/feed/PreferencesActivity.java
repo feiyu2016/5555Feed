@@ -20,7 +20,7 @@ public class PreferencesActivity extends PreferenceActivity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         mApp = (FeedApplication) getApplication();
-        
+
         getFragmentManager().beginTransaction().replace(
                 android.R.id.content, new PreferenceFrag()).commit();
 
@@ -28,7 +28,7 @@ public class PreferencesActivity extends PreferenceActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        
+
         finish();
         return super.onOptionsItemSelected(item);
 
@@ -44,7 +44,8 @@ public class PreferencesActivity extends PreferenceActivity {
             super.onCreate(savedInstanceState);         
             addPreferencesFromResource(R.layout.preferences);
 
-            mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(
+                    getBaseContext());
 
             initPrefs();
 
@@ -52,32 +53,40 @@ public class PreferencesActivity extends PreferenceActivity {
 
         public void initPrefs() {
 
-            Preference clearRead = (Preference) findPreference("preference_clear_read");
-            Preference clearSaved = (Preference) findPreference("preference_clear_saved");
+            Preference clearRead = (Preference) findPreference(
+                    "preference_clear_read");
+            Preference clearSaved = (Preference) findPreference(
+                    "preference_clear_saved");
 
-            clearRead.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+            clearRead.setOnPreferenceClickListener(
+                    new OnPreferenceClickListener() {
 
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
+                        @Override
+                        public boolean onPreferenceClick(Preference preference) {
 
-                    mSharedPrefs.edit().putStringSet("read_items", new LinkedHashSet <String> ()).commit();
-                    return true;
+                            mSharedPrefs.edit().putStringSet("read_items", 
+                                new LinkedHashSet <String> ()).commit();
 
-                }
+                            return true;
 
-            });
+                        }
 
-            clearSaved.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                    });
 
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
+            clearSaved.setOnPreferenceClickListener(
+                    new OnPreferenceClickListener() {
 
-                    mSharedPrefs.edit().putStringSet("saved_items", new LinkedHashSet <String> ()).commit();
-                    return true;
+                        @Override
+                        public boolean onPreferenceClick(Preference preference) {
 
-                }
+                            mSharedPrefs.edit().putStringSet("saved_items", 
+                                new LinkedHashSet <String> ()).commit();
 
-            });
+                            return true;
+
+                        }
+
+                    });
 
         }
 
