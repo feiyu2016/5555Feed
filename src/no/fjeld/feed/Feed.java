@@ -112,7 +112,6 @@ public class Feed {
                         /* If the item is marked as read, don't add it. */
                         for (String title : mReadSet) {
                             if (title.equals(item.getTitle())) {
-                                System.out.println(title);
                                 return false;
                             }
                         }
@@ -241,7 +240,7 @@ public class Feed {
         mSharedPrefs.edit().putStringSet("read_items", mReadSet).commit();
 
         mFeedList.clear();
-        mFeedAdapter.notifyDataSetChanged();
+        loadFeed(lastDrawerItem, false);
 
     }
 
