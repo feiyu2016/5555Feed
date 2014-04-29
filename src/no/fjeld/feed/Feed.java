@@ -221,7 +221,11 @@ public class Feed {
 
     }
 
-
+    /**
+     * Adds the current articles visible in the ListView to a
+     * Stringset in SharedPreferences, preventing them from
+     * being added to the ListView later on.
+     */
     public void markAllAsRead() {
 
         Set <String> mReadSet = mSharedPrefs.getStringSet("read_items", 
