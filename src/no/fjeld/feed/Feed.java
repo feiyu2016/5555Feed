@@ -212,6 +212,12 @@ public class Feed {
      */
     public void readLater(FeedItem mFeedItem) {
 
+        Set <String> mSavedSet = mSharedPrefs.getStringSet("saved_items",
+               new LinkedHashSet <String> ()); 
+
+        mSavedSet.add(mFeedItem.getTitle() + ";" + mFeedItem.getUrl()); 
+
+        mSharedPrefs.edit().putStringSet("saved_items", mSavedSet).commit();
 
     }
 
