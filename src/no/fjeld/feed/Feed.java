@@ -209,6 +209,8 @@ public class Feed {
     /**
      * Gets called from the DragListener if the user has chosen to read
      * the article later.
+     * The article is then added to a Stringset in the SharedPreferences
+     * with the key 'saved_items'.
      */
     public void readLater(FeedItem mFeedItem) {
 
