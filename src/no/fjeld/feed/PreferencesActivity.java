@@ -64,8 +64,6 @@ public class PreferencesActivity extends PreferenceActivity {
                         @Override
                         public boolean onPreferenceClick(Preference preference) {
 
-                            mSharedPrefs.edit().putStringSet("read_items", 
-                                new LinkedHashSet <String> ()).commit();
 
                             return true;
 
@@ -79,14 +77,13 @@ public class PreferencesActivity extends PreferenceActivity {
                         @Override
                         public boolean onPreferenceClick(Preference preference) {
 
-                            mSharedPrefs.edit().putStringSet("saved_items", 
-                                new LinkedHashSet <String> ()).commit();
 
                             return true;
 
                         }
 
                     });
+
 
         }
 

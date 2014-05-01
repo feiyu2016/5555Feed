@@ -100,21 +100,10 @@ public class Feed {
                     @Override
                     public boolean add(FeedItem item) {
 
-                        Set <String> mReadSet = mSharedPrefs
-                            .getStringSet("read_items", 
-                                new LinkedHashSet <String> ());
-
                         boolean added = false;
 
                         if (super.size() == 20)
                             return false;
-
-                        /* If the item is marked as read, don't add it. */
-                        for (String title : mReadSet) {
-                            if (title.equals(item.getTitle())) {
-                                return false;
-                            }
-                        }
 
                         /* If the item is already in the list, don't add it. */
                         for (int i = 0; i < super.size(); i++) {
@@ -208,36 +197,15 @@ public class Feed {
     /**
      * Gets called from the DragListener if the user has chosen to read
      * the article later.
-     * The article is then added to a Stringset in the SharedPreferences
-     * with the key 'saved_items'.
      */
     public void readLater(FeedItem mFeedItem) {
 
-        Set <String> mSavedSet = mSharedPrefs.getStringSet("saved_items",
-               new LinkedHashSet <String> ()); 
-
-        mSavedSet.add(mFeedItem.getTitle() + ";" + mFeedItem.getUrl()); 
-
-        mSharedPrefs.edit().putStringSet("saved_items", mSavedSet).commit();
 
     }
 
-    /**
-     * Adds the current articles visible in the ListView to a
-     * Stringset in SharedPreferences, preventing them from
-     * being added to the ListView later on.
-     */
     public void markAllAsRead() {
 
-        Set <String> mReadSet = mSharedPrefs.getStringSet("read_items", 
-                new LinkedHashSet <String> ());
-
         ArrayList <FeedItem> mFeedList = mFeedAdapter.getFeedList();
-
-        for (int i = 0; i < mFeedList.size(); i++)
-           mReadSet.add(mFeedList.get(i).getTitle()); 
-
-        mSharedPrefs.edit().putStringSet("read_items", mReadSet).commit();
 
         mFeedList.clear();
         loadFeed(lastDrawerItem, false);
