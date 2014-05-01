@@ -44,6 +44,11 @@ public class DrawerDB extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Adds a DrawerItem to the database.
+     *
+     * @param item The DrawerItem-object to get the info from.
+     */
     public void addItem(DrawerItem item) {
 
         SQLiteDatabase db = getWritableDatabase();
@@ -58,6 +63,11 @@ public class DrawerDB extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Deletes a DrawerItem from the database.
+     *
+     * @param item the DrawerItem-object to delete.
+     */
     public void deleteItem(DrawerItem item) {
 
         SQLiteDatabase db = getWritableDatabase();
@@ -66,6 +76,13 @@ public class DrawerDB extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Returns an ArrayList with DrawerItem-objects.
+     * All params for the DrawerItem-objects are from
+     * the db except the list with FeedItems.
+     *
+     * @return mDrawerItems A list with DrawerItems-objects.
+     */
     public List <DrawerItem> getItems() {
 
         List <DrawerItem> mDrawerItems = new ArrayList <DrawerItem> ();
