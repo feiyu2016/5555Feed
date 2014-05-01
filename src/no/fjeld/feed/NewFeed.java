@@ -144,9 +144,12 @@ public class NewFeed extends AsyncTask <String, Integer, String> {
      */
     public void addFeed(String mFeedName, String mEncoding) {
 
-        mApp.getNavDrawer().getDrawerAdapter().getDrawerList().add(
-                new DrawerItem(mFeedName, mUrl, mEncoding, new ArrayList <FeedItem> ())); 
-
+        DrawerItem mDrawerItem = new DrawerItem(mFeedName, mUrl, mEncoding, new ArrayList <FeedItem> ());
+        
+        DrawerDB db = new DrawerDB(mApp.getFeedActivity());
+        db.addItem(mDrawerItem);
+        
+        mApp.getNavDrawer().getDrawerAdapter().getDrawerList().add(mDrawerItem);
         mApp.getNavDrawer().getDrawerAdapter().notifyDataSetChanged();
 
     }

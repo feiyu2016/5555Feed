@@ -69,45 +69,20 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
 
     }
 
-    /**
-     * Overrides the notifyDataSetChanged to save the DrawerList 
-     * to SharedPreferences when a new feed is added or removed.
-     */
     @Override
     public void notifyDataSetChanged() {
 
-        Set <String> mDrawerSet = new LinkedHashSet <String> ();
-
-        Gson mGson = new GsonBuilder().setPrettyPrinting().create();
-
-        SharedPreferences mSharedPrefs = PreferenceManager
-            .getDefaultSharedPreferences(mActivity.getBaseContext());
-
-        for (int i = 0; i < mDrawerList.size(); i++) {
-            
-            mDrawerList.get(i).getFeedList().clear();
-            mDrawerSet.add(mGson.toJson(mDrawerList.get(i))); 
-
-        }
-
-        mSharedPrefs.edit().putStringSet(
-                "drawer_items", mDrawerSet).commit();
-
-        mDrawerList = sorted(mDrawerList);
-
+        sortList();
         super.notifyDataSetChanged();
-    
+
     }
 
     /**
      * Sorts the items alphabetically based on their titles. 
-     *
-     * @param  mTempList The list to be sorted.
-     * @return mTempList The sorted list.
      */
-    private ArrayList <DrawerItem> sorted(ArrayList <DrawerItem> mTempList) {
+    private void sortList() {
 
-        Collections.sort(mTempList, new Comparator <DrawerItem> () {
+        Collections.sort(mDrawerList, new Comparator <DrawerItem> () {
 
             @Override
             public int compare(DrawerItem first, DrawerItem second) {
@@ -116,8 +91,6 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
             }
 
         });
-
-        return mTempList;
 
     }
 

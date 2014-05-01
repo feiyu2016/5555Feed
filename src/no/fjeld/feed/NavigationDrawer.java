@@ -194,55 +194,10 @@ public class NavigationDrawer {
      */
     private void initDrawerAdapter() {
 
+        DrawerDB db = new DrawerDB(mApp.getFeedActivity());
+
         mDrawerAdapter = new DrawerAdapter(
-                mApp.getFeedActivity(), R.layout.drawer_item, getDrawerList());
-
-    }
-
-    /**
-     * Returns an ArrayList loaded from the SharedPreferences-set "drawer_items".
-     */
-    private ArrayList <DrawerItem> getDrawerList() {
-
-        ArrayList <DrawerItem> mDrawerList = new ArrayList <DrawerItem> (); 
-
-        Gson mGson = new GsonBuilder().setPrettyPrinting().create();
-
-        SharedPreferences mSharedPrefs = PreferenceManager.
-            getDefaultSharedPreferences(mApp.getFeedActivity().getBaseContext());
-
-        Set <String> mDrawerSet = mSharedPrefs.
-            getStringSet("drawer_items", new LinkedHashSet <String> ());
-
-        for (String item : mDrawerSet)
-            mDrawerList.add(mGson.fromJson(item, DrawerItem.class));
-
-        if (mDrawerList.size() > 1)
-            mDrawerList = sorted(mDrawerList);
-
-        return mDrawerList;
-
-    }
-
-    /**
-     * Sorts the mTempList-list alphabetically based on the feedname. 
-     *
-     * @param  mTempItems The list to be sorted.
-     * @return mTempItems The sorted list.
-     */
-    private ArrayList <DrawerItem> sorted(ArrayList <DrawerItem> mTempList) {
-
-        Collections.sort(mTempList, new Comparator <DrawerItem> () {
-
-            @Override
-            public int compare(DrawerItem first, DrawerItem second) {
-                return first.getFeedName().toLowerCase().compareTo(
-                    second.getFeedName().toLowerCase());
-            }
-
-        });
-
-        return mTempList;
+                mApp.getFeedActivity(), R.layout.drawer_item, db.getItems());
 
     }
 
@@ -420,6 +375,9 @@ public class NavigationDrawer {
 
             if (position > -1 && position < mDrawerAdapter.getDrawerList().size()) {
 
+                DrawerDB db = new DrawerDB(mApp.getFeedActivity());
+                db.deleteItem(mDrawerAdapter.getDrawerList().get(position));
+                
                 mDrawerAdapter.getDrawerList().remove(position);
                 mDrawerAdapter.notifyDataSetChanged();
 

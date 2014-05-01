@@ -83,15 +83,15 @@ public class DrawerDB extends SQLiteOpenHelper {
      *
      * @return mDrawerItems A list with DrawerItems-objects.
      */
-    public List <DrawerItem> getItems() {
+    public ArrayList <DrawerItem> getItems() {
 
-        List <DrawerItem> mDrawerItems = new ArrayList <DrawerItem> ();
+        ArrayList <DrawerItem> mDrawerItems = new ArrayList <DrawerItem> ();
 
         SQLiteDatabase db = getWritableDatabase();
 
-        Cursor cursor = db.query(TABLE_DRAWER_ITEMS,
-                new String [] {KEY_NAME, KEY_URL, KEY_ENCODING},
-                null, null, null, null, KEY_NAME);
+        Cursor cursor = db.rawQuery("SELECT *"
+                + " FROM " + TABLE_DRAWER_ITEMS
+                + " ORDER BY " + KEY_NAME + " COLLATE NOCASE", null);
 
         if (cursor.moveToFirst()) {
             do {
