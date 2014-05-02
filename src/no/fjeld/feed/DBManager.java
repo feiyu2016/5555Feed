@@ -11,13 +11,24 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBManager extends SQLiteOpenHelper {
 
+    private static final String DATABASE_NAME = "feedDatabase";
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "drawerItemsManager";
-    private static final String TABLE_DRAWER_ITEMS = "drawerItems";
 
-    private static final String KEY_NAME = "name";
-    private static final String KEY_URL = "url";
+    /* Values for the DrawerItems */
+    private static final String TABLE_DRAWER_ITEMS = "drawerItems";
+    private static final String KEY_DRAWER_TITLE = "title";
+    private static final String KEY_DRAWER_URL = "url";
     private static final String KEY_ENCODING = "encoding";
+
+    /* Values for saved items */
+    private static final String TABLE_SAVED_ITEMS = "savedItems";
+    private static final String KEY_SAVED_TITLE = "title";
+    private static final String KEY_SAVED_URL = "url";
+
+    /* Values for read items */
+    private static final String TABLE_READ_ITEMS = "readItems";
+    private static final String KEY_READ_URL = "url";
+
 
     public DBManager(Context context) {
 
@@ -29,10 +40,21 @@ public class DBManager extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL("CREATE TABLE " + TABLE_DRAWER_ITEMS + "("
-                + KEY_NAME + " TEXT PRIMARY KEY, "
-                + KEY_URL + " TEXT,"
+                + KEY_DRAWER_TITLE + " TEXT, "
+                + KEY_DRAWER_URL + " TEXT PRIMARY KEY,"
                 + KEY_ENCODING + " TEXT" 
                 + ")");
+
+        db.execSQL("CREATE TABLE " + TABLE_SAVED_ITEMS + "("
+                + KEY_SAVED_TITLE + " TEXT, "
+                + KEY_SAVED_URL + " TEXT PRIMARY KEY"
+                + ")");
+
+        db.execSQL("CREATE TABLE " + TABLE_READ_ITEMS + "("
+                + KEY_READ_URL + " TEXT PRIMARY KEY"
+                + ")"); 
+
+
 
     }
 
@@ -40,6 +62,9 @@ public class DBManager extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DRAWER_ITEMS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SAVED_ITEMS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_READ_ITEMS);
+
         onCreate(db);
 
     }
@@ -49,13 +74,13 @@ public class DBManager extends SQLiteOpenHelper {
      *
      * @param item The DrawerItem-object to get the info from.
      */
-    public void addItem(DrawerItem item) {
+    public void addDrawerItem(DrawerItem item) {
 
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, item.getFeedName());
-        values.put(KEY_URL, item.getUrl());
+        values.put(KEY_DRAWER_TITLE, item.getFeedName());
+        values.put(KEY_DRAWER_URL, item.getUrl());
         values.put(KEY_ENCODING, item.getEncoding());
 
         db.insert(TABLE_DRAWER_ITEMS, null, values);
@@ -68,22 +93,20 @@ public class DBManager extends SQLiteOpenHelper {
      *
      * @param item the DrawerItem-object to delete.
      */
-    public void deleteItem(DrawerItem item) {
+    public void deleteDrawerItem(DrawerItem item) {
 
         SQLiteDatabase db = getWritableDatabase();
-        db.delete(TABLE_DRAWER_ITEMS, KEY_NAME + " = ?", new String [] {item.getFeedName()});
+        db.delete(TABLE_DRAWER_ITEMS, KEY_DRAWER_URL + " = ?", new String [] {item.getUrl()});
         db.close();
 
     }
 
     /**
      * Returns an ArrayList with DrawerItem-objects.
-     * All params for the DrawerItem-objects are from
-     * the db except the list with FeedItems.
      *
      * @return mDrawerItems A list with DrawerItems-objects.
      */
-    public ArrayList <DrawerItem> getItems() {
+    public ArrayList <DrawerItem> getDrawerItems() {
 
         ArrayList <DrawerItem> mDrawerItems = new ArrayList <DrawerItem> ();
 
@@ -91,7 +114,7 @@ public class DBManager extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery("SELECT *"
                 + " FROM " + TABLE_DRAWER_ITEMS
-                + " ORDER BY " + KEY_NAME + " COLLATE NOCASE", null);
+                + " ORDER BY " + KEY_DRAWER_TITLE + " COLLATE NOCASE", null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -105,6 +128,43 @@ public class DBManager extends SQLiteOpenHelper {
 
         db.close();
         return mDrawerItems;
+
+    }
+
+    public void addSavedItem(FeedItem item) {
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_SAVED_TITLE, item.getTitle());
+        values.put(KEY_SAVED_URL, item.getUrl());
+
+        db.insert(TABLE_SAVED_ITEMS, null, values);
+        db.close();
+   
+    }
+
+    public void deleteSavedItem(FeedItem item) {
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(TABLE_SAVED_ITEMS, KEY_SAVED_URL + " = ?", new String [] {item.getUrl()});
+        db.close();
+
+    }
+
+    public ArrayList <FeedItem> getSavedItems() {
+
+    }
+
+    public void addReadItem(FeedItem item) {
+
+    }
+
+    public void deleteReadItem(FeedItem item) {
+
+    }
+
+    public ArrayList <FeedItem> getReadItems() {
 
     }
 
