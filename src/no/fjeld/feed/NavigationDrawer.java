@@ -194,7 +194,7 @@ public class NavigationDrawer {
      */
     private void initDrawerAdapter() {
 
-        DrawerDB db = new DrawerDB(mApp.getFeedActivity());
+        DBManager db = new DBManager(mApp.getFeedActivity());
 
         mDrawerAdapter = new DrawerAdapter(
                 mApp.getFeedActivity(), R.layout.drawer_item, db.getItems());
@@ -375,7 +375,7 @@ public class NavigationDrawer {
 
             if (position > -1 && position < mDrawerAdapter.getDrawerList().size()) {
 
-                DrawerDB db = new DrawerDB(mApp.getFeedActivity());
+                DBManager db = new DBManager(mApp.getFeedActivity());
                 db.deleteItem(mDrawerAdapter.getDrawerList().get(position));
                 
                 mDrawerAdapter.getDrawerList().remove(position);
