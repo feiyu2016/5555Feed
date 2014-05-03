@@ -15,8 +15,6 @@ import android.view.inputmethod.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
 
-import com.google.gson.*;
-
 import java.util.*;
 
 public class NavigationDrawer {
@@ -375,8 +373,8 @@ public class NavigationDrawer {
 
             if (position > -1 && position < mDrawerAdapter.getDrawerList().size()) {
 
-                DBManager db = new DBManager(mApp.getFeedActivity());
-                db.deleteDrawerItem(mDrawerAdapter.getDrawerList().get(position));
+                mApp.getDatabase().delete("drawerItems", 
+                        mDrawerAdapter.getDrawerList().get(position).getUrl());
                 
                 mDrawerAdapter.getDrawerList().remove(position);
                 mDrawerAdapter.notifyDataSetChanged();
