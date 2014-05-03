@@ -258,9 +258,13 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
         protected void onPostExecute(Bitmap mImage) {
 
             if (mTitle.length() > 5) { 
-
+                    
+                    
                 mFeedList.add(new FeedItem(mTitle, mDescription, 
                                 mUrl, mPubDate, mImage, mFeedName));
+
+                mApp.getFeed().getFeedAdapter().getFeedList().
+                    mReadItems = mApp.getDatabase().getReadItems();
 
                 mApp.getFeed().getFeedAdapter().getFeedList()
                     .add(new FeedItem(mTitle, mDescription, 
