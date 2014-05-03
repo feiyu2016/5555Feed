@@ -26,7 +26,7 @@ public class NewFeed extends AsyncTask <String, Integer, String> {
     NewFeed(FeedApplication mApp) {
 
         this.mApp = mApp;
-
+        
     }
 
     @Override
@@ -146,8 +146,7 @@ public class NewFeed extends AsyncTask <String, Integer, String> {
 
         DrawerItem mDrawerItem = new DrawerItem(mFeedName, mUrl, mEncoding, new ArrayList <FeedItem> ());
         
-        DBManager db = new DBManager(mApp.getFeedActivity());
-        db.addDrawerItem(mDrawerItem);
+        mApp.getDatabase().add(mDrawerItem);
         
         mApp.getNavDrawer().getDrawerAdapter().getDrawerList().add(mDrawerItem);
         mApp.getNavDrawer().getDrawerAdapter().notifyDataSetChanged();
