@@ -37,7 +37,7 @@ public class FeedDragListener implements View.OnDragListener {
     public FeedDragListener(View mView, FeedApplication mApp) {
 
         this.mView = mView;   
-        this.mApp = mApp;
+        this.mApp = mApp; 
 
     }
 
