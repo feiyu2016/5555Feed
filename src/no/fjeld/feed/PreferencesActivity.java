@@ -64,7 +64,7 @@ public class PreferencesActivity extends PreferenceActivity {
                         @Override
                         public boolean onPreferenceClick(Preference preference) {
 
-
+                            mApp.getDatabase().delete("readItems", null);
                             return true;
 
                         }
@@ -77,7 +77,7 @@ public class PreferencesActivity extends PreferenceActivity {
                         @Override
                         public boolean onPreferenceClick(Preference preference) {
 
-
+                            mApp.getDatabase().delete("savedItems", null);
                             return true;
 
                         }
