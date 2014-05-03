@@ -14,9 +14,9 @@ import android.widget.AdapterView.*;
 class FeedAdapter extends ArrayAdapter <FeedItem> {
 
     private Activity mActivity;
-    private ArrayList <FeedItem> mFeedList;
+    private FeedList mFeedList;
 
-    public FeedAdapter(Activity mActivity, int mResourceView, ArrayList <FeedItem> mFeedList) {
+    public FeedAdapter(Activity mActivity, int mResourceView, FeedList mFeedList) {
 
         super(mActivity, mResourceView, mFeedList);
         this.mActivity = mActivity;
@@ -81,7 +81,7 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
 
     }
 
-    public ArrayList <FeedItem> getFeedList() {
+    public FeedList getFeedList() {
 
         return mFeedList;
 
