@@ -94,42 +94,7 @@ public class Feed {
     private void initFeedAdapter() {
 
         mFeedAdapter = new FeedAdapter(mApp.getFeedActivity(), 
-                R.layout.list_item, new ArrayList <FeedItem> () {
-
-                    // This function should be cleaned up.
-                    @Override
-                    public boolean add(FeedItem item) {
-
-                        boolean added = false;
-
-                        if (super.size() == 20)
-                            return false;
-
-                        /* If the item is already in the list, don't add it. */
-                        for (int i = 0; i < super.size(); i++) {
-                            if (item.getTitle().equals(super.get(i).getTitle())) {
-                                return false;       
-                            }
-                        }
-
-                        /* Adds the items by date */
-                        for (int i = 0; i < super.size(); i++) {
-                            if (item.compareTo(super.get(i)) >= 0) {
-                                super.add(i, item);
-                                added = true;
-                                break;
-                            }
-                        }
-
-                        if (!added) {
-                            super.add(item);
-                        }
-
-                        return true;
-
-                    }
-
-                }); 
+                R.layout.list_item, new FeedList ());
 
     }
 
@@ -160,6 +125,9 @@ public class Feed {
             mFeedAdapter.getFeedList().clear();
 
         if (item.getFeedList().size() > 0 && !shouldRefresh) {
+
+            mFeedAdapter.getFeedList().mReadItems 
+                = mApp.getDatabase().getReadItems();
 
             for (FeedItem feedItem : item.getFeedList())
                 mFeedAdapter.getFeedList().add(feedItem); 
@@ -200,6 +168,7 @@ public class Feed {
      */
     public void readLater(FeedItem mFeedItem) {
 
+        mApp.getDatabase().add(mFeedItem); 
 
     }
 
@@ -207,9 +176,12 @@ public class Feed {
 
         ArrayList <FeedItem> mFeedList = mFeedAdapter.getFeedList();
 
+        mApp.getDatabase().add(mFeedList);
+
         mFeedList.clear();
         loadFeed(lastDrawerItem, false);
 
     }
 
 }
+
