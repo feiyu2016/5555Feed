@@ -1,7 +1,7 @@
 package no.fjeld.feed;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.*;
+import java.util.*;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -14,21 +14,13 @@ public class DBManager extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "feedDatabase";
     private static final int DATABASE_VERSION = 1;
 
-    /* Values for the DrawerItems */
     private static final String TABLE_DRAWER_ITEMS = "drawerItems";
-    private static final String KEY_DRAWER_TITLE = "title";
-    private static final String KEY_DRAWER_URL = "url";
-    private static final String KEY_ENCODING = "encoding";
-
-    /* Values for saved items */
     private static final String TABLE_SAVED_ITEMS = "savedItems";
-    private static final String KEY_SAVED_TITLE = "title";
-    private static final String KEY_SAVED_URL = "url";
-
-    /* Values for read items */
     private static final String TABLE_READ_ITEMS = "readItems";
-    private static final String KEY_READ_URL = "url";
 
+    private static final String KEY_TITLE = "title";
+    private static final String KEY_URL= "url";
+    private static final String KEY_ENCODING = "encoding";
 
     public DBManager(Context context) {
 
@@ -40,21 +32,19 @@ public class DBManager extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL("CREATE TABLE " + TABLE_DRAWER_ITEMS + "("
-                + KEY_DRAWER_TITLE + " TEXT, "
-                + KEY_DRAWER_URL + " TEXT PRIMARY KEY,"
+                + KEY_TITLE + " TEXT, "
+                + KEY_URL + " TEXT PRIMARY KEY,"
                 + KEY_ENCODING + " TEXT" 
                 + ")");
 
         db.execSQL("CREATE TABLE " + TABLE_SAVED_ITEMS + "("
-                + KEY_SAVED_TITLE + " TEXT, "
-                + KEY_SAVED_URL + " TEXT PRIMARY KEY"
+                + KEY_TITLE + " TEXT, "
+                + KEY_URL + " TEXT PRIMARY KEY"
                 + ")");
 
         db.execSQL("CREATE TABLE " + TABLE_READ_ITEMS + "("
-                + KEY_READ_URL + " TEXT PRIMARY KEY"
+                + KEY_URL + " TEXT PRIMARY KEY"
                 + ")"); 
-
-
 
     }
 
@@ -70,17 +60,32 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     /**
-     * Adds a DrawerItem to the database.
+     * Deletes a row from a table if url is provided,
+     * if not the whole tables is emptied.
      *
-     * @param item The DrawerItem-object to get the info from.
+     * @param table The table to delete from.
+     * @param url   The url-value in the row to delete.
      */
-    public void addDrawerItem(DrawerItem item) {
+    public void delete(String table, String url) {
+
+        SQLiteDatabase db = getWritableDatabase();
+        
+        if (url != null)
+            db.delete(table, KEY_URL + " = ?", new String [] {url});
+        else
+            db.delete(table, null, null);
+
+        db.close();
+
+    }
+
+    public void add(DrawerItem item) {
 
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_DRAWER_TITLE, item.getFeedName());
-        values.put(KEY_DRAWER_URL, item.getUrl());
+        values.put(KEY_TITLE, item.getFeedName());
+        values.put(KEY_URL, item.getUrl());
         values.put(KEY_ENCODING, item.getEncoding());
 
         db.insert(TABLE_DRAWER_ITEMS, null, values);
@@ -88,33 +93,55 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
 
-    /**
-     * Deletes a DrawerItem from the database.
-     *
-     * @param item the DrawerItem-object to delete.
-     */
-    public void deleteDrawerItem(DrawerItem item) {
+    public void add(FeedItem item) {
 
         SQLiteDatabase db = getWritableDatabase();
-        db.delete(TABLE_DRAWER_ITEMS, KEY_DRAWER_URL + " = ?", new String [] {item.getUrl()});
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_TITLE, item.getTitle());
+        values.put(KEY_URL, item.getUrl());
+
+        db.insert(TABLE_SAVED_ITEMS, null, values);
         db.close();
 
     }
 
-    /**
-     * Returns an ArrayList with DrawerItem-objects.
-     *
-     * @return mDrawerItems A list with DrawerItems-objects.
-     */
+    public void add(String url) {
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_URL, url); 
+
+        db.insert(TABLE_READ_ITEMS, null, values);
+        db.close();
+
+    }
+
+    public void add(ArrayList <FeedItem> list) {
+        
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        for (FeedItem item : list) {
+            values.put(KEY_URL, item.getUrl());
+            db.insert(TABLE_READ_ITEMS, null, values);
+        }
+
+        db.close();
+
+    }
+
     public ArrayList <DrawerItem> getDrawerItems() {
 
         ArrayList <DrawerItem> mDrawerItems = new ArrayList <DrawerItem> ();
 
         SQLiteDatabase db = getWritableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT *"
-                + " FROM " + TABLE_DRAWER_ITEMS
-                + " ORDER BY " + KEY_DRAWER_TITLE + " COLLATE NOCASE", null);
+        Cursor cursor = db.query(TABLE_DRAWER_ITEMS, 
+                null, null, null, null, null, 
+                KEY_TITLE + " COLLATE NOCASE", null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -131,40 +158,49 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
 
-    public void addSavedItem(FeedItem item) {
-
-        SQLiteDatabase db = getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(KEY_SAVED_TITLE, item.getTitle());
-        values.put(KEY_SAVED_URL, item.getUrl());
-
-        db.insert(TABLE_SAVED_ITEMS, null, values);
-        db.close();
-   
-    }
-
-    public void deleteSavedItem(FeedItem item) {
-
-        SQLiteDatabase db = getWritableDatabase();
-        db.delete(TABLE_SAVED_ITEMS, KEY_SAVED_URL + " = ?", new String [] {item.getUrl()});
-        db.close();
-
-    }
-
     public ArrayList <FeedItem> getSavedItems() {
 
+        ArrayList <FeedItem> mSavedItems = new ArrayList <FeedItem> ();
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        Cursor cursor = db.query(TABLE_SAVED_ITEMS,
+                null, null, null, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                mSavedItems.add(new FeedItem(cursor.getString(0), null, 
+                            cursor.getString(1), null, null, null));
+
+            } while(cursor.moveToNext());
+        }
+
+        db.close();
+
+        Collections.reverse(mSavedItems);
+        return mSavedItems;
+
     }
 
-    public void addReadItem(FeedItem item) {
+    public ArrayList <String> getReadItems() {
 
-    }
+        ArrayList <String> mReadItems = new ArrayList <String> ();
+        SQLiteDatabase db = getWritableDatabase();
 
-    public void deleteReadItem(FeedItem item) {
+        Cursor cursor = db.query(TABLE_READ_ITEMS,
+                null, null, null, null, null, null, null);
 
-    }
+        if (cursor.moveToFirst()) {
+            do {
 
-    public ArrayList <FeedItem> getReadItems() {
+                mReadItems.add(cursor.getString(0));
+
+            } while (cursor.moveToNext());
+        }
+
+        db.close();
+        return mReadItems;
 
     }
 
