@@ -2,8 +2,6 @@ package no.fjeld.feed;
 
 import java.util.*;
 
-import com.google.gson.*;
-
 import android.app.*;
 import android.content.*;
 import android.preference.*;
