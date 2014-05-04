@@ -8,24 +8,22 @@ public class FeedList extends ArrayList <FeedItem> {
 
     @Override
     public boolean add(FeedItem item) {
-
+        
+        int i = 0;
         boolean added = false;
 
-        if (super.size() == 20)
-            return false;
-
         /* If the item is marked as read, don't add it. */
-        for (int i = 0; i < mReadItems.size(); i++)
+        for (i = 0; i < mReadItems.size(); i++)
             if (item.getUrl().equals(mReadItems.get(i)))
                 return false;
 
         /* If the item is already in the list, don't add it. */
-        for (int i = 0; i < super.size(); i++) 
+        for (i = 0; i < super.size() && i < 20; i++) 
             if (item.getUrl().equals(super.get(i).getUrl())) 
                 return false;
              
         /* Adds the items by date. */
-        for (int i = 0; i < super.size(); i++) {
+        for (i = 0; i < super.size() && i < 20; i++) {
             if (item.compareTo(super.get(i)) >= 0) {
                 super.add(i, item);
                 added = true;
@@ -33,7 +31,7 @@ public class FeedList extends ArrayList <FeedItem> {
             }
         }
 
-        if (!added) 
+        if (!added && i < 20) 
             super.add(item);
 
         return true;
