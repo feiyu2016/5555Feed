@@ -146,6 +146,39 @@ public class Feed {
     }
 
     /**
+     * Loads all the feeds.
+     * If any of the DrawerItems feedItem-list is empty,
+     * it will be downloaded.
+     */
+    public void allFeeds() {
+
+        mFeedAdapter.getFeedList().clear();
+
+        mFeedAdapter.getFeedList().mReadItems 
+            = mApp.getDatabase().getReadItems();
+
+        for (DrawerItem drawerItem : mApp.getNavDrawer().getDrawerAdapter()
+                .getDrawerList()) {
+
+            if (drawerItem.getFeedList().size() > 0) {
+
+                for(FeedItem feedItem : drawerItem.getFeedList()) 
+                    mFeedAdapter.getFeedList().add(feedItem);
+
+                mFeedAdapter.notifyDataSetChanged();
+            
+            } else {
+
+                mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(true);
+                new GetFeed(mApp, drawerItem).execute(drawerItem.getUrl());
+
+            }
+
+        } 
+
+    }
+
+    /**
      * Gets called from the DragListener if the user has chosen to read
      * the article.
      */
