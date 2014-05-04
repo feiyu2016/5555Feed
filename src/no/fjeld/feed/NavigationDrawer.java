@@ -231,11 +231,12 @@ public class NavigationDrawer {
         if (position == 0) {                        // All feeds
             
             mDrawerLayout.closeDrawer(Gravity.LEFT);
+            mApp.getFeed().allFeeds();
 
         } else if (position == 1) {                 // Saved items 
 
+            mApp.getFeed().savedFeeds();
             mDrawerLayout.closeDrawer(Gravity.LEFT);
-
 
         } else if (position == mDrawerSize - 2) {   // Preferences
 
