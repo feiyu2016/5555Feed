@@ -24,8 +24,6 @@ public class Feed {
     private ListView mFeedListView;
     private FeedAdapter mFeedAdapter;
 
-    private ArrayList <FeedItem> mFeedsCombinedList;
-
     private SharedPreferences mSharedPrefs;
 
     public DrawerItem lastDrawerItem;
@@ -48,8 +46,6 @@ public class Feed {
 
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(
                 mApp.getFeedActivity().getBaseContext());
-
-        mFeedsCombinedList = new ArrayList <FeedItem> ();
 
     }
 
@@ -106,14 +102,6 @@ public class Feed {
     }
 
     /**
-     * Returns the list that should contain the FeedItems
-     * from the lists of mFeedList.
-     */
-    public ArrayList <FeedItem> getFeedsCombinedList() {
-        return mFeedsCombinedList;
-    }
-
-    /**
      * Gets called from the NavigationDrawer-class when a feed is clicked.
      *
      * @param item          The DrawerItem-object clicked
@@ -153,6 +141,9 @@ public class Feed {
      */
     public void allFeeds() {
 
+        lastDrawerItem = new DrawerItem(mApp.getFeedActivity().getString(
+                    R.string.drawer_header_all_feeds), null, null, new ArrayList <FeedItem> ());
+        
         mFeedAdapter.getFeedList().clear();
 
         mFeedAdapter.getFeedList().mReadItems 
@@ -179,11 +170,11 @@ public class Feed {
 
     }
 
-
     public void savedFeeds() {
     
         DrawerItem mDrawerItem = new DrawerItem(mApp.getFeedActivity().getString(
                     R.string.drawer_header_saved_items), null, null, mApp.getDatabase().getSavedItems());
+   
         loadFeed(mDrawerItem, false);
     
     }
