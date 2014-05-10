@@ -235,8 +235,8 @@ public class NavigationDrawer {
 
         } else if (position == 1) {                 // Saved items 
 
-            mApp.getFeed().savedFeeds();
             mDrawerLayout.closeDrawer(Gravity.LEFT);
+            mApp.getFeed().savedFeeds();
 
         } else if (position == mDrawerSize - 2) {   // Preferences
 

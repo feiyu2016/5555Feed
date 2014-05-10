@@ -19,6 +19,7 @@ public class DBManager extends SQLiteOpenHelper {
     private static final String TABLE_READ_ITEMS = "readItems";
 
     private static final String KEY_TITLE = "title";
+    private static final String KEY_DESCRIPTION = "description";
     private static final String KEY_URL= "url";
     private static final String KEY_ENCODING = "encoding";
 
@@ -39,6 +40,7 @@ public class DBManager extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE " + TABLE_SAVED_ITEMS + "("
                 + KEY_TITLE + " TEXT, "
+                + KEY_DESCRIPTION + " TEXT, "
                 + KEY_URL + " TEXT PRIMARY KEY"
                 + ")");
 
@@ -99,6 +101,7 @@ public class DBManager extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_TITLE, item.getTitle());
+        values.put(KEY_DESCRIPTION, item.getDescription());
         values.put(KEY_URL, item.getUrl());
 
         db.insert(TABLE_SAVED_ITEMS, null, values);
@@ -170,8 +173,8 @@ public class DBManager extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
 
-                mSavedItems.add(new FeedItem(cursor.getString(0), null, 
-                            cursor.getString(1), null, null, null));
+                mSavedItems.add(new FeedItem(cursor.getString(0), cursor.getString(1), 
+                            cursor.getString(2), null, null, null));
 
             } while(cursor.moveToNext());
         }

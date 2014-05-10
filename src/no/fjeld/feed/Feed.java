@@ -124,6 +124,8 @@ public class Feed {
         if (item != lastDrawerItem)
             mFeedAdapter.getFeedList().clear();
 
+        lastDrawerItem = item;
+        
         if (item.getFeedList().size() > 0 && !shouldRefresh) {
 
             mFeedAdapter.getFeedList().mReadItems 
@@ -141,7 +143,6 @@ public class Feed {
 
         }
 
-        lastDrawerItem = item;
 
     }
 
@@ -178,6 +179,15 @@ public class Feed {
 
     }
 
+
+    public void savedFeeds() {
+    
+        DrawerItem mDrawerItem = new DrawerItem(mApp.getFeedActivity().getString(
+                    R.string.drawer_header_saved_items), null, null, mApp.getDatabase().getSavedItems());
+        loadFeed(mDrawerItem, false);
+    
+    }
+
     /**
      * Gets called from the DragListener if the user has chosen to read
      * the article.
@@ -204,6 +214,7 @@ public class Feed {
         mApp.getDatabase().add(mFeedItem); 
 
     }
+
 
     public void markAllAsRead() {
 
