@@ -40,8 +40,8 @@ public class NavigationDrawer {
 
         initDrawerLayout();
         initDrawerToggle();
-        initDrawerListView();
         initDrawerAdapter();
+        initDrawerListView();
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerListView.setAdapter(mDrawerAdapter);
@@ -68,18 +68,18 @@ public class NavigationDrawer {
                 R.drawable.ic_navigation_drawer, R.string.drawer_open, R.string.drawer_closed) {
 
             public void onDrawerClosed(View mainView) {
-            
+
                 DrawerItem drawerItem = mApp.getFeed().lastDrawerItem;
-            
+
                 if (drawerItem != null)
                     mApp.getActionBar().setSubtitle(drawerItem.getFeedName());
-        
+
                 mApp.getFeedActivity().invalidateOptionsMenu();
 
             }
 
             public void onDrawerOpened(View drawerView) {
-           
+
                 mApp.getActionBar().setSubtitle(R.string.drawer_open);
                 mApp.getFeedActivity().invalidateOptionsMenu();
 
@@ -98,7 +98,7 @@ public class NavigationDrawer {
         addViews(); 
 
         mDrawerListView.setOnItemClickListener(new DrawerClickListener());
-        mDrawerListView.setOnItemLongClickListener(new DrawerLongClickListener());
+        mDrawerListView.setOnItemLongClickListener(new DrawerLongClick(mApp, mDrawerAdapter));
 
     }
 
@@ -109,13 +109,13 @@ public class NavigationDrawer {
     private void addViews() {
 
         /* Headers */
-        mDrawerListView.addHeaderView(getView(R.layout.drawer_item,
+        mDrawerListView.addHeaderView(getItemView(
                     R.id.drawer_item_text,
-                    R.string.drawer_header_all_feeds, 0));
+                    R.string.drawer_header_all_feeds));
 
-        mDrawerListView.addHeaderView(getView(R.layout.drawer_item,
+        mDrawerListView.addHeaderView(getItemView(
                     R.id.drawer_item_text,
-                    R.string.drawer_header_saved_items, 0));
+                    R.string.drawer_header_saved_items));
 
         mDrawerListView.addHeaderView(getView(R.layout.drawer_group,
                     R.id.drawer_group_text,
@@ -137,6 +137,23 @@ public class NavigationDrawer {
                     R.drawable.ic_icon_about));
 
     } 
+
+
+    private FrameLayout getItemView(int mTextResId, int mStringResId) {
+
+        LayoutInflater inflater = (LayoutInflater) mApp.getFeedActivity()
+            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        FrameLayout mListItem = (FrameLayout) inflater.inflate(
+                R.layout.drawer_item, null);
+
+        TextView mItemText = (TextView) mListItem.findViewById(mTextResId);
+        mItemText.setText(mApp.getFeedActivity().getResources()
+                .getString(mStringResId));
+
+        return mListItem;
+
+    }
 
     /**
      * Returns an inflated LinearLayout with the correct content
@@ -229,7 +246,7 @@ public class NavigationDrawer {
         int mDrawerSize = mDrawerListView.getChildCount();
 
         if (position == 0) {                        // All feeds
-            
+
             mDrawerLayout.closeDrawer(Gravity.LEFT);
             mApp.getFeed().allFeeds();
 
@@ -344,7 +361,7 @@ public class NavigationDrawer {
                     TextView mTextView = (TextView) lastClickedView.findViewById(
                             R.id.drawer_item_text);
                     mTextView.setTypeface(((TextView) view.findViewById(
-                            R.id.drawer_item_text)).getTypeface(), 
+                                    R.id.drawer_item_text)).getTypeface(), 
                             Typeface.NORMAL);
 
                 }
@@ -356,33 +373,6 @@ public class NavigationDrawer {
                 lastClickedView = view;
 
             }
-
-        }
-
-    }
-
-    /** 
-     * The LongClickListener for the Navigation Drawers ListView.
-     */
-    private class DrawerLongClickListener implements OnItemLongClickListener {
-
-        @Override
-        public boolean onItemLongClick(AdapterView <?> parent, View view,
-                int position, long id) {
-
-            position -= 3;
-
-            if (position > -1 && position < mDrawerAdapter.getDrawerList().size()) {
-
-                mApp.getDatabase().delete("drawerItems", 
-                        mDrawerAdapter.getDrawerList().get(position).getUrl());
-                
-                mDrawerAdapter.getDrawerList().remove(position);
-                mDrawerAdapter.notifyDataSetChanged();
-
-            }
-
-            return true;
 
         }
 
