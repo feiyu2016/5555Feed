@@ -73,7 +73,7 @@ public class FeedActivity extends Activity {
 
         mView = getWindow().getDecorView();
         mApp = (FeedApplication) getApplication();
-        
+
         mApp.mDatabase = new DBManager(this);
 
         mApp.mFeedActivity = this; 
