@@ -1,10 +1,11 @@
 <!-- The item that displays the added feeds -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" 
-    android:background="@color/bg_drawer_item" >
+    android:orientation="vertical" >
     
+    <include layout="@layout/drawer_options" />
+
     <TextView
         android:id="@+id/drawer_item_text"
         android:layout_width="match_parent"
@@ -13,6 +14,7 @@
         android:gravity="center_vertical"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium" 
+        android:background="@color/bg_drawer_item" />
 
-</LinearLayout>
+</FrameLayout>
