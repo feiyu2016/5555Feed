@@ -81,6 +81,22 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
 
+    public void update(DrawerItem item) {
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_TITLE, item.getFeedName());
+        values.put(KEY_URL, item.getUrl());
+        values.put(KEY_ENCODING, item.getEncoding());
+
+        db.update(TABLE_DRAWER_ITEMS, values, KEY_URL + " = ?",
+                new String [] { item.getUrl() });
+        
+        db.close();
+
+    }
+
     public void add(DrawerItem item) {
 
         SQLiteDatabase db = getWritableDatabase();
