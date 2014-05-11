@@ -42,4 +42,8 @@ public class DrawerItem {
 
     }
 
+    public void setFeedName(String name) {
+        this.mFeedName = name;
+    }
+
 }
