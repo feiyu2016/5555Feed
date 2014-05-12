@@ -96,42 +96,6 @@ public class Feed {
     }
 
     /**
-     * Gets called from the NavigationDrawer-class when a feed is clicked.
-     *
-     * @param item          The DrawerItem-object clicked
-     * @param shouldRefresh If the app should force a refresh
-     */
-    public void loadFeed(DrawerItem item, boolean shouldRefresh) {
-
-        if (item != lastDrawerItem) {
-            mFeedAdapter.getFeedList().clear();
-            mFeedAdapter.notifyDataSetChanged();
-        }
-
-        if (item.getUrl() != null) 
-            mApp.getSwipeRefresh().getSwipeLayout().setEnabled(true);
-
-        lastDrawerItem = item;
-
-        if (item.getFeedList().size() > 0 && !shouldRefresh) {
-
-            mFeedAdapter.getFeedList().readItems 
-                = mApp.getDatabase().getReadItems();
-
-            for (FeedItem feedItem : item.getFeedList())
-                mFeedAdapter.getFeedList().add(feedItem); 
-
-            mFeedAdapter.notifyDataSetChanged();
-
-        } else {
-            mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(true);
-            new GetFeed(mApp, item).execute(item.getUrl()); 
-        }
-
-
-    }
-
-    /**
      * Loads all the feeds.
      * If any of the DrawerItems feedItem-list is empty,
      * it will be downloaded.
@@ -176,7 +140,46 @@ public class Feed {
                     R.string.drawer_header_saved_items), null, null, mApp.getDatabase().getSavedItems());
 
         mApp.getSwipeRefresh().getSwipeLayout().setEnabled(false);
+
         loadFeed(drawerItem, false);
+
+    }
+
+    /**
+     * Gets called from the NavigationDrawer-class when a feed is clicked.
+     *
+     * @param item          The DrawerItem-object clicked
+     * @param shouldRefresh If the app should force a refresh
+     */
+    public void loadFeed(DrawerItem item, boolean shouldRefresh) {
+
+        if (item != lastDrawerItem) {
+            mFeedAdapter.getFeedList().clear();
+            mFeedAdapter.notifyDataSetChanged();
+        }
+
+        if (item.getUrl() != null) 
+            mApp.getSwipeRefresh().getSwipeLayout().setEnabled(true);
+
+        lastDrawerItem = item;
+
+        if (item.getFeedList().size() > 0 && !shouldRefresh) {
+
+            mFeedAdapter.getFeedList().readItems 
+                = mApp.getDatabase().getReadItems();
+
+            for (FeedItem feedItem : item.getFeedList())
+                mFeedAdapter.getFeedList().add(feedItem); 
+
+            mFeedAdapter.notifyDataSetChanged();
+
+        } else if ((item.getFeedList().size() == 0 || shouldRefresh)
+                && item.getUrl() != null) {
+           
+            mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(true);
+            new GetFeed(mApp, item).execute(item.getUrl()); 
+           
+        }
 
     }
 
@@ -207,13 +210,14 @@ public class Feed {
 
     }
 
-
+    /**
+     * Marks all the articles as read.
+     */
     public void markAllAsRead() {
 
         ArrayList <FeedItem> feedList = mFeedAdapter.getFeedList();
 
         mApp.getDatabase().add(feedList);
-
         feedList.clear();
 
         loadFeed(lastDrawerItem, false);
@@ -221,4 +225,3 @@ public class Feed {
     }
 
 }
-
