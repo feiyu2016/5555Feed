@@ -90,7 +90,7 @@ public class Feed {
     private void initFeedAdapter() {
 
         mFeedAdapter = new FeedAdapter(mApp.getFeedActivity(), 
-                R.layout.list_item, new FeedList ());
+                R.layout.list_item, new FeedList());
 
     }
 
@@ -109,11 +109,16 @@ public class Feed {
      */
     public void loadFeed(DrawerItem item, boolean shouldRefresh) {
 
-        if (item != lastDrawerItem)
+        if (item != lastDrawerItem) {
             mFeedAdapter.getFeedList().clear();
+            mFeedAdapter.notifyDataSetChanged();
+        }
+
+        if (item.getUrl() != null) 
+            mApp.getSwipeRefresh().getSwipeLayout().setEnabled(true);
 
         lastDrawerItem = item;
-        
+
         if (item.getFeedList().size() > 0 && !shouldRefresh) {
 
             mFeedAdapter.getFeedList().mReadItems 
@@ -125,10 +130,8 @@ public class Feed {
             mFeedAdapter.notifyDataSetChanged();
 
         } else {
-
             mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(true);
             new GetFeed(mApp, item).execute(item.getUrl()); 
-
         }
 
 
@@ -142,12 +145,14 @@ public class Feed {
     public void allFeeds() {
 
         lastDrawerItem = new DrawerItem(mApp.getFeedActivity().getString(
-                    R.string.drawer_header_all_feeds), null, null, new ArrayList <FeedItem> ());
-        
-        mFeedAdapter.getFeedList().clear();
+                    R.string.drawer_header_all_feeds), "", null, new FeedList());
 
-        mFeedAdapter.getFeedList().mReadItems 
-            = mApp.getDatabase().getReadItems();
+        mFeedAdapter.getFeedList().clear();
+        mFeedAdapter.notifyDataSetChanged();
+
+        mFeedAdapter.getFeedList().mReadItems = mApp.getDatabase().getReadItems();
+
+        mApp.getSwipeRefresh().getSwipeLayout().setEnabled(true);
 
         for (DrawerItem drawerItem : mApp.getNavDrawer().getDrawerAdapter()
                 .getDrawerList()) {
@@ -158,7 +163,7 @@ public class Feed {
                     mFeedAdapter.getFeedList().add(feedItem);
 
                 mFeedAdapter.notifyDataSetChanged();
-            
+
             } else {
 
                 mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(true);
@@ -166,17 +171,19 @@ public class Feed {
 
             }
 
-        } 
+                } 
 
     }
 
+
     public void savedFeeds() {
-    
+
         DrawerItem mDrawerItem = new DrawerItem(mApp.getFeedActivity().getString(
                     R.string.drawer_header_saved_items), null, null, mApp.getDatabase().getSavedItems());
-   
+
+        mApp.getSwipeRefresh().getSwipeLayout().setEnabled(false);
         loadFeed(mDrawerItem, false);
-    
+
     }
 
     /**
@@ -214,6 +221,7 @@ public class Feed {
         mApp.getDatabase().add(mFeedList);
 
         mFeedList.clear();
+
         loadFeed(lastDrawerItem, false);
 
     }
