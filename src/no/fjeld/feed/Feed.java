@@ -97,8 +97,9 @@ public class Feed {
 
     /**
      * Loads all the feeds.
-     * If any of the DrawerItems feedItem-list is empty,
-     * it will be downloaded.
+     * If any of the DrawerItems feedItems-list is empty,
+     * the data will be downloaded and the list will be
+     * populated.
      */
     public void allFeeds() {
 
@@ -109,7 +110,7 @@ public class Feed {
         mFeedAdapter.notifyDataSetChanged();
 
         mFeedAdapter.getFeedList().readItems = mApp.getDatabase().getReadItems();
-
+        mFeedAdapter.getFeedList().savedItems = mApp.getDatabase().getSavedItems();
         mApp.getSwipeRefresh().getSwipeLayout().setEnabled(true);
 
         for (DrawerItem drawerItem : mApp.getNavDrawer().getDrawerAdapter()
@@ -129,15 +130,18 @@ public class Feed {
 
             }
 
-                } 
+        } 
 
     }
 
-
+    /**
+     * Loads the saved articles and disables the SwipeRefreshLayout.
+     */
     public void savedFeeds() {
 
-        DrawerItem drawerItem = new DrawerItem(mApp.getFeedActivity().getString(
-                    R.string.drawer_header_saved_items), null, null, mApp.getDatabase().getSavedItems());
+        DrawerItem drawerItem = new DrawerItem(mApp.getFeedActivity()
+                .getString(R.string.drawer_header_saved_items), null, null, 
+                mApp.getDatabase().getSavedItems());
 
         mApp.getSwipeRefresh().getSwipeLayout().setEnabled(false);
 
@@ -167,6 +171,8 @@ public class Feed {
 
             mFeedAdapter.getFeedList().readItems 
                 = mApp.getDatabase().getReadItems();
+            mFeedAdapter.getFeedList().savedItems 
+                = mApp.getDatabase().getSavedItems();
 
             for (FeedItem feedItem : item.getFeedList())
                 mFeedAdapter.getFeedList().add(feedItem); 
@@ -175,10 +181,10 @@ public class Feed {
 
         } else if ((item.getFeedList().size() == 0 || shouldRefresh)
                 && item.getUrl() != null) {
-           
+
             mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(true);
             new GetFeed(mApp, item).execute(item.getUrl()); 
-           
+
         }
 
     }
