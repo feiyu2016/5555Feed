@@ -259,6 +259,8 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
 
                 mApp.getFeed().getFeedAdapter().getFeedList().
                     readItems = mApp.getDatabase().getReadItems();
+                mApp.getFeed().getFeedAdapter().getFeedList().
+                    savedItems = mApp.getDatabase().getSavedItems();
 
                 mApp.getFeed().getFeedAdapter().getFeedList()
                     .add(new FeedItem(mTitle, mDescription, 
