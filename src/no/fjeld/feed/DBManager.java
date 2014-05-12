@@ -61,8 +61,9 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     /**
-     * Deletes a row from a table if url is provided,
-     * if not the whole tables is emptied.
+     * Deletes a row from a table if an url is provided
+     * and matched.
+     * If not the whole table is cleared.
      *
      * @param table The table to delete from.
      * @param url   The url-value in the row to delete.
