@@ -22,9 +22,11 @@ public class DrawerLongClick implements OnItemLongClickListener {
 
     private static final int EDIT = 0;
     private static final int DELETE = 1;
+    private static final int CANCEL = 2;
 
     private FeedApplication mApp;
     private DrawerAdapter mDrawerAdapter;
+    private DrawerItem mDrawerItem;
 
     private View view;
     private int position;
@@ -33,6 +35,7 @@ public class DrawerLongClick implements OnItemLongClickListener {
     private LinearLayout mDrawerOptions;
     private LinearLayout editItem;
     private LinearLayout deleteItem;
+    private LinearLayout cancel;
 
     private Animation slideIn;
     private Animation slideOut;
@@ -102,6 +105,8 @@ public class DrawerLongClick implements OnItemLongClickListener {
             .findViewById(R.id.drawer_option_edit);
         deleteItem = (LinearLayout) mDrawerOptions
             .findViewById(R.id.drawer_option_delete);
+        cancel = (LinearLayout) mDrawerOptions
+            .findViewById(R.id.drawer_option_cancel);
 
         editItem.setOnClickListener(new View.OnClickListener() {
             public void onClick(View editView) {
@@ -115,6 +120,13 @@ public class DrawerLongClick implements OnItemLongClickListener {
                 action = DELETE;
                 deleteItem();
             }   
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View cancelView) {
+                action = CANCEL;
+                cancel();
+            }
         }); 
 
     }
@@ -126,6 +138,12 @@ public class DrawerLongClick implements OnItemLongClickListener {
     }
 
     public void deleteItem() {
+
+        mDrawerText.startAnimation(slideIn);
+
+    }
+
+    public void cancel() {
 
         mDrawerText.startAnimation(slideIn);
 
@@ -148,23 +166,73 @@ public class DrawerLongClick implements OnItemLongClickListener {
             mDrawerText.setVisibility(View.VISIBLE);
             mDrawerOptions.setVisibility(View.INVISIBLE);
 
+            mDrawerItem = mDrawerAdapter.getDrawerList().get(position);
+
             if (action == EDIT) {
 
-                DrawerItem item = mDrawerAdapter.getDrawerList().get(position);
-                item.setFeedName("New name");
-                mDrawerAdapter.notifyDataSetChanged();
-
-                mApp.getDatabase().update(item);
+                changeName();
 
             } else if (action == DELETE) { 
 
                 mDrawerAdapter.getDrawerList().remove(position);
                 mDrawerAdapter.notifyDataSetChanged(); 
 
-                //mApp.getDatabase().delete("drawerItems", 
-                //        mDrawerAdapter.getDrawerList().get(position).getUrl());
+                mApp.getDatabase().delete("drawerItems", mDrawerItem.getUrl()); 
 
             }
+
+        }
+
+
+        private void changeName() {
+
+            final Activity activity = mApp.getFeedActivity();
+
+            final EditText mInput = new EditText(activity);
+            mInput.setHint(mDrawerItem.getFeedName());
+
+            /* Shows the keyboard */
+            mInput.postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    ((InputMethodManager) activity.getSystemService(
+                        Context.INPUT_METHOD_SERVICE)).showSoftInput(mInput, 0);
+                }
+
+            }, 50); 
+
+            /* The dialog */
+            AlertDialog.Builder mDialog = new AlertDialog.Builder(
+                    new ContextThemeWrapper(activity, R.style.DefaultTheme));
+            mDialog.setTitle(R.string.drawer_item_change_title);
+            mDialog.setView(mInput);
+
+            /* The "OK"-button */
+            mDialog.setPositiveButton(R.string.new_feed_ok,
+                    new DialogInterface.OnClickListener() {
+
+                        @Override 
+                        public void onClick(DialogInterface dialog, int button) {
+
+                            mDrawerItem.setFeedName(mInput.getText().toString());
+                            mDrawerAdapter.notifyDataSetChanged();
+
+                            mApp.getDatabase().update(mDrawerItem);
+
+                        }
+
+                    });
+
+            /* The "Cancel"-button */
+            mDialog.setNegativeButton(R.string.new_feed_cancel,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int button) {
+                        }
+                    });
+
+            mDialog.show();
 
         }
 
