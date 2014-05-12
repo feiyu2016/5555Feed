@@ -1,22 +1,17 @@
 package no.fjeld.feed;
 
-import android.app.*;
 import android.content.*;
 import android.graphics.*;
 import android.os.*;
 import android.preference.*;
-import android.support.v4.app.*;
-import android.support.v4.widget.*;
 import android.text.*;
 import java.io.*;
 import java.net.*;
-import java.nio.charset.*;
 import java.text.*;
 import java.util.*;
 import java.util.regex.*;
 import javax.xml.parsers.*;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.w3c.dom.Document;
@@ -37,15 +32,15 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
     /**
      * Constructor for the class "GetFeed".
      *
-     * @param mApp        The application-object for this app.
-     * @param mDrawerItem The DrawerItem-object clicked.
+     * @param app        The application-object for this app.
+     * @param drawerItem The DrawerItem-object clicked.
      */
-    public GetFeed(FeedApplication mApp, DrawerItem mDrawerItem) {
+    public GetFeed(FeedApplication app, DrawerItem drawerItem) {
 
-        this.mApp = mApp;
-        this.mFeedName = mDrawerItem.getFeedName();
-        this.mEncoding = mDrawerItem.getEncoding();
-        this.mFeedList = mDrawerItem.getFeedList();
+        this.mApp = app;
+        this.mFeedName = drawerItem.getFeedName();
+        this.mEncoding = drawerItem.getEncoding();
+        this.mFeedList = drawerItem.getFeedList();
 
     }
 
@@ -56,31 +51,31 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
     @Override
     protected String doInBackground(String ... args) {
 
-        StringBuilder mStringBuilder = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
 
         try {
 
-            HttpResponse mHttpResponse = new DefaultHttpClient()
+            HttpResponse httpResponse = new DefaultHttpClient()
                 .execute(new HttpGet(args[0]));
 
-            InputStream mInputStream = mHttpResponse.getEntity()
+            InputStream inputStream = httpResponse.getEntity()
                 .getContent();
 
-            BufferedReader mBuffReader = new BufferedReader(
-                    new InputStreamReader(mInputStream, mEncoding));
+            BufferedReader buffReader = new BufferedReader(
+                    new InputStreamReader(inputStream, mEncoding));
 
             String line = "";
 
-            while((line = mBuffReader.readLine()) != null)
-                mStringBuilder.append(line);
+            while((line = buffReader.readLine()) != null)
+                stringBuilder.append(line);
 
-            mInputStream.close();
+            inputStream.close();
 
         } catch (Exception e) {
             return null;
         }
 
-        return mStringBuilder.toString();
+        return stringBuilder.toString();
 
     }
 
@@ -97,51 +92,51 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
      */
     private void parseFeed(String feed) {
 
-        String mTitle;
-        String mDescription;
-        String mLink;
-        String mPubDate;
-        String mImgUrl;
+        String title;
+        String description;
+        String link;
+        String pubDate;
+        String imgUrl;
 
-        SharedPreferences mSharedPrefs = PreferenceManager
+        SharedPreferences sharedPrefs = PreferenceManager
             .getDefaultSharedPreferences(mApp.getFeedActivity()
                     .getBaseContext());
 
         try {
 
-            DocumentBuilderFactory mDocBuilder = DocumentBuilderFactory
+            DocumentBuilderFactory docBuilder = DocumentBuilderFactory
                 .newInstance();
 
-            Document mDocument = mDocBuilder.newDocumentBuilder().parse(
+            Document document = docBuilder.newDocumentBuilder().parse(
                     new InputSource(new StringReader(feed)));
 
-            mDocument.getDocumentElement().normalize();
+            document.getDocumentElement().normalize();
 
-            NodeList mNodeList = mDocument.getElementsByTagName("item");
-            mNodeListLength = mNodeList.getLength();
+            NodeList nodeList = document.getElementsByTagName("item");
+            mNodeListLength = nodeList.getLength();
 
             /* Iterates through the Document */
-            for (int i = 0; i < mNodeList.getLength(); i++) {
+            for (int i = 0; i < nodeList.getLength(); i++) {
 
-                mTitle = getValue(mNodeList.item(i), "title"); 
-                mDescription = getValue(mNodeList.item(i), "description");
-                mLink = getValue(mNodeList.item(i), "link");
+                title = getValue(nodeList.item(i), "title"); 
+                description = getValue(nodeList.item(i), "description");
+                link = getValue(nodeList.item(i), "link");
 
-                mPubDate = (getValue(mNodeList.item(i), "pubDate") != null)
-                    ? getValue(mNodeList.item(i), "pubDate")
-                    : getValue(mNodeList.item(i), "dc:date"); 
+                pubDate = (getValue(nodeList.item(i), "pubDate") != null)
+                    ? getValue(nodeList.item(i), "pubDate")
+                    : getValue(nodeList.item(i), "dc:date"); 
 
-                mImgUrl = (getEnclosure((Element) mNodeList.item(i)) != null) 
-                    ? getEnclosure((Element) mNodeList.item(i))
-                    : getUrl(mDescription); 
+                imgUrl = (getEnclosure((Element) nodeList.item(i)) != null) 
+                    ? getEnclosure((Element) nodeList.item(i))
+                    : getUrl(description); 
 
                 /* Checks if the user has chosen to download images */
-                if (mSharedPrefs.getBoolean("preference_images", true))
-                    new GetImage(i).execute(mImgUrl, mTitle, mDescription, mLink,
-                            mPubDate);
+                if (sharedPrefs.getBoolean("preference_images", true))
+                    new GetImage(i).execute(imgUrl, title, description, link,
+                            pubDate);
                 else
-                    new GetImage(i).execute(null, mTitle, mDescription, mLink,
-                            mPubDate);
+                    new GetImage(i).execute(null, title, description, link,
+                            pubDate);
 
             }
 
@@ -170,12 +165,12 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
      */ 
     private String getEnclosure(Element element) {
 
-        NodeList list = element.getElementsByTagName("enclosure");
+        NodeList nodeList = element.getElementsByTagName("enclosure");
 
-        for (int i = 0; i < list.getLength(); i++) {
-            if (list.item(i).getAttributes().getLength() > 0) {
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            if (nodeList.item(i).getAttributes().getLength() > 0) {
 
-                return list.item(i).getAttributes().getNamedItem("url")
+                return nodeList.item(i).getAttributes().getNamedItem("url")
                     .getTextContent();
 
             }
@@ -191,10 +186,10 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
      * If found, the value will be returned as the url for the
      * image to download.
      */
-    private String getUrl(String mDescription) {
+    private String getUrl(String description) {
 
         Pattern p = Pattern.compile("src\\s*=\\s*([\"'])?([^ \"']*)");
-        Matcher m = p.matcher(mDescription);
+        Matcher m = p.matcher(description);
 
         if (m.find())
             return m.group(2);
@@ -236,13 +231,13 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
 
             try {
 
-                HttpURLConnection mConnection = (HttpURLConnection) 
+                HttpURLConnection connection = (HttpURLConnection) 
                     new URL(args[0]).openConnection();
 
-                if (mConnection.getResponseCode() != 200)
+                if (connection.getResponseCode() != 200)
                     throw new Exception("Error in connection.");
 
-                InputStream mInputStream = mConnection.getInputStream();
+                InputStream mInputStream = connection.getInputStream();
 
                 return BitmapFactory.decodeStream(mInputStream);
 
@@ -255,20 +250,19 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
         }
 
         @Override
-        protected void onPostExecute(Bitmap mImage) {
+        protected void onPostExecute(Bitmap image) {
 
             if (mTitle.length() > 5) { 
                     
-                    
                 mFeedList.add(new FeedItem(mTitle, mDescription, 
-                                mUrl, mPubDate, mImage, mFeedName));
+                                mUrl, mPubDate, image, mFeedName));
 
                 mApp.getFeed().getFeedAdapter().getFeedList().
-                    mReadItems = mApp.getDatabase().getReadItems();
+                    readItems = mApp.getDatabase().getReadItems();
 
                 mApp.getFeed().getFeedAdapter().getFeedList()
                     .add(new FeedItem(mTitle, mDescription, 
-                                mUrl, mPubDate, mImage, mFeedName));
+                                mUrl, mPubDate, image, mFeedName));
 
                 mApp.getFeed().getFeedAdapter().notifyDataSetChanged();
 
@@ -303,21 +297,21 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
         /**
          * Converts a string containing a date to a Date-object.
          */
-        private Date stringToDate(String mPubDate) {
+        private Date stringToDate(String pubDate) {
 
             try {
 
-                SimpleDateFormat format = new SimpleDateFormat(
+                SimpleDateFormat dateFormat = new SimpleDateFormat(
                         "dd MMM yyyy HH mm ss", Locale.US);
 
-                mPubDate = mPubDate.substring(5, 25).trim();
+                pubDate = pubDate.substring(5, 25).trim();
 
-                byte [] bytes = mPubDate.getBytes("ISO-8859-1");
+                byte [] bytes = pubDate.getBytes("ISO-8859-1");
 
-                mPubDate = new String(bytes, "UTF-8").replaceAll(
+                pubDate = new String(bytes, "UTF-8").replaceAll(
                         "\\W", " ");
 
-                return format.parse(mPubDate);
+                return dateFormat.parse(pubDate);
 
             } catch (Exception e) {
                 return null;

@@ -1,14 +1,8 @@
 package no.fjeld.feed;
 
 import android.app.*;
-import android.content.*;
 import android.os.*;
-import android.preference.*;
-import android.support.v4.app.*;
-import android.support.v4.widget.*;
 import android.view.*;
-import android.widget.*;
-import android.widget.AdapterView.*;
 
 public class FeedActivity extends Activity {
 

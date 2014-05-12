@@ -1,15 +1,11 @@
 package no.fjeld.feed;
 
 import android.app.*;
-import android.content.*;
 import android.graphics.*;
 import android.os.*;
-import android.preference.*;
 import android.view.*;
 import android.webkit.*;
 import android.widget.*;
-
-import java.util.*;
 
 public class WebViewActivity extends Activity {
 

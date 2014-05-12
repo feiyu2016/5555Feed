@@ -1,6 +1,5 @@
 package no.fjeld.feed;
 
-import java.text.*;
 import java.util.*;
 
 import android.content.ContentValues;
@@ -154,7 +153,7 @@ public class DBManager extends SQLiteOpenHelper {
 
     public ArrayList <DrawerItem> getDrawerItems() {
 
-        ArrayList <DrawerItem> mDrawerItems = new ArrayList <DrawerItem> ();
+        ArrayList <DrawerItem> drawerItems = new ArrayList <DrawerItem> ();
 
         SQLiteDatabase db = getWritableDatabase();
 
@@ -165,7 +164,7 @@ public class DBManager extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
 
-                mDrawerItems.add(new DrawerItem(cursor.getString(0), 
+                drawerItems.add(new DrawerItem(cursor.getString(0), 
                             cursor.getString(1), cursor.getString(2), 
                             new ArrayList <FeedItem> ()));
 
@@ -173,13 +172,13 @@ public class DBManager extends SQLiteOpenHelper {
         }
 
         db.close();
-        return mDrawerItems;
+        return drawerItems;
 
     }
 
     public ArrayList <FeedItem> getSavedItems() {
 
-        ArrayList <FeedItem> mSavedItems = new ArrayList <FeedItem> ();
+        ArrayList <FeedItem> savedItems = new ArrayList <FeedItem> ();
 
         SQLiteDatabase db = getWritableDatabase();
 
@@ -189,7 +188,7 @@ public class DBManager extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
 
-                mSavedItems.add(new FeedItem(cursor.getString(0), cursor.getString(1), 
+                savedItems.add(new FeedItem(cursor.getString(0), cursor.getString(1), 
                             cursor.getString(2), null, null, null));
 
             } while(cursor.moveToNext());
@@ -197,14 +196,14 @@ public class DBManager extends SQLiteOpenHelper {
 
         db.close();
 
-        Collections.reverse(mSavedItems);
-        return mSavedItems;
+        Collections.reverse(savedItems);
+        return savedItems;
 
     }
 
     public ArrayList <String> getReadItems() {
 
-        ArrayList <String> mReadItems = new ArrayList <String> ();
+        ArrayList <String> readItems = new ArrayList <String> ();
         SQLiteDatabase db = getWritableDatabase();
 
         Cursor cursor = db.query(TABLE_READ_ITEMS,
@@ -213,13 +212,13 @@ public class DBManager extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
 
-                mReadItems.add(cursor.getString(0));
+                readItems.add(cursor.getString(0));
 
             } while (cursor.moveToNext());
         }
 
         db.close();
-        return mReadItems;
+        return readItems;
 
     }
 

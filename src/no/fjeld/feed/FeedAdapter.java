@@ -1,26 +1,20 @@
 package no.fjeld.feed;
 
-import java.util.*;
-import java.io.*;
-
 import android.app.*;
-import android.graphics.*;
 import android.content.*;
-import android.media.*;
 import android.view.*;
 import android.widget.*;
-import android.widget.AdapterView.*;
 
 class FeedAdapter extends ArrayAdapter <FeedItem> {
 
     private Activity mActivity;
     private FeedList mFeedList;
 
-    public FeedAdapter(Activity mActivity, int mResourceView, FeedList mFeedList) {
+    public FeedAdapter(Activity activity, int resourceView, FeedList feedList) {
 
-        super(mActivity, mResourceView, mFeedList);
-        this.mActivity = mActivity;
-        this.mFeedList = mFeedList;    
+        super(activity, resourceView, feedList);
+        this.mActivity = activity;
+        this.mFeedList = feedList;    
 
     }
 
@@ -34,29 +28,29 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
 
     public View getView(int position, View view, ViewGroup parent) {
 
-        ViewHolder mViewHolder;
+        ViewHolder viewHolder;
 
         if (view == null) {
 
             view = ((LayoutInflater) mActivity.getSystemService(Context.
                         LAYOUT_INFLATER_SERVICE)).inflate(R.layout.list_item, null);
 
-            mViewHolder = new ViewHolder();
+            viewHolder = new ViewHolder();
 
-            mViewHolder.mTitle = (TextView) view.findViewById(R.id.feed_title);
-            mViewHolder.mDescription = (TextView) view.findViewById(R.id.feed_description);
-            mViewHolder.mImage = (ImageView) view.findViewById(R.id.feed_image);
+            viewHolder.mTitle = (TextView) view.findViewById(R.id.feed_title);
+            viewHolder.mDescription = (TextView) view.findViewById(R.id.feed_description);
+            viewHolder.mImage = (ImageView) view.findViewById(R.id.feed_image);
 
-            view.setTag(mViewHolder);
+            view.setTag(viewHolder);
 
 
         } else
-            mViewHolder = (ViewHolder) view.getTag();
+            viewHolder = (ViewHolder) view.getTag();
 
-        FeedItem mFeedItem = mFeedList.get(position);
+        FeedItem feedItem = mFeedList.get(position);
 
-        if (mFeedItem != null)
-            setItemView(mViewHolder, mFeedItem);
+        if (feedItem != null)
+            setItemView(viewHolder, feedItem);
 
         return view;
 
@@ -68,16 +62,16 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
      * If the Bitmap in the item is null, the 
      * ImageView-visibility is set to Gone.
      */
-    private void setItemView(ViewHolder mViewHolder, FeedItem mFeedItem) {
+    private void setItemView(ViewHolder viewHolder, FeedItem feedItem) {
 
-        mViewHolder.mTitle.setText(mFeedItem.getTitle());
-        mViewHolder.mDescription.setText(mFeedItem.getDescription());
+        viewHolder.mTitle.setText(feedItem.getTitle());
+        viewHolder.mDescription.setText(feedItem.getDescription());
 
-        if (mFeedItem.getImage() != null) {
-            mViewHolder.mImage.setVisibility(View.VISIBLE);
-            mViewHolder.mImage.setImageBitmap(mFeedItem.getImage());
+        if (feedItem.getImage() != null) {
+            viewHolder.mImage.setVisibility(View.VISIBLE);
+            viewHolder.mImage.setImageBitmap(feedItem.getImage());
         } else 
-            mViewHolder.mImage.setVisibility(View.GONE);
+            viewHolder.mImage.setVisibility(View.GONE);
 
     }
 

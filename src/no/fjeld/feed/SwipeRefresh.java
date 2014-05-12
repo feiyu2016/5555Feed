@@ -1,13 +1,11 @@
 package no.fjeld.feed;
 
-import android.app.*;
-import android.os.*;
 import android.support.v4.widget.*;
 import android.view.*;
 
 public class SwipeRefresh implements SwipeRefreshLayout.OnRefreshListener {
 
-    private View view;
+    private View mView;
     private FeedApplication mApp;
 
     private SwipeRefreshLayout mSwipeLayout;
@@ -16,12 +14,12 @@ public class SwipeRefresh implements SwipeRefreshLayout.OnRefreshListener {
      * Constructor for the class "SwipeToRefresh".
      *
      * @param view  The apps main-view.
-     * @param mApp  The Application-object for this app.
+     * @param app  The Application-object for this app.
      */
-    public SwipeRefresh(View view, FeedApplication mApp) {
+    public SwipeRefresh(View view, FeedApplication app) {
 
-        this.view = view;
-        this.mApp = mApp;
+        this.mView = view;
+        this.mApp = app;
 
         initSwipeLayout();
         setSwipeLayoutListener();
@@ -34,7 +32,7 @@ public class SwipeRefresh implements SwipeRefreshLayout.OnRefreshListener {
      */
     private void initSwipeLayout() {
 
-        mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_layout);
+        mSwipeLayout = (SwipeRefreshLayout) mView.findViewById(R.id.swipe_layout);
 
     }
 
@@ -65,10 +63,10 @@ public class SwipeRefresh implements SwipeRefreshLayout.OnRefreshListener {
      */
     public void onRefresh() {
 
-        DrawerItem mDrawerItem = mApp.getFeed().lastDrawerItem;
+        DrawerItem drawerItem = mApp.getFeed().lastDrawerItem;
 
-        if (mDrawerItem != null)
-            mApp.getFeed().loadFeed(mDrawerItem, true);
+        if (drawerItem != null)
+            mApp.getFeed().loadFeed(drawerItem, true);
         else
             mSwipeLayout.setRefreshing(false);
 

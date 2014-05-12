@@ -9,12 +9,10 @@ import java.util.*;
 import javax.xml.parsers.*;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.*;
 
@@ -23,9 +21,9 @@ public class NewFeed extends AsyncTask <String, Integer, String> {
     FeedApplication mApp;
     String mUrl;
 
-    NewFeed(FeedApplication mApp) {
+    NewFeed(FeedApplication app) {
 
-        this.mApp = mApp;
+        this.mApp = app;
         
     }
 
@@ -41,25 +39,25 @@ public class NewFeed extends AsyncTask <String, Integer, String> {
         else
             mUrl = args[0];
 
-        StringBuilder mStringBuilder = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
 
         try {
 
-            HttpResponse mHttpResponse = new DefaultHttpClient()
+            HttpResponse httpResponse = new DefaultHttpClient()
                 .execute(new HttpGet(mUrl));
 
-            InputStream mInputStream = mHttpResponse.getEntity()
+            InputStream inputStream = httpResponse.getEntity()
                 .getContent();
 
-            BufferedReader mBuffReader = new BufferedReader(
-                    new InputStreamReader(mInputStream));
+            BufferedReader buffReader = new BufferedReader(
+                    new InputStreamReader(inputStream));
 
             String line = null;
 
-            while ((line = mBuffReader.readLine()) != null)
-                mStringBuilder.append(line);
+            while ((line = buffReader.readLine()) != null)
+                stringBuilder.append(line);
 
-            mInputStream.close();
+            inputStream.close();
 
         } catch(Exception e) {
 
@@ -68,7 +66,7 @@ public class NewFeed extends AsyncTask <String, Integer, String> {
 
         }
 
-        return mStringBuilder.toString();
+        return stringBuilder.toString();
 
     }
 
@@ -80,13 +78,13 @@ public class NewFeed extends AsyncTask <String, Integer, String> {
 
         else {
 
-            String mFeedName = getFeedName(feed);
-            String mEncoding = getEncoding(feed);
+            String feedName = getFeedName(feed);
+            String encoding = getEncoding(feed);
 
-            if (mFeedName == null)
+            if (feedName == null)
                 invalidFeed();
             else
-                addFeed(mFeedName, mEncoding);
+                addFeed(feedName, encoding);
 
         }
 
@@ -99,17 +97,17 @@ public class NewFeed extends AsyncTask <String, Integer, String> {
 
         try {
 
-            DocumentBuilderFactory mDocBuilder = DocumentBuilderFactory.newInstance();
+            DocumentBuilderFactory docBuilder = DocumentBuilderFactory.newInstance();
 
-            Document mDocument = mDocBuilder.newDocumentBuilder().parse(
+            Document document = docBuilder.newDocumentBuilder().parse(
                     new InputSource(new StringReader(feed)));
 
-            mDocument.getDocumentElement().normalize();
+            document.getDocumentElement().normalize();
 
-            NodeList mNodeList = mDocument.getElementsByTagName("channel");
+            NodeList nodeList = document.getElementsByTagName("channel");
 
-            for (int i = 0; i < mNodeList.getLength(); i++)
-                return ((Element) mNodeList.item(i)).getElementsByTagName(
+            for (int i = 0; i < nodeList.getLength(); i++)
+                return ((Element) nodeList.item(i)).getElementsByTagName(
                         "title").item(0).getTextContent();
 
         } catch (Exception e) {
@@ -128,27 +126,27 @@ public class NewFeed extends AsyncTask <String, Integer, String> {
      */
     private String getEncoding(String feed) {
 
-        String mEncoding = feed.split("\"")[3].toUpperCase();   
+        String encoding = feed.split("\"")[3].toUpperCase();   
 
-        if (!mEncoding.toUpperCase().equals("UTF-8")
-                && !mEncoding.toUpperCase().equals("ISO-8859-1")
-                && !mEncoding.toUpperCase().equals("ISO-8859-15")) 
+        if (!encoding.toUpperCase().equals("UTF-8")
+                && !encoding.toUpperCase().equals("ISO-8859-1")
+                && !encoding.toUpperCase().equals("ISO-8859-15")) 
             return "UTF-8";
         else
-            return mEncoding;
+            return encoding;
 
     }
 
     /**
      * Adds the new Feed to the Drawer-list.
      */
-    public void addFeed(String mFeedName, String mEncoding) {
+    public void addFeed(String feedName, String encoding) {
 
-        DrawerItem mDrawerItem = new DrawerItem(mFeedName, mUrl, mEncoding, new ArrayList <FeedItem> ());
+        DrawerItem drawerItem = new DrawerItem(feedName, mUrl, encoding, new ArrayList <FeedItem> ());
         
-        mApp.getDatabase().add(mDrawerItem);
+        mApp.getDatabase().add(drawerItem);
         
-        mApp.getNavDrawer().getDrawerAdapter().getDrawerList().add(mDrawerItem);
+        mApp.getNavDrawer().getDrawerAdapter().getDrawerList().add(drawerItem);
         mApp.getNavDrawer().getDrawerAdapter().notifyDataSetChanged();
 
     }
@@ -161,17 +159,17 @@ public class NewFeed extends AsyncTask <String, Integer, String> {
      */
     private void invalidFeed() {
 
-        AlertDialog.Builder mDialog = new AlertDialog.Builder(mApp.getFeedActivity());
-        mDialog.setTitle(R.string.invalid_feed_message);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(mApp.getFeedActivity());
+        dialog.setTitle(R.string.invalid_feed_message);
 
-        mDialog.setNeutralButton(R.string.invalid_feed_ok, new DialogInterface.
+        dialog.setNeutralButton(R.string.invalid_feed_ok, new DialogInterface.
                 OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
                     }
                 });
 
-        mDialog.show();
+        dialog.show();
 
     }
 

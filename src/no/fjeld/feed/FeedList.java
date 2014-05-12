@@ -4,7 +4,12 @@ import java.util.*;
 
 public class FeedList extends ArrayList <FeedItem> {
 
-    public ArrayList <String> mReadItems;
+    /**
+     * Actually not necessary since the list will be cleared before an item is
+     * saved to the database.
+     */
+    private static final long serialVersionUID = -6728285211029336860L;
+    public ArrayList <String> readItems;
 
     @Override
     public boolean add(FeedItem item) {
@@ -13,8 +18,8 @@ public class FeedList extends ArrayList <FeedItem> {
         boolean added = false;
 
         /* If the item is marked as read, don't add it. */
-        for (i = 0; i < mReadItems.size(); i++)
-            if (item.getUrl().equals(mReadItems.get(i)))
+        for (i = 0; i < readItems.size(); i++)
+            if (item.getUrl().equals(readItems.get(i)))
                 return false;
 
         /* If the item is already in the list, don't add it. */

@@ -1,15 +1,10 @@
 package no.fjeld.feed;
 
-import android.content.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
-import android.net.*;
-import android.os.*;
-import android.preference.*;
 import android.view.*;
 import android.view.animation.*;
 import android.widget.*;
-import android.widget.AdapterView.*;
 
 /**
  * The DragListener that handles the events on a longclick
@@ -34,10 +29,10 @@ public class FeedDragListener implements View.OnDragListener {
     private int x;
     private int y;
 
-    public FeedDragListener(View mView, FeedApplication mApp) {
+    public FeedDragListener(View view, FeedApplication app) {
 
-        this.mView = mView;   
-        this.mApp = mApp; 
+        this.mView = view;   
+        this.mApp = app; 
 
     }
 
@@ -82,9 +77,6 @@ public class FeedDragListener implements View.OnDragListener {
                 setView(View.GONE, R.anim.slide_out_left);
                 mTrans.reverseTransition(100);
 
-                int position = mApp.getFeed().getFeedAdapter().
-                    getFeedList().indexOf(mFeedItem) + 1;
-
                 /* Read now - calls readNow() in Feed */
                 if (mReadNowRect.contains(x, y))
                     mApp.getFeed().readNow(
@@ -113,13 +105,13 @@ public class FeedDragListener implements View.OnDragListener {
         mFeedItem = (FeedItem) event.getLocalState();
         mPopupView = (LinearLayout) mView.findViewById(R.id.popup_view);
 
-        ImageView mImage = (ImageView) mView.findViewById(R.id.popup_image);
+        ImageView image = (ImageView) mView.findViewById(R.id.popup_image);
 
         if (mFeedItem.getImage() == null)
-            mImage.setVisibility(View.GONE);
+            image.setVisibility(View.GONE);
         else {
-            mImage.setVisibility(View.VISIBLE);
-            mImage.setImageBitmap(mFeedItem.getImage());
+            image.setVisibility(View.VISIBLE);
+            image.setImageBitmap(mFeedItem.getImage());
         }
 
         ((TextView) mView.findViewById(R.id.popup_feed_title))

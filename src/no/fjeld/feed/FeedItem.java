@@ -2,7 +2,6 @@ package no.fjeld.feed;
 
 import android.graphics.Bitmap;
 import java.util.*;
-import java.text.*;
 
 public class FeedItem implements Comparable <FeedItem> {
 

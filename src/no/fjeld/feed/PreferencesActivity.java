@@ -1,12 +1,10 @@
 package no.fjeld.feed;
 
-import android.content.*;
+import android.annotation.SuppressLint;
 import android.os.*;
 import android.preference.*;
 import android.preference.Preference.*;
 import android.view.*;
-
-import java.util.*;
 
 public class PreferencesActivity extends PreferenceActivity {
 
@@ -34,18 +32,14 @@ public class PreferencesActivity extends PreferenceActivity {
 
     }
 
+    @SuppressLint("ValidFragment")
     private class PreferenceFrag extends PreferenceFragment {
-
-        private SharedPreferences mSharedPrefs;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
 
             super.onCreate(savedInstanceState);         
             addPreferencesFromResource(R.layout.preferences);
-
-            mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(
-                    getBaseContext());
 
             initPrefs();
 
@@ -83,7 +77,6 @@ public class PreferencesActivity extends PreferenceActivity {
                         }
 
                     });
-
 
         }
 

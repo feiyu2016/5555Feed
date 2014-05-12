@@ -2,13 +2,9 @@ package no.fjeld.feed;
 
 import android.app.*;
 import android.content.*;
-import android.graphics.*;
-import android.graphics.drawable.*;
 import android.net.*;
-import android.os.*;
 import android.preference.*;
 import android.view.*;
-import android.view.animation.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
 
@@ -16,9 +12,7 @@ import java.util.*;
 
 public class Feed {
 
-    private final static int MAX_FEEDITEMS = 20;
-
-    private View view;
+    private View mView;
     private FeedApplication mApp;
 
     private ListView mFeedListView;
@@ -32,12 +26,12 @@ public class Feed {
      * Constructor for the class Feed.
      *
      * @param view The FeedActivity content view.
-     * @param mApp The Application-object for this app.
+     * @param app The Application-object for this app.
      */
-    public Feed(View view, FeedApplication mApp) {
+    public Feed(View view, FeedApplication app) {
 
-        this.view = view;
-        this.mApp = mApp;
+        this.mView = view;
+        this.mApp = app;
 
         initFeedListView();
         initFeedAdapter();
@@ -45,7 +39,7 @@ public class Feed {
         mFeedListView.setAdapter(mFeedAdapter);
 
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(
-                mApp.getFeedActivity().getBaseContext());
+                app.getFeedActivity().getBaseContext());
 
     }
 
@@ -54,14 +48,14 @@ public class Feed {
      */
     private void initFeedListView() {
 
-        mFeedListView = (ListView) view.findViewById(R.id.feed_list);
+        mFeedListView = (ListView) mView.findViewById(R.id.feed_list);
 
-        View mListMargin = ((LayoutInflater) mApp.getFeedActivity()
+        View listMargin = ((LayoutInflater) mApp.getFeedActivity()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE))
             .inflate(R.layout.list_margin, null);
 
-        mFeedListView.addHeaderView(mListMargin);
-        mFeedListView.addFooterView(mListMargin);
+        mFeedListView.addHeaderView(listMargin);
+        mFeedListView.addFooterView(listMargin);
 
         /* If the user does a LongClick on a item, the DragListener 
          * for the list will be called. */
@@ -80,7 +74,7 @@ public class Feed {
 
         });
 
-        mFeedListView.setOnDragListener(new FeedDragListener(view, mApp));
+        mFeedListView.setOnDragListener(new FeedDragListener(mView, mApp));
 
     }
 
@@ -121,7 +115,7 @@ public class Feed {
 
         if (item.getFeedList().size() > 0 && !shouldRefresh) {
 
-            mFeedAdapter.getFeedList().mReadItems 
+            mFeedAdapter.getFeedList().readItems 
                 = mApp.getDatabase().getReadItems();
 
             for (FeedItem feedItem : item.getFeedList())
@@ -150,7 +144,7 @@ public class Feed {
         mFeedAdapter.getFeedList().clear();
         mFeedAdapter.notifyDataSetChanged();
 
-        mFeedAdapter.getFeedList().mReadItems = mApp.getDatabase().getReadItems();
+        mFeedAdapter.getFeedList().readItems = mApp.getDatabase().getReadItems();
 
         mApp.getSwipeRefresh().getSwipeLayout().setEnabled(true);
 
@@ -178,11 +172,11 @@ public class Feed {
 
     public void savedFeeds() {
 
-        DrawerItem mDrawerItem = new DrawerItem(mApp.getFeedActivity().getString(
+        DrawerItem drawerItem = new DrawerItem(mApp.getFeedActivity().getString(
                     R.string.drawer_header_saved_items), null, null, mApp.getDatabase().getSavedItems());
 
         mApp.getSwipeRefresh().getSwipeLayout().setEnabled(false);
-        loadFeed(mDrawerItem, false);
+        loadFeed(drawerItem, false);
 
     }
 
@@ -216,11 +210,11 @@ public class Feed {
 
     public void markAllAsRead() {
 
-        ArrayList <FeedItem> mFeedList = mFeedAdapter.getFeedList();
+        ArrayList <FeedItem> feedList = mFeedAdapter.getFeedList();
 
-        mApp.getDatabase().add(mFeedList);
+        mApp.getDatabase().add(feedList);
 
-        mFeedList.clear();
+        feedList.clear();
 
         loadFeed(lastDrawerItem, false);
 

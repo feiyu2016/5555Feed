@@ -3,23 +3,16 @@ package no.fjeld.feed;
 import android.app.*;
 import android.content.*;
 import android.graphics.*;
-import android.text.*;
-import android.os.*;
-import android.preference.*;
 import android.support.v4.app.*;
 import android.support.v4.widget.*;
 import android.view.*;
-import android.view.animation.*;
-import android.view.GestureDetector.*;
 import android.view.inputmethod.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
 
-import java.util.*;
-
 public class NavigationDrawer {
 
-    private View view;
+    private View mView;
     private FeedApplication mApp;
 
     private DrawerLayout mDrawerLayout;
@@ -31,12 +24,12 @@ public class NavigationDrawer {
      * Constructor for the class NavgigationDrawer.
      *
      * @param view  The FeedActivity content view.
-     * @param mApp  The Application-object for this app.
+     * @param app  The Application-object for this app.
      */
-    public NavigationDrawer(View view, FeedApplication mApp) {
+    public NavigationDrawer(View view, FeedApplication app) {
 
-        this.view = view;
-        this.mApp = mApp;
+        this.mView = view;
+        this.mApp = app;
 
         initDrawerLayout();
         initDrawerToggle();
@@ -46,7 +39,7 @@ public class NavigationDrawer {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerListView.setAdapter(mDrawerAdapter);
 
-        mApp.getActionBar().setDisplayHomeAsUpEnabled(true);
+        app.getActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -55,7 +48,7 @@ public class NavigationDrawer {
      */
     private void initDrawerLayout() {
 
-        mDrawerLayout = (DrawerLayout) view.findViewById(R.id.drawer_layout);
+        mDrawerLayout = (DrawerLayout) mView.findViewById(R.id.drawer_layout);
 
     }
 
@@ -94,7 +87,7 @@ public class NavigationDrawer {
      */ 
     private void initDrawerListView() {
 
-        mDrawerListView = (ListView) view.findViewById(R.id.drawer_list);
+        mDrawerListView = (ListView) mView.findViewById(R.id.drawer_list);
         addViews(); 
 
         mDrawerListView.setOnItemClickListener(new DrawerClickListener());
@@ -139,19 +132,19 @@ public class NavigationDrawer {
     } 
 
 
-    private FrameLayout getItemView(int mTextResId, int mStringResId) {
+    private FrameLayout getItemView(int textResId, int stringResId) {
 
         LayoutInflater inflater = (LayoutInflater) mApp.getFeedActivity()
             .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        FrameLayout mListItem = (FrameLayout) inflater.inflate(
+        FrameLayout item = (FrameLayout) inflater.inflate(
                 R.layout.drawer_item, null);
 
-        TextView mItemText = (TextView) mListItem.findViewById(mTextResId);
-        mItemText.setText(mApp.getFeedActivity().getResources()
-                .getString(mStringResId));
+        TextView itemText = (TextView) item.findViewById(textResId);
+        itemText.setText(mApp.getFeedActivity().getResources()
+                .getString(stringResId));
 
-        return mListItem;
+        return item;
 
     }
 
@@ -159,38 +152,38 @@ public class NavigationDrawer {
      * Returns an inflated LinearLayout with the correct content
      * according to the parameters.
      *
-     * @param  mLayoutResId The layout-xml to be inflated.
-     * @param  mTextResId   The TextView to be set.
-     * @param  mStringResId The String-resource for the TextView.
-     * @param  mImgResId    The Drawable-resource for the layout.
+     * @param  layoutResId The layout-xml to be inflated.
+     * @param  textResId   The TextView to be set.
+     * @param  stringResId The String-resource for the TextView.
+     * @param  imgResId    The Drawable-resource for the layout.
      *
      * @return mListItem    The new LinearLayout.
      */
-    private LinearLayout getView(int mLayoutResId, int mTextResId, 
-            int mStringResId, int mImgResId) {
+    private LinearLayout getView(int layoutResId, int textResId, 
+            int stringResId, int imgResId) {
 
         LayoutInflater inflater = (LayoutInflater) mApp.getFeedActivity()
             .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        LinearLayout mListItem = (LinearLayout) inflater.inflate(
-                mLayoutResId, null);
+        LinearLayout item = (LinearLayout) inflater.inflate(
+                layoutResId, null);
 
-        TextView mItemText = (TextView) mListItem.findViewById(mTextResId);
-        mItemText.setText(mApp.getFeedActivity().getResources()
-                .getString(mStringResId));
+        TextView itemText = (TextView) item.findViewById(textResId);
+        itemText.setText(mApp.getFeedActivity().getResources()
+                .getString(stringResId));
 
-        if (mImgResId != 0) {
+        if (imgResId != 0) {
 
-            ImageView mItemImage = (ImageView) mListItem.findViewById(
+            ImageView itemImage = (ImageView) item.findViewById(
                     R.id.drawer_footer_image);
-            mItemImage.setImageResource(mImgResId);
+            itemImage.setImageResource(imgResId);
 
         }
 
         /* This is the case where we add the "Add Feed"-button */
-        if (mStringResId == R.string.drawer_group_subfeeds) {
+        if (stringResId == R.string.drawer_group_subfeeds) {
 
-            ((LinearLayout) mListItem.findViewById(R.id.drawer_group_new_feed))
+            ((LinearLayout) item.findViewById(R.id.drawer_group_new_feed))
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -200,7 +193,7 @@ public class NavigationDrawer {
 
         }
 
-        return mListItem;
+        return item;
 
     }
 
@@ -209,10 +202,9 @@ public class NavigationDrawer {
      */
     private void initDrawerAdapter() {
 
-        DBManager db = new DBManager(mApp.getFeedActivity());
-
         mDrawerAdapter = new DrawerAdapter(
-                mApp.getFeedActivity(), R.layout.drawer_item, db.getDrawerItems());
+                mApp.getFeedActivity(), R.layout.drawer_item, 
+                        mApp.getDatabase().getDrawerItems());
 
     }
 
@@ -267,10 +259,10 @@ public class NavigationDrawer {
 
             mDrawerLayout.closeDrawer(Gravity.LEFT);
 
-            DrawerItem mDrawerItem = mDrawerAdapter
+            DrawerItem drawerItem = mDrawerAdapter
                 .getDrawerList().get(position - 3);
 
-            mApp.getFeed().loadFeed(mDrawerItem, false); 
+            mApp.getFeed().loadFeed(drawerItem, false); 
 
         }
 
@@ -286,47 +278,47 @@ public class NavigationDrawer {
 
         final Activity activity = mApp.getFeedActivity();
 
-        final EditText mInput = new EditText(activity);
-        mInput.setHint(R.string.new_feed_hint);
+        final EditText input = new EditText(activity);
+        input.setHint(R.string.new_feed_hint);
 
         /* Shows the keyboard */
-        mInput.postDelayed(new Runnable() {
+        input.postDelayed(new Runnable() {
 
             @Override
             public void run() {
                 ((InputMethodManager) activity.getSystemService(
-                    Context.INPUT_METHOD_SERVICE)).showSoftInput(mInput, 0);
+                    Context.INPUT_METHOD_SERVICE)).showSoftInput(input, 0);
             }
 
         }, 50); 
 
         /* The dialog */
-        AlertDialog.Builder mDialog = new AlertDialog.Builder(
+        AlertDialog.Builder dialog = new AlertDialog.Builder(
                 new ContextThemeWrapper(activity, R.style.DefaultTheme));
-        mDialog.setTitle(R.string.new_feed_title);
-        mDialog.setView(mInput);
+        dialog.setTitle(R.string.new_feed_title);
+        dialog.setView(input);
 
         /* The "OK"-button */
-        mDialog.setPositiveButton(R.string.new_feed_ok,
+        dialog.setPositiveButton(R.string.new_feed_ok,
                 new DialogInterface.OnClickListener() {
 
                     @Override 
                     public void onClick(DialogInterface dialog, int button) {
                         NewFeed newFeed = new NewFeed(mApp);
-                        newFeed.execute(mInput.getText().toString());
+                        newFeed.execute(input.getText().toString());
                     }
 
                 });
 
         /* The "Cancel"-button */
-        mDialog.setNegativeButton(R.string.new_feed_cancel, 
+        dialog.setNegativeButton(R.string.new_feed_cancel, 
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int button) {
                     }
                 });
 
-        mDialog.show();
+        dialog.show();
 
     }
 
@@ -335,7 +327,7 @@ public class NavigationDrawer {
      */
     private class DrawerClickListener implements OnItemClickListener {
 
-        private View lastClickedView;
+        private View mLastItemView;
 
         @Override
         public void onItemClick(AdapterView <?> parent, View view, 
@@ -356,21 +348,21 @@ public class NavigationDrawer {
 
             if (position != 2 && position <= listSize - 3) {
 
-                if (lastClickedView != null) {
+                if (mLastItemView != null) {
 
-                    TextView mTextView = (TextView) lastClickedView.findViewById(
+                    TextView textView = (TextView) mLastItemView.findViewById(
                             R.id.drawer_item_text);
-                    mTextView.setTypeface(((TextView) view.findViewById(
+                    textView.setTypeface(((TextView) view.findViewById(
                                     R.id.drawer_item_text)).getTypeface(), 
                             Typeface.NORMAL);
 
                 }
 
-                TextView mTextView = (TextView) view.findViewById(
+                TextView textView = (TextView) view.findViewById(
                         R.id.drawer_item_text);
-                mTextView.setTypeface(mTextView.getTypeface(), Typeface.BOLD);
+                textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
 
-                lastClickedView = view;
+                mLastItemView = view;
 
             }
 
