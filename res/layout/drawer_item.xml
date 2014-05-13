@@ -2,19 +2,34 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
-    
+    android:minHeight="?android:attr/listPreferredItemHeight" 
+    android:gravity="center_vertical"
+    android:orientation="horizontal" > 
+
     <include layout="@layout/drawer_options" />
 
     <TextView
         android:id="@+id/drawer_item_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?android:attr/listPreferredItemHeight" 
+        android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:textAppearance="?android:attr/textAppearanceMedium" 
-        android:background="@color/bg_drawer_item" />
+        android:background="@color/bg_drawer_item" 
+        android:textAppearance="?android:attr/textAppearanceMedium"/> 
+
+    <LinearLayout
+        android:id="@+id/drawer_item_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:visibility="gone" >
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
 
 </FrameLayout>
