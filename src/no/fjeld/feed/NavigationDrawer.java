@@ -10,6 +10,8 @@ import android.view.inputmethod.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
 
+import java.util.*;
+
 public class NavigationDrawer {
 
     private View mView;
@@ -204,7 +206,7 @@ public class NavigationDrawer {
 
         mDrawerAdapter = new DrawerAdapter(
                 mApp.getFeedActivity(), R.layout.drawer_item, 
-                        mApp.getDatabase().getDrawerItems());
+                mApp.getDatabase().getDrawerItems());
 
     }
 
@@ -304,8 +306,7 @@ public class NavigationDrawer {
 
                     @Override 
                     public void onClick(DialogInterface dialog, int button) {
-                        NewFeed newFeed = new NewFeed(mApp);
-                        newFeed.execute(input.getText().toString());
+                        addFeed(input.getText().toString());
                     }
 
                 });
@@ -319,6 +320,20 @@ public class NavigationDrawer {
                 });
 
         dialog.show();
+
+    }
+
+
+    public void addFeed(String url) {
+
+        DrawerItem newItem = new DrawerItem(mApp.getFeedActivity()
+                .getString(R.string.drawer_item_loading), null, null, 
+                new ArrayList <FeedItem> ());
+        mDrawerAdapter.getDrawerList().add(newItem); 
+        mDrawerAdapter.notifyDataSetChanged();
+
+        NewFeed newFeed = new NewFeed(mApp, newItem);
+        newFeed.execute(url);
 
     }
 
