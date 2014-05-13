@@ -130,7 +130,7 @@ public class Feed {
 
             }
 
-        } 
+                } 
 
     }
 
@@ -185,7 +185,7 @@ public class Feed {
             mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(true);
             new GetFeed(mApp, item).execute(item.getUrl()); 
 
-        }
+                }
 
     }
 
@@ -210,22 +210,28 @@ public class Feed {
      * Gets called from the DragListener if the user has chosen to read
      * the article later.
      */
-    public void readLater(FeedItem mFeedItem) {
+    public void readLater(FeedItem item) {
 
-        mApp.getDatabase().add(mFeedItem); 
+        mFeedAdapter.getFeedList().remove(mFeedAdapter.getFeedList().indexOf(item));
+        mFeedAdapter.notifyDataSetChanged();
+        mApp.getDatabase().add(item); 
 
     }
 
     /**
-     * Marks all the articles as read.
+     * Marks all the articles in the listview as read.
      */
     public void markAllAsRead() {
 
         ArrayList <FeedItem> feedList = mFeedAdapter.getFeedList();
-
         mApp.getDatabase().add(feedList);
+        
         feedList.clear();
-
+        mFeedAdapter.notifyDataSetChanged();
+        
+        if (lastDrawerItem.getUrl() == null)
+            mApp.getDatabase().delete("savedItems", null);
+            
         loadFeed(lastDrawerItem, false);
 
     }
