@@ -11,7 +11,7 @@ public class DrawerItem {
 
     public DrawerItem(String mFeedName, String mUrl, String mEncoding, 
             ArrayList <FeedItem> mFeedList) {
-        
+
         this.mFeedName = mFeedName;
         this.mUrl = mUrl;
         this.mEncoding = mEncoding;
@@ -20,14 +20,14 @@ public class DrawerItem {
     }
 
     public String getFeedName() {
-    
+
         return mFeedName;
     }
 
     public String getUrl() {
-    
+
         return mUrl;
-    
+
     }
 
     public String getEncoding() {
@@ -37,7 +37,7 @@ public class DrawerItem {
     }
 
     public ArrayList <FeedItem> getFeedList() {
-    
+
         return mFeedList;
 
     }
@@ -46,4 +46,14 @@ public class DrawerItem {
         this.mFeedName = name;
     }
 
-}
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public void setEncoding(String encoding) {
+        this.encoding = encoding;
+    }
+
+    public void setFeedList(ArrayList <FeedItem> feedList) {
+        this.feedList = feedList;
+    }
