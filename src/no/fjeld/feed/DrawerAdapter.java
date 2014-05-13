@@ -52,6 +52,15 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
         if (drawerItem != null) 
             viewHolder.mFeedName.setText(drawerItem.getFeedName());
 
+        if (drawerItem.getFeedName().equals(mActivity.getString(
+                        R.string.drawer_item_loading))) 
+            ((LinearLayout) view.findViewById(R.id.drawer_item_progress))
+                .setVisibility(View.VISIBLE);
+        else    
+            ((LinearLayout) view.findViewById(R.id.drawer_item_progress))
+                .setVisibility(View.GONE);
+
+
         return view;
 
     }
