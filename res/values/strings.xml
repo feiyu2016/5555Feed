@@ -21,6 +21,7 @@
     <string name="drawer_footer_preferences">PREFERENCES</string>
     <string name="drawer_footer_about">ABOUT</string>   
 
+    <string name="drawer_item_loading">Loading feed..</string>
     <string name="drawer_item_change_title">Change title</string>
 
     <!-- String for the New Feed-dialog -->
