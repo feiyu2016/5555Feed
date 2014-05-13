@@ -19,11 +19,14 @@ import org.xml.sax.*;
 public class NewFeed extends AsyncTask <String, Integer, String> {
 
     FeedApplication mApp;
+
+    DrawerItem newItem;
     String mUrl;
 
-    NewFeed(FeedApplication app) {
+    NewFeed(FeedApplication app, DrawerItem newItem) {
 
         this.mApp = app;
+        this.newItem = newItem;
         
     }
 
@@ -142,18 +145,17 @@ public class NewFeed extends AsyncTask <String, Integer, String> {
      */
     public void addFeed(String feedName, String encoding) {
 
-        DrawerItem drawerItem = new DrawerItem(feedName, mUrl, encoding, new ArrayList <FeedItem> ());
+        newItem.setFeedName(feedName);
+        newItem.setUrl(mUrl);
+        newItem.setEncoding(encoding); 
         
-        mApp.getDatabase().add(drawerItem);
-        
-        mApp.getNavDrawer().getDrawerAdapter().getDrawerList().add(drawerItem);
         mApp.getNavDrawer().getDrawerAdapter().notifyDataSetChanged();
+        mApp.getDatabase().add(newItem);
 
     }
 
     /**
      * Shows a dialog if mFeedName is null.
-
      * This could mean that the url is invalid, or that 
      * the RSS-feed is malformed.
      */
