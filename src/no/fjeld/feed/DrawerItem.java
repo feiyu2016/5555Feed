@@ -47,13 +47,15 @@ public class DrawerItem {
     }
 
     public void setUrl(String url) {
-        this.url = url;
+        this.mUrl = url;
     }
 
     public void setEncoding(String encoding) {
-        this.encoding = encoding;
+        this.mEncoding = encoding;
     }
 
     public void setFeedList(ArrayList <FeedItem> feedList) {
-        this.feedList = feedList;
+        this.mFeedList = feedList;
     }
+
+}
