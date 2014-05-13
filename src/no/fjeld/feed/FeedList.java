@@ -12,6 +12,7 @@ public class FeedList extends ArrayList <FeedItem> {
     public ArrayList <String> readItems;
     public ArrayList <FeedItem> savedItems;
 
+    // TODO: This function needs some serious effectivisation.
     @Override
     public boolean add(FeedItem item) {
 
