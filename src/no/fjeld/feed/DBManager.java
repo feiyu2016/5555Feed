@@ -22,12 +22,20 @@ public class DBManager extends SQLiteOpenHelper {
     private static final String KEY_URL= "url";
     private static final String KEY_ENCODING = "encoding";
 
+    /**
+     * Constructor for the class DBManager.
+     *
+     * @param context The 'FeedActivity'-context.
+     */
     public DBManager(Context context) {
 
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
     } 
 
+    /**
+     * Creates all the tables for the database.
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
 
@@ -71,7 +79,7 @@ public class DBManager extends SQLiteOpenHelper {
     public void delete(String table, String url) {
 
         SQLiteDatabase db = getWritableDatabase();
-        
+
         if (url != null)
             db.delete(table, KEY_URL + " = ?", new String [] {url});
         else
@@ -81,6 +89,11 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Updates the values for a DrawerItem.
+     *
+     * @param item The DrawerItem with the new values.
+     */
     public void update(DrawerItem item) {
 
         SQLiteDatabase db = getWritableDatabase();
@@ -92,11 +105,16 @@ public class DBManager extends SQLiteOpenHelper {
 
         db.update(TABLE_DRAWER_ITEMS, values, KEY_URL + " = ?",
                 new String [] { item.getUrl() });
-        
+
         db.close();
 
     }
 
+    /**
+     * Adds a new DrawerItem to the database.
+     *
+     * @param item The new DrawerItem
+     */
     public void add(DrawerItem item) {
 
         SQLiteDatabase db = getWritableDatabase();
@@ -111,6 +129,11 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Adds a new FeedItem to the list of saved articles.
+     *
+     * @param item The FeedItem with the values to save.
+     */
     public void add(FeedItem item) {
 
         SQLiteDatabase db = getWritableDatabase();
@@ -125,6 +148,11 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Adds an url to the list of read articles.
+     *
+     * @param url Url of the item that is marked as read.
+     */
     public void add(String url) {
 
         SQLiteDatabase db = getWritableDatabase();
@@ -137,8 +165,14 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Is called when the user chooses to mark all
+     * articles as read.
+     *
+     * @param list The list which contains the articles.
+     */
     public void add(ArrayList <FeedItem> list) {
-        
+
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -152,6 +186,11 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Returns a list of all items in the NavigationDrawer.
+     *
+     * @return drawerItems The list with DrawerItems.
+     */
     public ArrayList <DrawerItem> getDrawerItems() {
 
         ArrayList <DrawerItem> drawerItems = new ArrayList <DrawerItem> ();
@@ -177,6 +216,11 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Returns a list of all saved articles.
+     *
+     * @return savedItems The list with the saved FeedItems.
+     */
     public ArrayList <FeedItem> getSavedItems() {
 
         ArrayList <FeedItem> savedItems = new ArrayList <FeedItem> ();
@@ -202,6 +246,11 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Returns a list of urls the user has marked as 'read'.
+     *
+     * @return readItems The list with the urls.
+     */.
     public ArrayList <String> getReadItems() {
 
         ArrayList <String> readItems = new ArrayList <String> ();
