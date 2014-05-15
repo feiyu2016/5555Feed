@@ -4,15 +4,11 @@ import java.util.*;
 
 public class FeedList extends ArrayList <FeedItem> {
 
-    /**
-     * Actually not necessary since the list will be cleared before an item is
-     * saved to the database.
-     */
     private static final long serialVersionUID = -6728285211029336860L;
     public ArrayList <String> readItems;
     public ArrayList <FeedItem> savedItems;
 
-    // TODO: This function needs some serious effectivisation.
+    // TODO: This function needs some serious optimization.
     @Override
     public boolean add(FeedItem item) {
 
