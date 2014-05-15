@@ -26,7 +26,7 @@ public class NavigationDrawer {
      * Constructor for the class NavgigationDrawer.
      *
      * @param view  The FeedActivity content view.
-     * @param app  The Application-object for this app.
+     * @param app   The Application-object for this app.
      */
     public NavigationDrawer(View view, FeedApplication app) {
 
@@ -103,46 +103,40 @@ public class NavigationDrawer {
      */
     private void addViews() {
 
+        LayoutInflater inflater = (LayoutInflater) mApp.getFeedActivity()
+            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
         /* Headers */
-        mDrawerListView.addHeaderView(getItemView(
-                    R.id.drawer_item_text,
+        mDrawerListView.addHeaderView(getItemView(inflater,
                     R.string.drawer_header_all_feeds));
-
-        mDrawerListView.addHeaderView(getItemView(
-                    R.id.drawer_item_text,
+        mDrawerListView.addHeaderView(getItemView(inflater,
                     R.string.drawer_header_saved_items));
-
-        mDrawerListView.addHeaderView(getView(R.layout.drawer_group,
-                    R.id.drawer_group_text,
-                    R.string.drawer_group_subfeeds, 0));
+        mDrawerListView.addHeaderView(getItemView(inflater));
 
         /* Footers */
-        mDrawerListView.addFooterView(((LayoutInflater) mApp.getFeedActivity()
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(
+        mDrawerListView.addFooterView(inflater.inflate(
                     R.layout.drawer_footer_divider, null));
-
-        mDrawerListView.addFooterView(getView(R.layout.drawer_footer,
-                    R.id.drawer_footer_text,
-                    R.string.drawer_footer_preferences,
-                    R.drawable.ic_icon_settings));
-
-        mDrawerListView.addFooterView(getView(R.layout.drawer_footer,
-                    R.id.drawer_footer_text,
-                    R.string.drawer_footer_about,
-                    R.drawable.ic_icon_about));
+        mDrawerListView.addFooterView(getItemView(inflater,
+                    R.drawable.ic_icon_settings,
+                    R.string.drawer_footer_preferences));
+        mDrawerListView.addFooterView(getItemView(inflater,
+                    R.drawable.ic_icon_about,
+                    R.string.drawer_footer_about));
 
     } 
 
-
-    private FrameLayout getItemView(int textResId, int stringResId) {
-
-        LayoutInflater inflater = (LayoutInflater) mApp.getFeedActivity()
-            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    /**
+     * Inflates a view with the standard DrawerItem-layout.
+     *
+     * @param  stringResId The resource id for the String to use for the TextView.
+     * @return item        The FrameLayout for the drawerlistitem.
+     */
+    private FrameLayout getItemView(LayoutInflater inflater, int stringResId) {
 
         FrameLayout item = (FrameLayout) inflater.inflate(
                 R.layout.drawer_item, null);
 
-        TextView itemText = (TextView) item.findViewById(textResId);
+        TextView itemText = (TextView) item.findViewById(R.id.drawer_item_text);
         itemText.setText(mApp.getFeedActivity().getResources()
                 .getString(stringResId));
 
@@ -151,51 +145,52 @@ public class NavigationDrawer {
     }
 
     /**
-     * Returns an inflated LinearLayout with the correct content
-     * according to the parameters.
+     * Inflates the drawer_footer.xml-view.
      *
-     * @param  layoutResId The layout-xml to be inflated.
-     * @param  textResId   The TextView to be set.
-     * @param  stringResId The String-resource for the TextView.
-     * @param  imgResId    The Drawable-resource for the layout.
+     * @param inflater    The LayoutInflater-object.
+     * @param imgResId    The resource id for the image.
+     * @param stringResId The resource id for the string.
      *
-     * @return mListItem    The new LinearLayout.
+     * @return item       The LinearLayout for the drawerlistitem.
      */
-    private LinearLayout getView(int layoutResId, int textResId, 
-            int stringResId, int imgResId) {
-
-        LayoutInflater inflater = (LayoutInflater) mApp.getFeedActivity()
-            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    private LinearLayout getItemView(LayoutInflater inflater, int imgResId, int stringResId){
 
         LinearLayout item = (LinearLayout) inflater.inflate(
-                layoutResId, null);
+                R.layout.drawer_footer, null);
 
-        TextView itemText = (TextView) item.findViewById(textResId);
+        TextView itemText = (TextView) item.findViewById(
+                R.id.drawer_footer_text);
         itemText.setText(mApp.getFeedActivity().getResources()
                 .getString(stringResId));
 
-        if (imgResId != 0) {
-
-            ImageView itemImage = (ImageView) item.findViewById(
-                    R.id.drawer_footer_image);
-            itemImage.setImageResource(imgResId);
-
-        }
-
-        /* This is the case where we add the "Add Feed"-button */
-        if (stringResId == R.string.drawer_group_subfeeds) {
-
-            ((LinearLayout) item.findViewById(R.id.drawer_group_new_feed))
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        newFeed();
-                    }
-                });
-
-        }
+        ImageView itemImage = (ImageView) item.findViewById(
+                R.id.drawer_footer_image);
+        itemImage.setImageResource(imgResId);
 
         return item;
+
+    }
+
+    /**
+     * Inflates the group-view with the 'Add feed'-button.
+     *
+     * @param  inflater The LayoutInflater-object.
+     * @return group    The LinearLayout for the group-view.
+     */
+    private LinearLayout getItemView(LayoutInflater inflater) { 
+
+        LinearLayout group = (LinearLayout) inflater.inflate(
+                R.layout.drawer_group, null);
+
+        ((LinearLayout) group.findViewById(R.id.drawer_group_new_feed))
+            .setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view){
+                    newFeed();
+                }
+            });
+
+        return group;
 
     }
 
@@ -237,7 +232,7 @@ public class NavigationDrawer {
      */
     private void drawerItemClicked(int position) {
 
-        int mDrawerSize = mDrawerListView.getChildCount();
+        int drawerSize = mDrawerListView.getChildCount();
 
         if (position == 0) {                        // All feeds
 
@@ -249,15 +244,15 @@ public class NavigationDrawer {
             mDrawerLayout.closeDrawer(Gravity.LEFT);
             mApp.getFeed().savedFeeds();
 
-        } else if (position == mDrawerSize - 2) {   // Preferences
+        } else if (position == drawerSize - 2) {    // Preferences
 
             mApp.getFeedActivity().startActivity(new Intent(
                         mApp.getFeedActivity(), PreferencesActivity.class));
 
-        } else if (position == mDrawerSize - 1) {   // About
+        } else if (position == drawerSize - 1) {    // About
 
 
-        } else if (position > 2 && position < mDrawerSize - 2) { // Feed
+        } else if (position > 2 && position < drawerSize - 2) { // Feed
 
             mDrawerLayout.closeDrawer(Gravity.LEFT);
 
@@ -278,14 +273,13 @@ public class NavigationDrawer {
      */ 
     public void newFeed() {
 
+        /* Some final-modifiers needed for inner class access. */
         final Activity activity = mApp.getFeedActivity();
-
         final EditText input = new EditText(activity);
         input.setHint(R.string.new_feed_hint);
 
         /* Shows the keyboard */
         input.postDelayed(new Runnable() {
-
             @Override
             public void run() {
                 ((InputMethodManager) activity.getSystemService(
@@ -303,7 +297,6 @@ public class NavigationDrawer {
         /* The "OK"-button */
         dialog.setPositiveButton(R.string.new_feed_ok,
                 new DialogInterface.OnClickListener() {
-
                     @Override 
                     public void onClick(DialogInterface dialog, int button) {
                         addFeed(input.getText().toString());
@@ -315,15 +308,19 @@ public class NavigationDrawer {
         dialog.setNegativeButton(R.string.new_feed_cancel, 
                 new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int button) {
-                    }
+                    public void onClick(DialogInterface dialog, int button) {}
                 });
 
         dialog.show();
 
     }
 
-
+    /**
+     * Adds a new Feed to the drawer list and calls a
+     * new AsyncTask to get the data needed.
+     *
+     * @param url The url for the new Feed.
+     */
     public void addFeed(String url) {
 
         DrawerItem newItem = new DrawerItem(mApp.getFeedActivity()
@@ -355,7 +352,7 @@ public class NavigationDrawer {
 
         /**
          * Sets the clicked views fontstyle to bold on click,
-         * and reset the last clicked.
+         * and resets the last clicked items fontstyle.
          */
         public void setItemView(View view, int position) {
 
