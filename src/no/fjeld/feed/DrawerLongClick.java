@@ -222,11 +222,11 @@ public class DrawerLongClick implements OnItemLongClickListener {
                         @Override 
                         public void onClick(DialogInterface dialog, int button) {
 
-                            /* Updates the title for the DrawerItem. *//
+                            /* Updates the title for the DrawerItem. */
                             mDrawerItem.setFeedName(input.getText().toString());
                             mDrawerAdapter.notifyDataSetChanged();
 
-                            /* Updates the title for the DrawerItem. *//
+                            /* Updates the title for the DrawerItem. */
                             mApp.getDatabase().update(mDrawerItem);
 
                         }
