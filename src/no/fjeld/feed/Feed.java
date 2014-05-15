@@ -212,9 +212,12 @@ public class Feed {
 
         Activity activity = mApp.getFeedActivity();
 
+        /* Loads the url in the WebView-class displayed in the app. */ 
         if (mSharedPrefs.getBoolean("preference_open_in", true)) 
             activity.startActivity(new Intent(activity, WebViewActivity.class)
                     .putExtra("title", title).putExtra("url", url));
+
+        /* Loads the url in the default browser. */
         else
             activity.startActivity(new Intent(Intent.ACTION_VIEW, 
                         Uri.parse(url)));
