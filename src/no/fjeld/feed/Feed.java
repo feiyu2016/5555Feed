@@ -20,13 +20,13 @@ public class Feed {
 
     private SharedPreferences mSharedPrefs;
 
-    public DrawerItem lastDrawerItem;
+    public DrawerItem lastDrawerItem; // The 'active' DrawerItem.
 
     /**
      * Constructor for the class Feed.
      *
      * @param view The FeedActivity content view.
-     * @param app The Application-object for this app.
+     * @param app  The Application-object for this app.
      */
     public Feed(View view, FeedApplication app) {
 
@@ -57,7 +57,7 @@ public class Feed {
         mFeedListView.addHeaderView(listMargin);
         mFeedListView.addFooterView(listMargin);
 
-        /* If the user does a LongClick on a item, the DragListener 
+        /* If the user does a LongClick on a item, the FeedDragListener 
          * for the list will be called. */
         mFeedListView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
@@ -111,11 +111,14 @@ public class Feed {
 
         mFeedAdapter.getFeedList().readItems = mApp.getDatabase().getReadItems();
         mFeedAdapter.getFeedList().savedItems = mApp.getDatabase().getSavedItems();
+
         mApp.getSwipeRefresh().getSwipeLayout().setEnabled(true);
 
         for (DrawerItem drawerItem : mApp.getNavDrawer().getDrawerAdapter()
                 .getDrawerList()) {
 
+            /* If the DrawerItems list already has items, fill the 
+             * ListView with these. */
             if (drawerItem.getFeedList().size() > 0) {
 
                 for(FeedItem feedItem : drawerItem.getFeedList()) 
@@ -123,6 +126,8 @@ public class Feed {
 
                 mFeedAdapter.notifyDataSetChanged();
 
+                /* If the DrawerItems list is empty, create a new AsyncTask
+                 * to download items. */
             } else {
 
                 mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(true);
@@ -130,7 +135,7 @@ public class Feed {
 
             }
 
-                } 
+        } 
 
     }
 
@@ -143,6 +148,7 @@ public class Feed {
                 .getString(R.string.drawer_header_saved_items), null, null, 
                 mApp.getDatabase().getSavedItems());
 
+        /* No need for the 'Refresh'-functionality here. */
         mApp.getSwipeRefresh().getSwipeLayout().setEnabled(false);
 
         loadFeed(drawerItem, false);
@@ -157,16 +163,23 @@ public class Feed {
      */
     public void loadFeed(DrawerItem item, boolean shouldRefresh) {
 
+        /* If the clicked DrawerItem isn't the same as the last one,
+         * clear the list. */
         if (item != lastDrawerItem) {
             mFeedAdapter.getFeedList().clear();
             mFeedAdapter.notifyDataSetChanged();
         }
 
+        /* Means that this item has an url, and we can refresh
+         * the list if we want to. */
         if (item.getUrl() != null) 
             mApp.getSwipeRefresh().getSwipeLayout().setEnabled(true);
 
         lastDrawerItem = item;
 
+        /* If the items FeedList has items, and we have chosen
+         * not to download anything new, fill the ListView with
+         * existing items. */
         if (item.getFeedList().size() > 0 && !shouldRefresh) {
 
             mFeedAdapter.getFeedList().readItems 
