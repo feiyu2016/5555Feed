@@ -12,6 +12,13 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
     private Activity mActivity;
     private ArrayList <DrawerItem> mDrawerItems;
 
+    /**
+     * Constructor for the class DrawerAdapter.
+     *
+     * @param activity     FeedActivity-pointer
+     * @param resourceView The layout-id for the DrawerItem.
+     * @param drawerList   The list which contains DrawerItems.
+     */
     public DrawerAdapter(Activity activity, int resourceView, 
             ArrayList <DrawerItem> drawerList) {
 
@@ -44,6 +51,7 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
                         R.layout.drawer_item, null);
 
             viewHolder = new ViewHolder();
+            
             viewHolder.mFeedName = (TextView) view.findViewById(
                     R.id.drawer_item_text);
 
@@ -55,6 +63,7 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
 
         DrawerItem drawerItem = mDrawerItems.get(position);
 
+        /* Sets the title for the TextView in the DrawerItem-layout. */ 
         if (drawerItem != null) 
             viewHolder.mFeedName.setText(drawerItem.getFeedName());
 

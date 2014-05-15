@@ -10,6 +10,13 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
     private Activity mActivity;
     private FeedList mFeedList;
 
+    /**
+     * Constructor for the class FeedAdapter.
+     *
+     * @param activity     FeedActivity-pointer.
+     * @param resourceView The layout-id for the FeedItem.
+     * @param drawerList   The list which contains FeedItems.
+     */
     public FeedAdapter(Activity activity, int resourceView, FeedList feedList) {
 
         super(activity, resourceView, feedList);
@@ -26,12 +33,18 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
 
     }
 
+    /**
+     * Returns the view for the current FeedItem.
+     *
+     * @return view The FeedItem-view.
+     */
     public View getView(int position, View view, ViewGroup parent) {
 
         ViewHolder viewHolder;
 
         if (view == null) {
 
+            /* Inflates the layout for the FeedItem. */
             view = ((LayoutInflater) mActivity.getSystemService(Context.
                         LAYOUT_INFLATER_SERVICE)).inflate(R.layout.list_item, null);
 
@@ -49,6 +62,7 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
 
         FeedItem feedItem = mFeedList.get(position);
 
+        /* Sets the values for the views in the FeedItem-layout. */
         if (feedItem != null)
             setItemView(viewHolder, feedItem);
 
@@ -59,8 +73,8 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
     /**
      * Sets the text and bitmaps for the FeedItem.
      *
-     * If the Bitmap in the item is null, the 
-     * ImageView-visibility is set to Gone.
+     * If the Bitmap in the FeedItem is null, the 
+     * ImageView-visibility is set to View.GONE.
      */
     private void setItemView(ViewHolder viewHolder, FeedItem feedItem) {
 
@@ -75,6 +89,11 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
 
     }
 
+    /**
+     * Returns the adapters ArrayList.
+     *
+     * @return mFeedList The ArrayList with the FeedItems.
+     */
     public FeedList getFeedList() {
 
         return mFeedList;
