@@ -27,12 +27,18 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
 
     }
 
+    /**
+     * Returns the view for the current DrawerItem.
+     *
+     * @return view The DrawerItem-view.
+     */
     public View getView(int position, View view, ViewGroup parent) {
 
         ViewHolder viewHolder;
 
         if (view == null) {
 
+            /* Inflates the layout for the DrawerItem. */
             view = ((LayoutInflater) mActivity.getSystemService(Context.
                         LAYOUT_INFLATER_SERVICE)).inflate(
                         R.layout.drawer_item, null);
@@ -52,6 +58,9 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
         if (drawerItem != null) 
             viewHolder.mFeedName.setText(drawerItem.getFeedName());
 
+        /* If the DrawerItem is a newly added item that has not loaded
+         * all it's values yet, it displays the title 'Loading feed..'
+         * and sets the ProgressBar as visible. */
         if (drawerItem.getFeedName().equals(mActivity.getString(
                         R.string.drawer_item_loading))) 
             ((LinearLayout) view.findViewById(R.id.drawer_item_progress))
@@ -67,6 +76,8 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
 
     /**
      * Returns the adapters ArrayList.
+     *
+     * @return mDrawerItems The ArrayList with the DrawerItems.
      */
     public ArrayList <DrawerItem> getDrawerList() {
 
@@ -74,6 +85,10 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
 
     }
 
+    /** 
+     * The notifyDataSetChanged is overridden
+     * to sort the list when something has changed.
+     */
     @Override
     public void notifyDataSetChanged() {
 
@@ -83,7 +98,8 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
     }
 
     /**
-     * Sorts the items alphabetically based on their titles. 
+     * Sorts mDrawerItems (list with the DrawerItem-objects) 
+     * alphabetically based on their titles. 
      */
     private void sortList() {
 
