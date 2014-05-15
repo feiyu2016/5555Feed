@@ -29,6 +29,12 @@ public class FeedDragListener implements View.OnDragListener {
     private int x;
     private int y;
 
+    /**
+     * Constructor for the class FeedDragListener.
+     *
+     * @param view The apps main-view.
+     * @param app  The app-pointer used to access global pointers.
+     */
     public FeedDragListener(View view, FeedApplication app) {
 
         this.mView = view;   
@@ -102,11 +108,15 @@ public class FeedDragListener implements View.OnDragListener {
      */
     private void init(DragEvent event) {
 
+        /* The FeedItem that is pressed */
         mFeedItem = (FeedItem) event.getLocalState();
+
+        /* The main view for the popup */
         mPopupView = (LinearLayout) mView.findViewById(R.id.popup_view);
 
         ImageView image = (ImageView) mView.findViewById(R.id.popup_image);
 
+        /* If the FeedItems image is null, hide it. */
         if (mFeedItem.getImage() == null)
             image.setVisibility(View.GONE);
         else {
@@ -114,6 +124,7 @@ public class FeedDragListener implements View.OnDragListener {
             image.setImageBitmap(mFeedItem.getImage());
         }
 
+        /* Sets the correct values for the views in the popup. */
         ((TextView) mView.findViewById(R.id.popup_feed_title))
             .setText(mFeedItem.getTitle());
         ((TextView) mView.findViewById(R.id.popup_feed_description))
@@ -122,6 +133,8 @@ public class FeedDragListener implements View.OnDragListener {
         mReadNow = (TextView) mView.findViewById(R.id.popup_read_now);
         mReadLater = (TextView) mView.findViewById(R.id.popup_read_later);
 
+        /* Rect-objects used to find out if the user drags the finger
+         * over the mReadNow- or mReadLater-view. */
         mReadNowRect = new Rect(
                 mReadNow.getLeft(), mReadNow.getTop(),
                 mReadNow.getLeft() + mReadNow.getWidth(), 
@@ -131,6 +144,7 @@ public class FeedDragListener implements View.OnDragListener {
                 mReadLater.getLeft() + mReadLater.getWidth(), 
                 mReadLater.getTop() + mReadLater.getHeight());
 
+        /* The fading background. */
         mTrans = (TransitionDrawable) ((LinearLayout) 
                 mView.findViewById(R.id.fading_background)).getBackground();
 
