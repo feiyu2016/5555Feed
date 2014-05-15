@@ -122,10 +122,12 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
                 description = getValue(nodeList.item(i), "description");
                 link = getValue(nodeList.item(i), "link");
 
+                /* Gets the publication date of the article */
                 pubDate = (getValue(nodeList.item(i), "pubDate") != null)
                     ? getValue(nodeList.item(i), "pubDate")
                     : getValue(nodeList.item(i), "dc:date"); 
 
+                /* Gets the imageurl if any. */
                 imgUrl = (getEnclosure((Element) nodeList.item(i)) != null) 
                     ? getEnclosure((Element) nodeList.item(i))
                     : getUrl(description); 
@@ -182,7 +184,6 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
 
     /**
      * Looks for an <img> tag in the description. 
-     *
      * If found, the value will be returned as the url for the
      * image to download.
      */
@@ -211,6 +212,11 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
 
         private int itemNumber;
 
+        /**
+         * Constructor for the class GetImage.
+         *
+         * @param itemNumber The position of current item.
+         */
         GetImage(int itemNumber) {
 
             this.itemNumber = itemNumber;
@@ -237,9 +243,9 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
                 if (connection.getResponseCode() != 200)
                     throw new Exception("Error in connection.");
 
-                InputStream mInputStream = connection.getInputStream();
+                InputStream inputStream = connection.getInputStream();
 
-                return BitmapFactory.decodeStream(mInputStream);
+                return BitmapFactory.decodeStream(inputStream);
 
             }
 
@@ -252,24 +258,23 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
         @Override
         protected void onPostExecute(Bitmap image) {
 
+            /* Just in case of an empty item. */
             if (mTitle.length() > 5) { 
-                    
-                mFeedList.add(new FeedItem(mTitle, mDescription, 
-                                mUrl, mPubDate, image, mFeedName));
+    
+                FeedItem newItem = new FeedItem(mTitle, mDescription,
+                    mUlr, mPubDate, image, mFeedName);    
 
-                mApp.getFeed().getFeedAdapter().getFeedList().
-                    readItems = mApp.getDatabase().getReadItems();
-                mApp.getFeed().getFeedAdapter().getFeedList().
-                    savedItems = mApp.getDatabase().getSavedItems();
-
-                mApp.getFeed().getFeedAdapter().getFeedList()
-                    .add(new FeedItem(mTitle, mDescription, 
-                                mUrl, mPubDate, image, mFeedName));
-
+                /* Add the new FeedItem to the DrawerItems mFeedList, and to the
+                 * FeedAdapters mFeedList. */
+                mFeedList.add(newItem);
+                mApp.getFeed().getFeedAdapter().getFeedList().add(newItem);
+                
                 mApp.getFeed().getFeedAdapter().notifyDataSetChanged();
 
             }
 
+            /* If this is the last item from the feed, 
+             * set the refresh-state of the progressbar to false. */
             if (itemNumber == mNodeListLength - 1)
                 mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(false);
 
