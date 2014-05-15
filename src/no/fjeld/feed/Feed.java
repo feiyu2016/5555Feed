@@ -223,16 +223,31 @@ public class Feed {
      */
     public void markAllAsRead() {
 
-        ArrayList <FeedItem> feedList = mFeedAdapter.getFeedList();
-        mApp.getDatabase().add(feedList);
-        
-        feedList.clear();
+        mApp.getDatabase().add(mFeedAdapter.getFeedList());
+
+        mFeedAdapter.getFeedList().clear();
         mFeedAdapter.notifyDataSetChanged();
-        
+
         if (lastDrawerItem.getUrl() == null)
             mApp.getDatabase().delete("savedItems", null);
-            
-        loadFeed(lastDrawerItem, false);
+
+    }
+
+    /**
+     * Marks an article as read by adding it to
+     * the 'readItems' table in the database.
+     *
+     * @param item The FeedItem to add to the DB.
+     */
+    public void markAsRead(FeedItem item) {
+
+        mApp.getDatabase().add(item.getUrl()); 
+
+        mFeedAdapter.getFeedList().remove(mFeedAdapter.getFeedList().indexOf(item));
+        mFeedAdapter.notifyDataSetChanged();
+
+        if (lastDrawerItem.getUrl() == null)
+            mApp.getDatabase().delete("savedItems", item.getUrl());
 
     }
 
