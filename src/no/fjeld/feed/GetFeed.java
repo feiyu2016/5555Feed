@@ -262,7 +262,7 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
             if (mTitle.length() > 5) { 
     
                 FeedItem newItem = new FeedItem(mTitle, mDescription,
-                    mUlr, mPubDate, image, mFeedName);    
+                    mUrl, mPubDate, image, mFeedName);    
 
                 /* Add the new FeedItem to the DrawerItems mFeedList, and to the
                  * FeedAdapters mFeedList. */
