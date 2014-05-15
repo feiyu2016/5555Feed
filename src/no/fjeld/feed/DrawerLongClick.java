@@ -90,7 +90,7 @@ public class DrawerLongClick implements OnItemLongClickListener {
     /** 
      * Hides the options of the previous clicked item.
      */
-    public void closeLast() {
+    private void closeLast() {
 
         mDrawerOptions.setVisibility(View.INVISIBLE);
         mDrawerText.setVisibility(View.VISIBLE);
@@ -102,7 +102,7 @@ public class DrawerLongClick implements OnItemLongClickListener {
     /**
      * Initializes the animations to be used for the DrawerItem-view.
      */
-    public void initAnims() {
+    private void initAnims() {
 
         mSlideIn = AnimationUtils.loadAnimation(mApp.getFeedActivity().
                 getBaseContext(), R.anim.slide_in_left);
@@ -116,7 +116,7 @@ public class DrawerLongClick implements OnItemLongClickListener {
     /**
      * Initializes the option-views and gives them OnClickListeners.
      */
-    public void initViews() {
+    private void initViews() {
 
         mDrawerText = (TextView) mView.findViewById(
                 R.id.drawer_item_text); 
