@@ -173,6 +173,13 @@ public class NewFeed extends AsyncTask <String, Integer, String> {
 
         dialog.show();
 
+        ArrayList <DrawerItem> drawerItems = mApp.getNavDrawer().
+                getDrawerAdapter().getDrawerList();
+       
+        /* Removes the 'Loading feed..'-iten from the DrawerList. */ 
+        drawerItems.remove(drawerItems.indexOf(newItem)); 
+        mApp.getNavDrawer().getDrawerAdapter().notifyDataSetChanged();
+
     }
 
 }
