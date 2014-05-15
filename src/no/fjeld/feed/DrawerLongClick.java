@@ -18,6 +18,7 @@ public class DrawerLongClick implements OnItemLongClickListener {
     /* Values to determine which action to take. */ 
     private static final int EDIT = 0;  
     private static final int DELETE = 1;
+    private static final int CANCEL = 2;
     private int action;
 
     private FeedApplication mApp;
@@ -145,6 +146,7 @@ public class DrawerLongClick implements OnItemLongClickListener {
 
         mCancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View cancelView) {
+                action = CANCEL;
                 close(); 
             }
         }); 

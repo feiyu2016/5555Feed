@@ -65,19 +65,6 @@ public class PreferencesActivity extends PreferenceActivity {
 
                     });
 
-            clearSaved.setOnPreferenceClickListener(
-                    new OnPreferenceClickListener() {
-
-                        @Override
-                        public boolean onPreferenceClick(Preference preference) {
-
-                            mApp.getDatabase().delete("savedItems", null);
-                            return true;
-
-                        }
-
-                    });
-
         }
 
     }
