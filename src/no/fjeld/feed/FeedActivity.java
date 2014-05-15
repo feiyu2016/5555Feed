@@ -43,6 +43,7 @@ public class FeedActivity extends Activity {
         boolean drawerOpen = mApp.mNavDrawer.getDrawerLayout()
             .isDrawerOpen(Gravity.LEFT);
 
+        /* Sets the 'Mark all as read'-option invsible when Drawer is open. */
         menu.findItem(R.id.action_mark_all).setVisible(!drawerOpen);
 
         return super.onPrepareOptionsMenu(menu);
@@ -62,7 +63,9 @@ public class FeedActivity extends Activity {
 
     }
 
-
+    /**
+     * Initializes the global values for the application.
+     */
     private void initApp() {
 
         mView = getWindow().getDecorView();
@@ -77,7 +80,5 @@ public class FeedActivity extends Activity {
         mApp.mFeed = new Feed(mView, mApp);
 
     }
-
-
 
 }
