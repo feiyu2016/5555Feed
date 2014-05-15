@@ -250,7 +250,7 @@ public class DBManager extends SQLiteOpenHelper {
      * Returns a list of urls the user has marked as 'read'.
      *
      * @return readItems The list with the urls.
-     */.
+     */
     public ArrayList <String> getReadItems() {
 
         ArrayList <String> readItems = new ArrayList <String> ();
