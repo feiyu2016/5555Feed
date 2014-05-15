@@ -135,7 +135,7 @@ public class Feed {
 
             }
 
-        } 
+                } 
 
     }
 
@@ -177,15 +177,17 @@ public class Feed {
 
         lastDrawerItem = item;
 
+        /* Updates the 'readItems' and 'savedItems' lists in 
+         * the FeedList-class. */
+        mFeedAdapter.getFeedList().readItems 
+            = mApp.getDatabase().getReadItems();
+        mFeedAdapter.getFeedList().savedItems 
+            = mApp.getDatabase().getSavedItems();
+
         /* If the items FeedList has items, and we have chosen
          * not to download anything new, fill the ListView with
          * existing items. */
         if (item.getFeedList().size() > 0 && !shouldRefresh) {
-
-            mFeedAdapter.getFeedList().readItems 
-                = mApp.getDatabase().getReadItems();
-            mFeedAdapter.getFeedList().savedItems 
-                = mApp.getDatabase().getSavedItems();
 
             for (FeedItem feedItem : item.getFeedList())
                 mFeedAdapter.getFeedList().add(feedItem); 
@@ -198,7 +200,7 @@ public class Feed {
             mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(true);
             new GetFeed(mApp, item).execute(item.getUrl()); 
 
-                }
+        }
 
     }
 
