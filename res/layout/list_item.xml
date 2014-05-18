@@ -1,4 +1,4 @@
-<!-- The item that displays the feed. -->
+<!-- Layout for the item that displays an entry from an RSS-feed -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -6,6 +6,7 @@
     android:orientation="horizontal" 
     android:background="@drawable/bg_list_item" >
 
+    <!-- ImageView for the image from the item -->
     <ImageView
         android:id="@+id/feed_image"
         android:layout_width="match_parent"
@@ -27,6 +28,7 @@
         android:paddingBottom="16dp"
         android:orientation="vertical" >
 
+        <!-- The title for the entry -->
         <TextView
             android:id="@+id/feed_title"
             android:layout_width="match_parent"
@@ -35,6 +37,7 @@
             android:singleLine="true"
             android:ellipsize="end" /> 
 
+        <!-- The description / content for the entry -->
         <TextView
             android:id="@+id/feed_description"
             android:layout_width="match_parent"
