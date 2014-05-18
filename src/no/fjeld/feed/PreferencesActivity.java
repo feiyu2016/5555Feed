@@ -45,12 +45,10 @@ public class PreferencesActivity extends PreferenceActivity {
 
         }
 
-        public void initPrefs() {
+        private void initPrefs() {
 
             Preference clearRead = (Preference) findPreference(
                     "preference_clear_read");
-            Preference clearSaved = (Preference) findPreference(
-                    "preference_clear_saved");
 
             clearRead.setOnPreferenceClickListener(
                     new OnPreferenceClickListener() {
