@@ -23,6 +23,7 @@
     <PreferenceCategory
         android:title="@string/preference_category_clean_up" />
 
+    <!-- The option to clear the table/list of 'read' items -->
     <Preference
         android:key="preference_clear_read"
         android:title="@string/preference_clear_read_title"
