@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <!-- The Layout that contains the non-drawer layouts -->
+    <!-- Layout for the main-view of the app. (not the Navigation Drawer) --> 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,7 +19,7 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp" > 
 
-            <!-- The main list that displays the RSS-feed -->
+            <!-- The list that displays the RSS-feed -->
             <ListView
                 android:id="@+id/feed_list"
                 android:layout_width="match_parent"
@@ -29,19 +29,21 @@
 
         </android.support.v4.widget.SwipeRefreshLayout>
 
-        <!-- The fading background -->
+        <!-- The bakground that fades when the user does a long
+             click on a FeedItem -->
         <LinearLayout
             android:id="@+id/fading_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent" 
             android:background="@drawable/bg_fading" />
 
-        <!-- The View that displays the inflated feed-item -->
+        <!-- The view that becomes visible when the user does
+             a long click on a FeedItem -->
         <include layout="@layout/popup_view" />
 
     </FrameLayout>
 
-    <!-- The list that contains the drawer-items -->
+    <!-- The list that contains the items in the Navigation Drawer -->
     <ListView
         android:id="@+id/drawer_list"
         android:layout_width="300dp"
