@@ -1,3 +1,5 @@
+<!-- Layout for the options-view for the RSS-feed items in the
+     Navigation Drawer. This becomes visible on long press -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_item_options"
     android:layout_width="match_parent"
@@ -12,6 +14,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1" >
 
+        <!-- The layout which represents the 'Change title'-function -->
         <LinearLayout
             android:id="@+id/drawer_option_edit"
             android:layout_width="match_parent"
@@ -27,6 +30,7 @@
 
         </LinearLayout>
 
+        <!-- The layout which represents the delete-function -->
         <LinearLayout
             android:id="@+id/drawer_option_delete"
             android:layout_width="match_parent"
@@ -44,6 +48,7 @@
 
     </LinearLayout>
 
+    <!-- A divider between the delete-button and cancel-button -->
     <LinearLayout
         android:layout_width="2dp"
         android:layout_height="match_parent"
@@ -51,6 +56,7 @@
         android:layout_marginBottom="8dp"
         android:background="@color/background" />
 
+    <!-- The layout which represents the cancel-function -->
     <LinearLayout
         android:id="@+id/drawer_option_cancel"
         android:layout_width="match_parent"
