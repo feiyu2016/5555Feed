@@ -45,6 +45,9 @@ public class PreferencesActivity extends PreferenceActivity {
 
         }
 
+        /**
+         * Provides an OnPreferenceClickListener for the 'Clear read'-option.
+         */
         private void initPrefs() {
 
             Preference clearRead = (Preference) findPreference(
