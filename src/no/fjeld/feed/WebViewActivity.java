@@ -26,6 +26,12 @@ public class WebViewActivity extends Activity {
     }
 
     @Override
+    public void onDestroy() {
+        mWebView.destroy();
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
             
         finish();
