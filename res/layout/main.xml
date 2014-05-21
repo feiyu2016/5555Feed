@@ -24,6 +24,7 @@
                 android:layout_height="match_parent"
                 android:divider="@android:color/transparent"
                 android:dividerHeight="8dp" 
+                android:listSelector="@android:color/transparent"
                 android:background="@android:color/transparent"/> 
 
         </android.support.v4.widget.SwipeRefreshLayout>
