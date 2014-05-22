@@ -56,7 +56,6 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
 
             view.setTag(viewHolder);
 
-
         } else
             viewHolder = (ViewHolder) view.getTag();
 
@@ -66,6 +65,9 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
         if (feedItem != null)
             setItemView(viewHolder, feedItem);
 
+        view.setOnTouchListener(new FeedItemTouchListener(
+                    (FeedApplication) mActivity.getApplication(), feedItem));
+        
         return view;
 
     }
