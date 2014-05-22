@@ -5,6 +5,7 @@ import android.content.*;
 import android.net.*;
 import android.preference.*;
 import android.view.*;
+import android.view.animation.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
 
@@ -57,25 +58,6 @@ public class Feed {
         mFeedListView.addHeaderView(listMargin);
         mFeedListView.addFooterView(listMargin);
 
-        /* If the user does a LongClick on a item, the FeedDragListener 
-         * for the list will be called. */
-        mFeedListView.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-            @Override
-            public boolean onItemLongClick(AdapterView <?> parent, View view,
-                int position, long id) {
-
-                view.startDrag(null, new View.DragShadowBuilder(),
-                    mFeedListView.getItemAtPosition(position), 0);
-
-                return true;
-
-            }
-
-        });
-
-        mFeedListView.setOnDragListener(new FeedDragListener(mView, mApp));
-
     }
 
     /**
@@ -86,6 +68,13 @@ public class Feed {
         mFeedAdapter = new FeedAdapter(mApp.getFeedActivity(), 
                 R.layout.list_item, new FeedList());
 
+    }
+
+    /**
+     * Returns the ListView.
+     */
+    public ListView getFeedListView() {
+        return mFeedListView;
     }
 
     /**
@@ -200,7 +189,7 @@ public class Feed {
             mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(true);
             new GetFeed(mApp, item).execute(item.getUrl()); 
 
-        }
+                }
 
     }
 
@@ -230,8 +219,6 @@ public class Feed {
      */
     public void readLater(FeedItem item) {
 
-        mFeedAdapter.getFeedList().remove(mFeedAdapter.getFeedList().indexOf(item));
-        mFeedAdapter.notifyDataSetChanged();
         mApp.getDatabase().add(item); 
 
     }
@@ -258,11 +245,8 @@ public class Feed {
      * @param item The FeedItem to add to the DB.
      */
     public void markAsRead(FeedItem item) {
-
+        
         mApp.getDatabase().add(item.getUrl()); 
-
-        mFeedAdapter.getFeedList().remove(mFeedAdapter.getFeedList().indexOf(item));
-        mFeedAdapter.notifyDataSetChanged();
 
         if (lastDrawerItem.getUrl() == null)
             mApp.getDatabase().delete("savedItems", item.getUrl());
