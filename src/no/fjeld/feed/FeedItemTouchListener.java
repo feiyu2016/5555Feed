@@ -105,6 +105,7 @@ public class FeedItemTouchListener implements View.OnTouchListener {
             if (Math.abs(deltaX) > mSwipeSlop) {
                 mSwiping = true;
                 mListView.requestDisallowInterceptTouchEvent(true);
+                mApp.getSwipeRefresh().getSwipeLayout().setEnabled(false);
             }
         }
 
@@ -202,6 +203,7 @@ public class FeedItemTouchListener implements View.OnTouchListener {
 
             mSwiping = false;
             mListView.setEnabled(true);
+            mApp.getSwipeRefresh().getSwipeLayout().setEnabled(true);
 
         }
 
