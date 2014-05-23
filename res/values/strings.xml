@@ -32,14 +32,14 @@
     <string name="invalid_feed_message">Invalid RSS-link</string>
     <string name="invalid_feed_ok">Ok</string>
 
-    <!-- DragAction strings -->
-    <string name="drag_read_now">Read now</string>
-    <string name="drag_read_later">Read later</string>
-
-    <!-- WebView strings -->
-    <string name="mark_as_read">Mark as read</string>
-    <string name="marked_as_read">Marked as read</string>
-
+    <!-- Swipe strings -->
+    <string name="swipe_read_later">Read later</string>
+    <string name="swipe_mark_as_read">Mark as read</string>
+    
+    <!-- Popup strings -->
+    <string name="popup_read">Read article</string>
+    <string name="popup_done">Done</string>
+    
     <!-- Preference Strings -->
     <string name="preference_category_general">General</string>
     <string name="preference_category_clean_up">Clean up</string>
