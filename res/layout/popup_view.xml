@@ -1,73 +1,68 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/popup_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginBottom="8dp"
-    android:gravity="center_vertical"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:visibility="gone" > 
 
     <LinearLayout 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="8dp"
-        android:paddingTop="16dp"
-        android:paddingRight="8dp"
-        android:paddingBottom="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:orientation="vertical" 
         android:background="@android:color/white">
 
         <ImageView
             android:id="@+id/popup_image"
             android:layout_width="match_parent"
-            android:layout_height="96dp"
-            android:layout_marginBottom="8dp" />
+            android:layout_height="96dp" 
+            android:layout_margin="8dp"/>
 
         <TextView
-            android:id="@+id/popup_feed_title"
+            android:id="@+id/popup_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_margin="8dp"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/popup_feed_description"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/popup_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        </ScrollView>
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/popup_read_now"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:paddingLeft="16dp"
-        android:paddingTop="8dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="8dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:background="@color/btn_read"
-        android:textColor="@color/accent_text"
-        android:text="@string/drag_read_now" />
+        android:orientation="horizontal" >
 
-    <TextView
-        android:id="@+id/popup_read_later"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:paddingLeft="16dp"
-        android:paddingTop="8dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="8dp"
-        android:textAppearance="?android:attr/textAppearanceMedium" 
-        android:background="@color/btn_read"
-        android:textColor="@color/accent_text"
-        android:text="@string/drag_read_later"/>
+        <TextView
+            style="@style/Button_Popup"
+            android:id="@+id/popup_read"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/popup_read" />
+
+        <TextView
+            style="@style/Button_Popup"
+            android:id="@+id/popup_done"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/popup_done" />
+
+    </LinearLayout>
 
 </LinearLayout>
