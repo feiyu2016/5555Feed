@@ -2,6 +2,7 @@ package no.fjeld.feed;
 
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
+import android.content.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
 import android.util.*;
@@ -15,6 +16,13 @@ public class FeedItemPopup {
     private FeedApplication mApp;
     private FeedItem mFeedItem;
 
+    private LinearLayout mPopupView;
+    private TransitionDrawable mBackground;
+
+    private ImageView mImage;
+    private TextView mTitle;
+    private TextView mDescription;
+
     public FeedItemPopup(FeedApplication app, FeedItem item) {
 
         this.mApp = app;
@@ -24,6 +32,75 @@ public class FeedItemPopup {
 
     public void initView() {
 
+        mPopupView = (LinearLayout) mApp.getFeedActivity().findViewById(
+                R.id.popup_view); 
+        mBackground = (TransitionDrawable) mApp.getFeedActivity().findViewById(
+                R.id.fading_background).getBackground();
+
+        mImage = (ImageView) mPopupView.findViewById(R.id.popup_image);
+        mTitle = (TextView) mPopupView.findViewById(R.id.popup_title);
+        mDescription = (TextView) mPopupView.findViewById(R.id.popup_description);     
+
+        setClickListeners();
+        setContent();
+
+        mPopupView.setVisibility(View.VISIBLE);
+        mPopupView.startAnimation(AnimationUtils.loadAnimation(
+                    mApp.getFeedActivity(), R.anim.slide_in_top));
+
+        mBackground.startTransition(150); 
+
+    }
+
+    private void setClickListeners() {
+
+        mPopupView.findViewById(R.id.popup_read).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        read();
+                    }
+                });
+
+        mPopupView.findViewById(R.id.popup_done).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        done();
+                    }
+                });
+
+    }
+
+    private void setContent() {
+
+        mImage.setVisibility(View.VISIBLE);
+
+        if (mFeedItem.getImage() != null)
+            mImage.setImageBitmap(mFeedItem.getImage());
+        else
+            mImage.setVisibility(View.GONE);
+
+        mTitle.setText(mFeedItem.getTitle());
+        mDescription.setText(mFeedItem.getDescription());
+
+
+    }
+
+    private void read() {
+
+        mApp.getFeedActivity().startActivity(new Intent(
+                    mApp.getFeedActivity(), WebViewActivity.class).putExtra("url", mFeedItem.getUrl()));
+
+    }
+
+    private void done() {
+
+        mPopupView.setVisibility(View.GONE);
+        mPopupView.startAnimation(AnimationUtils.loadAnimation(
+                    mApp.getFeedActivity(), R.anim.slide_out_top));
+
+        mBackground.reverseTransition(150);
 
     }
 
