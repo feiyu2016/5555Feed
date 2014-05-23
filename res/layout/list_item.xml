@@ -11,7 +11,7 @@
         android:layout_marginRight="8dp"
         android:minHeight="92dp"
         android:orientation="horizontal" 
-        android:background="@drawable/bg_list_item" >
+        android:background="@color/bg_list_item" >
 
         <!-- ImageView for the image from the item -->
         <ImageView
