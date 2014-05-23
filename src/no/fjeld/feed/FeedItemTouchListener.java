@@ -61,7 +61,7 @@ public class FeedItemTouchListener implements View.OnTouchListener {
                     return false;
 
                 mItemPressed = true;
-              
+
                 break;
 
             case MotionEvent.ACTION_CANCEL:
@@ -72,7 +72,7 @@ public class FeedItemTouchListener implements View.OnTouchListener {
                 v.setTranslationX(0);
 
                 mItemPressed = false;
-               
+
                 break;
 
             case MotionEvent.ACTION_MOVE: 
@@ -81,13 +81,18 @@ public class FeedItemTouchListener implements View.OnTouchListener {
                 mVelocityTracker.computeCurrentVelocity(100);
 
                 actionMove(v, event);
-                
+
                 break;
 
             case MotionEvent.ACTION_UP: 
 
-                actionUp(v, event);
+                mItemPressed = false;
                 
+                if (mSwiping)
+                    actionUp(v, event);
+                else 
+                    new FeedItemPopup(mApp, mFeedItem).initView();
+
                 break;
 
         }
@@ -118,42 +123,38 @@ public class FeedItemTouchListener implements View.OnTouchListener {
 
     private void actionUp(View v, MotionEvent event) {
 
-        if (mSwiping) {
 
-            float x = event.getX() + v.getTranslationX();
-            float deltaX = x - mDownX;
-            float velocityX = Math.abs(mVelocityTracker.getXVelocity());
+        float x = event.getX() + v.getTranslationX();
+        float deltaX = x - mDownX;
+        float velocityX = Math.abs(mVelocityTracker.getXVelocity());
 
-            float fractionCovered, endX, endAlpha;
-            final boolean remove;
+        float fractionCovered, endX, endAlpha;
+        final boolean remove;
 
-            if (velocityX > SWIPE_VELOCITY_MIN || Math.abs(deltaX) > v.getWidth() / 3) {
+        if (velocityX > SWIPE_VELOCITY_MIN || Math.abs(deltaX) > v.getWidth() / 3) {
 
-                fractionCovered = Math.abs(deltaX) / v.getWidth();
-                endX = deltaX < 0 ? -v.getWidth() : v.getWidth();
-                endAlpha = 0;
-                remove = true;
+            fractionCovered = Math.abs(deltaX) / v.getWidth();
+            endX = deltaX < 0 ? -v.getWidth() : v.getWidth();
+            endAlpha = 0;
+            remove = true;
 
-            } else {
+        } else {
 
-                fractionCovered = 1 - (Math.abs(deltaX) / v.getWidth());
-                endX = 0;
-                endAlpha = 1;
-                remove = false;
-
-            }
-
-            mListView.setEnabled(false);
-
-            long duration = (int) ((1 - fractionCovered) * SWIPE_DURATION);
-            
-            v.animate().setDuration(duration)
-                .alpha(endAlpha).translationX(endX)
-                .setListener(new SlideOutListener(v, remove, (int) endX));
+            fractionCovered = 1 - (Math.abs(deltaX) / v.getWidth());
+            endX = 0;
+            endAlpha = 1;
+            remove = false;
 
         }
 
-        mItemPressed = false;
+        mListView.setEnabled(false);
+
+        long duration = (int) ((1 - fractionCovered) * SWIPE_DURATION);
+
+        v.animate().setDuration(duration)
+            .alpha(endAlpha).translationX(endX)
+            .setListener(new SlideOutListener(v, remove, (int) endX));
+
 
     }
 
@@ -185,7 +186,7 @@ public class FeedItemTouchListener implements View.OnTouchListener {
                 FeedAdapter adapter = mApp.getFeed().getFeedAdapter();
 
                 int position = adapter.getFeedList().indexOf(mFeedItem);
-                
+
                 if (position != -1) {
                     adapter.getFeedList().remove(position);
                     adapter.notifyDataSetChanged();
