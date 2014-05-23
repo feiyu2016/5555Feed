@@ -39,17 +39,27 @@
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textColor">#FF878787</item>
     </style>
-    
+
     <style name="Text_Style_Medium" parent="@android:style/TextAppearance.Medium">
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textColor">#FF000000</item>
     </style>
-   
+
     <style name="Text_Style_Large" parent="@android:style/TextAppearance.Large">
         <item name="android:textSize">22sp</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textColor">#FF000000</item>
+    </style>
+
+    <!-- Popup styles -->
+    <style name="Button_Popup">
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:background">@color/btn_popup</item>
+        <item name="android:textColor">@color/accent_text</item>
     </style>
 
 </resources>
