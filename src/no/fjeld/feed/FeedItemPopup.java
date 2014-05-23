@@ -5,6 +5,10 @@ import android.animation.Animator.AnimatorListener;
 import android.content.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
+import android.net.*;
+import android.preference.PreferenceManager;
+import android.text.*;
+import android.text.method.*;
 import android.util.*;
 import android.view.*;
 import android.view.animation.*;
@@ -83,15 +87,29 @@ public class FeedItemPopup {
 
         mTitle.setText(mFeedItem.getTitle());
         mDescription.setText(mFeedItem.getDescription());
-
-
+        
+        mDescription.setMovementMethod(LinkMovementMethod.getInstance());
+        
     }
 
     private void read() {
 
-        mApp.getFeedActivity().startActivity(new Intent(
-                    mApp.getFeedActivity(), WebViewActivity.class).putExtra("url", mFeedItem.getUrl()));
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
+                mApp.getFeedActivity());
 
+        if (prefs.getBoolean("preference_open_in", true)) {
+
+            Intent appIntent = new Intent(mApp.getFeedActivity(), 
+                    WebViewActivity.class).putExtra("url", mFeedItem.getUrl());
+            mApp.getFeedActivity().startActivity(appIntent);
+
+        } else {
+
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, 
+                    Uri.parse(mFeedItem.getUrl()));
+            mApp.getFeedActivity().startActivity(browserIntent);
+
+        }
     }
 
     private void done() {
