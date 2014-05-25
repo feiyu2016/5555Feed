@@ -1,69 +1,81 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/popup_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:visibility="gone" > 
+    android:layout_height="match_parent" 
+    android:visibility="gone" 
+    android:orientation="vertical" >
 
     <LinearLayout 
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:orientation="vertical" 
-        android:background="@android:color/white">
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-        <ImageView
-            android:id="@+id/popup_image"
+        <LinearLayout 
             android:layout_width="match_parent"
-            android:layout_height="96dp" 
-            android:layout_margin="8dp"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:orientation="vertical" 
+            android:background="@android:color/white">
 
-        <TextView
-            android:id="@+id/popup_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            <ImageView
+                android:id="@+id/popup_image"
+                android:layout_width="match_parent"
+                android:layout_height="96dp" 
+                android:layout_margin="8dp"/>
 
             <TextView
-                android:id="@+id/popup_description"
+                android:id="@+id/popup_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:autoLink="all"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        </ScrollView>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/popup_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:autoLink="all"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            </ScrollView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@style/Button_Popup"
+                android:id="@+id/popup_read"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/popup_read" />
+
+            <TextView
+                style="@style/Button_Popup"
+                android:id="@+id/popup_done"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/popup_done" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/dummy" 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-            style="@style/Button_Popup"
-            android:id="@+id/popup_read"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/popup_read" />
-
-        <TextView
-            style="@style/Button_Popup"
-            android:id="@+id/popup_done"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/popup_done" />
-
-    </LinearLayout>
+        android:layout_height="match_parent" />
 
 </LinearLayout>
