@@ -63,6 +63,16 @@ public class FeedActivity extends Activity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+   
+        if (FeedItemPopup.isVisible())
+            FeedItemPopup.getInstance().done();
+        else
+            super.onBackPressed();
+
+    }
+
     /**
      * Initializes the global values for the application.
      */
