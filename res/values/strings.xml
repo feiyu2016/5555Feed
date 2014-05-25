@@ -37,8 +37,8 @@
     <string name="swipe_mark_as_read">Mark as read</string>
     
     <!-- Popup strings -->
+    <string name="popup_share">Share</string>
     <string name="popup_read">Read article</string>
-    <string name="popup_done">Done</string>
     
     <!-- Preference Strings -->
     <string name="preference_category_general">General</string>

@@ -58,7 +58,7 @@ public class FeedItemPopup {
                     mApp.getFeedActivity(), R.anim.slide_in_top));
 
         mBackground.startTransition(150); 
-       
+
         mApp.getFeed().getFeedListView().setEnabled(false); 
         sVisible = true;
 
@@ -66,19 +66,19 @@ public class FeedItemPopup {
 
     private void setClickListeners() {
 
+        mPopupView.findViewById(R.id.popup_share).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        share();
+                    }
+                });
+
         mPopupView.findViewById(R.id.popup_read).setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         read();
-                    }
-                });
-
-        mPopupView.findViewById(R.id.popup_done).setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        done();
                     }
                 });
 
@@ -89,7 +89,7 @@ public class FeedItemPopup {
                         done();
                     }
                 });
-                    
+
 
     }
 
@@ -104,11 +104,15 @@ public class FeedItemPopup {
 
         mTitle.setText(mFeedItem.getTitle());
         mDescription.setText(mFeedItem.getDescription());
-        
+
         mDescription.setMovementMethod(LinkMovementMethod.getInstance());
-        
+
     }
 
+    private void share() {
+
+    }
+    
     private void read() {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
@@ -149,7 +153,7 @@ public class FeedItemPopup {
     }
 
     public static FeedItemPopup getInstance() {
-            
+
         return sInstance;
 
     }
