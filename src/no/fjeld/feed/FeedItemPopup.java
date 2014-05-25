@@ -17,6 +17,9 @@ import android.widget.*;
 
 public class FeedItemPopup {
 
+    private static boolean sVisible;
+    private static FeedItemPopup sInstance;
+
     private FeedApplication mApp;
     private FeedItem mFeedItem;
 
@@ -31,6 +34,8 @@ public class FeedItemPopup {
 
         this.mApp = app;
         this.mFeedItem = item;
+
+        sInstance = this;
 
     }
 
@@ -53,6 +58,8 @@ public class FeedItemPopup {
                     mApp.getFeedActivity(), R.anim.slide_in_top));
 
         mBackground.startTransition(150); 
+        
+        sVisible = true;
 
     }
 
@@ -73,6 +80,15 @@ public class FeedItemPopup {
                         done();
                     }
                 });
+
+        mPopupView.findViewById(R.id.dummy).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        done();
+                    }
+                });
+                    
 
     }
 
@@ -112,13 +128,27 @@ public class FeedItemPopup {
         }
     }
 
-    private void done() {
+    public void done() {
 
         mPopupView.setVisibility(View.GONE);
         mPopupView.startAnimation(AnimationUtils.loadAnimation(
                     mApp.getFeedActivity(), R.anim.slide_out_top));
 
         mBackground.reverseTransition(150);
+
+        sVisible = false;
+
+    }
+
+    public static boolean isVisible() {
+
+        return sVisible;
+
+    }
+
+    public static FeedItemPopup getInstance() {
+            
+        return sInstance;
 
     }
 
