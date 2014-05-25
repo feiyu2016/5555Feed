@@ -57,7 +57,7 @@ public class FeedItemPopup {
         mPopupView.startAnimation(AnimationUtils.loadAnimation(
                     mApp.getFeedActivity(), R.anim.slide_in_top));
 
-        mBackground.startTransition(150); 
+        mBackground.startTransition(300); 
 
         mApp.getFeed().getFeedListView().setEnabled(false); 
         sVisible = true;
@@ -139,7 +139,7 @@ public class FeedItemPopup {
         mPopupView.startAnimation(AnimationUtils.loadAnimation(
                     mApp.getFeedActivity(), R.anim.slide_out_top));
 
-        mBackground.reverseTransition(150);
+        mBackground.reverseTransition(300);
 
         mApp.getFeed().getFeedListView().setEnabled(true); 
         sVisible = false;
