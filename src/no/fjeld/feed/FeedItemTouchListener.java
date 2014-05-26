@@ -87,7 +87,7 @@ public class FeedItemTouchListener implements View.OnTouchListener {
             case MotionEvent.ACTION_UP: 
 
                 mItemPressed = false;
-                
+
                 if (mSwiping)
                     actionUp(v, event);
                 else 
@@ -116,8 +116,20 @@ public class FeedItemTouchListener implements View.OnTouchListener {
         }
 
         if (mSwiping) {
+
             v.setTranslationX(x - mDownX);
             v.setAlpha(1 - Math.abs(deltaX) / v.getWidth());
+
+            LinearLayout background = (LinearLayout) v.findViewById(R.id.swiping_background); 
+
+            if (deltaX > 0) {
+                background.setBackground(new ColorDrawable(Color.parseColor("#FFFF0000")));
+                background.setAlpha(Math.abs(deltaX) / v.getWidth());
+            } else {
+                background.setBackground(new ColorDrawable(Color.parseColor("#FF00FF00")));
+                background.setAlpha(Math.abs(deltaX) / v.getWidth());
+            }
+
         }
 
     }
@@ -151,6 +163,9 @@ public class FeedItemTouchListener implements View.OnTouchListener {
         mListView.setEnabled(false);
 
         long duration = (int) ((1 - fractionCovered) * SWIPE_DURATION);
+
+        v.findViewById(R.id.swiping_background).animate().setDuration(duration)
+            .alpha(0);
 
         v.animate().setDuration(duration)
             .alpha(endAlpha).translationX(endX)

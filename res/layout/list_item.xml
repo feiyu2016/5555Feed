@@ -1,5 +1,5 @@
 <!-- Layout for the item that displays an entry from an RSS-feed -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" 
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
@@ -59,4 +59,14 @@
         </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+    <!-- Background that changes alpha when swiping an item -->
+    <LinearLayout
+        android:id="@+id/swiping_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:alpha="0.0"
+        android:background="#FFFF0000" />
+
+</FrameLayout>
