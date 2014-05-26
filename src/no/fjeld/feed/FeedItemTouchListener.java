@@ -12,7 +12,7 @@ import android.widget.*;
 
 public class FeedItemTouchListener implements View.OnTouchListener {
 
-    private static final int SWIPE_DURATION = 250;
+    private static final int SWIPE_DURATION = 300;
     private static final int SWIPE_DISTANCE_MIN = 100;
     private static final int SWIPE_VELOCITY_MIN = 100;
 
@@ -91,7 +91,8 @@ public class FeedItemTouchListener implements View.OnTouchListener {
                 if (mSwiping)
                     actionUp(v, event);
                 else 
-                    new FeedItemPopup(mApp, mFeedItem).initView();
+                    if (!FeedItemPopup.isVisible())
+                        new FeedItemPopup(mApp, mFeedItem).initView();
 
                 break;
 
