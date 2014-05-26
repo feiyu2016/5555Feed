@@ -53,13 +53,8 @@ public class FeedItemPopup {
         setClickListeners();
         setContent();
 
+        animateView(R.anim.slide_in_top);
         mPopupView.setVisibility(View.VISIBLE);
-        mPopupView.startAnimation(AnimationUtils.loadAnimation(
-                    mApp.getFeedActivity(), R.anim.slide_in_top));
-
-        mBackground.startTransition(300); 
-
-        mApp.getFeed().getFeedListView().setEnabled(false); 
         sVisible = true;
 
     }
@@ -86,7 +81,7 @@ public class FeedItemPopup {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        done();
+                        if (isVisible()) done();
                     }
                 });
 
@@ -112,7 +107,7 @@ public class FeedItemPopup {
     private void share() {
 
     }
-    
+
     private void read() {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
@@ -131,17 +126,15 @@ public class FeedItemPopup {
             mApp.getFeedActivity().startActivity(browserIntent);
 
         }
+
+        done();
+
     }
 
     public void done() {
 
+        animateView(R.anim.slide_out_top);
         mPopupView.setVisibility(View.GONE);
-        mPopupView.startAnimation(AnimationUtils.loadAnimation(
-                    mApp.getFeedActivity(), R.anim.slide_out_top));
-
-        mBackground.reverseTransition(300);
-
-        mApp.getFeed().getFeedListView().setEnabled(true); 
         sVisible = false;
 
     }
@@ -155,6 +148,20 @@ public class FeedItemPopup {
     public static FeedItemPopup getInstance() {
 
         return sInstance;
+
+    }
+
+    private void animateView(int animResId) {
+
+        Animation anim = AnimationUtils.loadAnimation(
+                mApp.getFeedActivity(), animResId);
+
+        mPopupView.startAnimation(anim);
+
+        if (animResId == R.anim.slide_in_top)
+            mBackground.startTransition(300);
+        else
+            mBackground.reverseTransition(300);
 
     }
 
