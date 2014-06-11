@@ -14,7 +14,7 @@ public class FeedItemTouchListener implements View.OnTouchListener {
 
     private static final int SWIPE_DURATION = 300;
     private static final int SWIPE_DISTANCE_MIN = 100;
-    private static final int SWIPE_VELOCITY_MIN = 100;
+    private static final int SWIPE_VELOCITY_MIN = 75;
 
     private FeedApplication mApp;
     private FeedItem mFeedItem;
