@@ -17,6 +17,10 @@ import android.widget.*;
 
 public class FeedItemPopup {
 
+    private final static int SHARE = 0;
+    private final static int READ = 1;
+    private int mAction;
+
     private static boolean sVisible;
     private static FeedItemPopup sInstance;
 
@@ -32,10 +36,22 @@ public class FeedItemPopup {
 
     public FeedItemPopup(FeedApplication app, FeedItem item) {
 
-        this.mApp = app;
-        this.mFeedItem = item;
+        mApp = app;
+        mFeedItem = item;
 
         sInstance = this;
+
+    }
+
+    public static boolean isVisible() {
+
+        return sVisible;
+
+    }
+
+    public static FeedItemPopup getInstance() {
+
+        return sInstance;
 
     }
 
@@ -53,37 +69,7 @@ public class FeedItemPopup {
         setClickListeners();
         setContent();
 
-        animateView(R.anim.slide_in_top);
-        mPopupView.setVisibility(View.VISIBLE);
-        sVisible = true;
-
-    }
-
-    private void setClickListeners() {
-
-        mPopupView.findViewById(R.id.popup_share).setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        share();
-                    }
-                });
-
-        mPopupView.findViewById(R.id.popup_read).setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        read();
-                    }
-                });
-
-        mPopupView.findViewById(R.id.dummy).setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (isVisible()) done();
-                    }
-                });
+        showView();
 
 
     }
@@ -101,6 +87,63 @@ public class FeedItemPopup {
         mDescription.setText(mFeedItem.getDescription());
 
         mDescription.setMovementMethod(LinkMovementMethod.getInstance());
+
+    }
+
+    private void setClickListeners() {
+
+        mPopupView.findViewById(R.id.popup_share).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mAction = 0;
+                        hideView();
+                    }
+                });
+
+        mPopupView.findViewById(R.id.popup_read).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mAction = 1;
+                        hideView();
+                    }
+                });
+
+        mPopupView.findViewById(R.id.dummy).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (isVisible()) hideView(); 
+                    }
+                });
+
+    }
+
+    private void showView() {
+
+        Animation anim = AnimationUtils.loadAnimation(
+                mApp.getFeedActivity(), R.anim.slide_in_top);
+
+        mPopupView.startAnimation(anim);
+        mBackground.startTransition(300);
+
+        mPopupView.setVisibility(View.VISIBLE);
+        sVisible = true;
+
+    }
+
+    public void hideView() {
+
+        Animation anim = AnimationUtils.loadAnimation(
+                mApp.getFeedActivity(), R.anim.slide_out_top);
+        anim.setAnimationListener(new SlideOutListener());
+
+        mPopupView.startAnimation(anim);
+        mBackground.reverseTransition(300);
+
+        mPopupView.setVisibility(View.GONE);
+        sVisible = false;
 
     }
 
@@ -127,41 +170,25 @@ public class FeedItemPopup {
 
         }
 
-        done();
-
     }
 
-    public void done() {
+    private class SlideOutListener implements Animation.AnimationListener {
 
-        animateView(R.anim.slide_out_top);
-        mPopupView.setVisibility(View.GONE);
-        sVisible = false;
+        @Override
+        public void onAnimationStart(Animation animation) {}
 
-    }
+        @Override
+        public void onAnimationRepeat(Animation animation) {}
 
-    public static boolean isVisible() {
+        @Override
+        public void onAnimationEnd(Animation animation) {
 
-        return sVisible;
+            if (mAction == SHARE) 
+                share();
+            else if (mAction == READ) 
+                read();
 
-    }
-
-    public static FeedItemPopup getInstance() {
-
-        return sInstance;
-
-    }
-
-    private void animateView(int animResId) {
-
-        Animation anim = AnimationUtils.loadAnimation(
-                mApp.getFeedActivity(), animResId);
-
-        mPopupView.startAnimation(anim);
-
-        if (animResId == R.anim.slide_in_top)
-            mBackground.startTransition(300);
-        else
-            mBackground.reverseTransition(300);
+        }
 
     }
 

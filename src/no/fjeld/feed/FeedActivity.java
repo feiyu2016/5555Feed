@@ -67,7 +67,7 @@ public class FeedActivity extends Activity {
     public void onBackPressed() {
    
         if (FeedItemPopup.isVisible())
-            FeedItemPopup.getInstance().done();
+            FeedItemPopup.getInstance().hideView();
         else
             super.onBackPressed();
 
