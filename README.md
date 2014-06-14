@@ -1,16 +1,17 @@
 Feed <br/> A beautiful reader for your favorite RSS-feeds.
 -------------------------------------------------------------------------
 
-For command-line debugging, check out [this](https://gist.github.com/fjeld/9989959) bash script.
-
-**Installation**
-
-```sh
+**Clone repository and generate local files**
+```bash
 git clone https://github.com/fjeld/Feed.git   # Clone the repository to your computer
 cd Feed                                       # Go to the project directory
 android update project -p .                   # Generate local files for the project
-./android_debug.sh FeedActivity               # Build and execute the app on your device
 ```
+
+**Command-line debugging and building**
+
+Clone the android_debug script with `git clone https://gist.github.com/fjeld/9989959`, and  
+follow the instructions in android_debug.sh.
 
 **TODO**
 
