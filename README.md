@@ -5,7 +5,8 @@ A beautiful reader for your favorite RSS-feeds.
 -----------------------------------------------
 
 **TODO**
+- Fix all imports (remove dotASTERIX's)
 - Clean up field names in all .java
 - Clean up / add comments in all .java/.xml
 - Pass activity to classes instead of application
-- Make parser handle atom feeds
+- Parser should handle atom-feeds
