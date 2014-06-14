@@ -46,8 +46,8 @@ public class DrawerLongClick implements OnItemLongClickListener {
      */
     public DrawerLongClick(FeedApplication app, DrawerAdapter drawerAdapter) {
 
-        this.mApp = app;
-        this.mDrawerAdapter = drawerAdapter;
+        mApp = app;
+        mDrawerAdapter = drawerAdapter;
 
     }
 
@@ -55,10 +55,10 @@ public class DrawerLongClick implements OnItemLongClickListener {
     public boolean onItemLongClick(AdapterView <?> parent, View view,
             int position, long id) {
 
-        this.mView = view;
-        this.mPosition = position - 3;
+        mView = view;
+        mPosition = position - 3;
 
-        /* Checks if the position is a RSS-item, and not just 'All feeds', or 'Saved items'. */
+        /* Checks if the position is a RSS-item, and not 'All feeds', or 'Saved items'. */
         if (mPosition > -1 && mPosition < mDrawerAdapter.getDrawerList().size()) {
 
             /* Means that another item has its options visible. */
@@ -154,8 +154,8 @@ public class DrawerLongClick implements OnItemLongClickListener {
     }
 
     /**
-     * Inner class that takes care of the actions when the options
-     * for the item is hidden.
+     * AnimationListener that takes care of what to do when the user
+     * has made a choice, and the animation on the options is done. 
      */
     private class SlideInListener implements Animation.AnimationListener {
 
