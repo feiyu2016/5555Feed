@@ -1,4 +1,4 @@
-<!-- The background for the Navigation Drawers list-items. -->
+<!-- The background for the Navigation Drawers footers. -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:drawable="@drawable/drawer_footer_pressed" android:state_selected="true"/>
