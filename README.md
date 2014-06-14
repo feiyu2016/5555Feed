@@ -1,9 +1,10 @@
 Feed <br/> A beautiful reader for your favorite RSS-feeds.
-----------------------------------------------------------
+-------------------------------------------------------------------------
 
 For command-line debugging, check out [this](https://gist.github.com/fjeld/9989959) bash script.
 
 **Installation via command-line**
+
 ```sh
 git clone https://github.com/fjeld/Feed.git   # Clone the repository to your computer
 cd Feed                                       # Go to the project directory
@@ -12,6 +13,7 @@ android update project -p .                   # Generate local files for the pro
 ```
 
 **TODO**
+
 - Implement image caching
 - Fix all imports (remove dotASTERIX's)
 - Clean up field names in all .java
