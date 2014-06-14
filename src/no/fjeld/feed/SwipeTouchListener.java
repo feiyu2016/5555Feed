@@ -45,7 +45,7 @@ public class SwipeTouchListener implements OnTouchListener {
     }
 
     /**
-     * Called when the View has recieved a touch event. 
+     * Is called when the View has recieved a touch event. 
      * Contains a switch() that controls what should happen 
      * when the user performs certain actions.
      *
@@ -60,7 +60,7 @@ public class SwipeTouchListener implements OnTouchListener {
 
         switch (event.getAction()) {
 
-            /** First touch on the View. */
+            /* First touch on the View. */
             case MotionEvent.ACTION_DOWN:
 
                 if (mViewPressed)
@@ -80,7 +80,7 @@ public class SwipeTouchListener implements OnTouchListener {
 
                 break;
 
-            /** The View is dragged. */
+            /* The View is dragged. */
             case MotionEvent.ACTION_MOVE: 
 
                 mVelocityTracker.addMovement(event);
@@ -90,7 +90,7 @@ public class SwipeTouchListener implements OnTouchListener {
 
                 break;
 
-            /** The View is released. */
+            /* The View is released. */
             case MotionEvent.ACTION_UP: 
 
                 mViewPressed = false;
@@ -102,8 +102,8 @@ public class SwipeTouchListener implements OnTouchListener {
 
                 break;
 
-            /** The hold on the View has been cancelled 
-             *  for some reason. */
+            /* The hold on the View has been cancelled 
+             * for some reason. */
             case MotionEvent.ACTION_CANCEL:
 
                 mViewPressed = false;
@@ -121,7 +121,7 @@ public class SwipeTouchListener implements OnTouchListener {
     }
 
     /**
-     * Called when the user drags the view.
+     * Is called when the user drags the view.
      * 
      * @param event The MotionEvent-object from onTouch()
      */
@@ -158,8 +158,8 @@ public class SwipeTouchListener implements OnTouchListener {
         float outOfView, endX, endAlpha;
         boolean dismiss = false;
 
-        // The user has performed a swipe-gesture at the specified velocity, or over 
-        // a third of the Views width has been dragged out of its initial position.
+        /* The user has performed a swipe-gesture at the specified velocity, or over 
+        *  a third of the Views width has been dragged out of its initial position. */
         if (velocityX > SWIPE_VELOCITY_MIN || Math.abs(deltaX) > mView.getWidth() / 3) {
 
             outOfView = Math.abs(deltaX) / mView.getWidth();
@@ -167,7 +167,7 @@ public class SwipeTouchListener implements OnTouchListener {
             endAlpha = 0;
             dismiss = true;
 
-        // The user has released the hold on the View before it should be dismissed.
+        /* The user has released the hold on the View before it should be dismissed. */
         } else {
 
             outOfView = 1 - (Math.abs(deltaX) / mView.getWidth());
