@@ -10,21 +10,21 @@ import android.widget.*;
 public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
 
     private Activity mActivity;
-    private ArrayList <DrawerItem> mDrawerItems;
+    private ArrayList <DrawerItem> mDrawerList;
 
     /**
      * Constructor for the class DrawerAdapter.
      *
      * @param activity     FeedActivity-pointer
-     * @param resourceView The layout-id for the DrawerItem.
-     * @param drawerList   The list which contains DrawerItems.
+     * @param resourceView The resource id for the DrawerItem's layout
+     * @param drawerList   The list which contains DrawerItems
      */
     public DrawerAdapter(Activity activity, int resourceView, 
             ArrayList <DrawerItem> drawerList) {
 
         super(activity, resourceView, drawerList);
-        this.mActivity = activity;
-        this.mDrawerItems = drawerList; 
+        mActivity = activity;
+        mDrawerList = drawerList; 
 
     }
 
@@ -35,7 +35,7 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
     }
 
     /**
-     * Returns the view for the current DrawerItem.
+     * Returns the View for the current DrawerItem.
      *
      * @return view The DrawerItem-view.
      */
@@ -61,7 +61,7 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
         } else
             viewHolder = (ViewHolder) view.getTag();
 
-        DrawerItem drawerItem = mDrawerItems.get(position);
+        DrawerItem drawerItem = mDrawerList.get(position);
 
         /* Sets the title for the TextView in the DrawerItem-layout. */ 
         if (drawerItem != null) 
@@ -83,19 +83,8 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
 
     }
 
-    /**
-     * Returns the adapters ArrayList.
-     *
-     * @return mDrawerItems The ArrayList with the DrawerItems.
-     */
-    public ArrayList <DrawerItem> getDrawerList() {
-
-        return mDrawerItems;
-
-    }
-
     /** 
-     * The notifyDataSetChanged is overridden
+     * notifyDataSetChanged() is overridden
      * to sort the list when something has changed.
      */
     @Override
@@ -107,12 +96,12 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
     }
 
     /**
-     * Sorts mDrawerItems (list with the DrawerItem-objects) 
+     * Sorts mDrawerList (the list with the DrawerItem-objects) 
      * alphabetically based on their titles. 
      */
     private void sortList() {
 
-        Collections.sort(mDrawerItems, new Comparator <DrawerItem> () {
+        Collections.sort(mDrawerList, new Comparator <DrawerItem> () {
 
             @Override
             public int compare(DrawerItem first, DrawerItem second) {
@@ -121,6 +110,17 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
             }
 
         });
+
+    }
+
+    /**
+     * Returns the adapters ArrayList.
+     *
+     * @return mDrawerList The ArrayList with the DrawerItems.
+     */
+    public ArrayList <DrawerItem> getDrawerList() {
+
+        return mDrawerList;
 
     }
 
