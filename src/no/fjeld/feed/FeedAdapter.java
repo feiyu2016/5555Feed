@@ -65,9 +65,8 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
         if (feedItem != null)
             setItemView(viewHolder, feedItem);
 
-        view.setOnTouchListener(new FeedItemTouchListener(
-                    (FeedApplication) mActivity.getApplication(), feedItem));
-        
+        setSwipeListener(view, parent, feedItem);
+
         return view;
 
     }
@@ -88,6 +87,57 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
             viewHolder.mImage.setImageBitmap(feedItem.getImage());
         } else 
             viewHolder.mImage.setVisibility(View.GONE);
+
+    }
+
+    public void setSwipeListener(View view, ViewGroup parent, final FeedItem item) {
+
+        view.setOnTouchListener(new SwipeTouchListener(mActivity, parent) {
+
+            @Override
+            public boolean onClick() {
+                click(item);
+                return super.onClick();
+            }
+
+            @Override
+            public void onSwipeLeft() {
+                leftSwipe(item); 
+            }
+
+            @Override
+            public void onSwipeRight() {
+                rightSwipe(item);
+            }  
+
+        }); 
+
+    }
+
+    private void click(FeedItem item) {
+
+        FeedApplication app = (FeedApplication) mActivity.getApplication();
+
+        if (!FeedItemPopup.isVisible())
+            new FeedItemPopup(app, item).initView();
+
+    }
+
+    public void leftSwipe(FeedItem item) {
+
+        mFeedList.remove(mFeedList.indexOf(item));
+        notifyDataSetChanged();
+
+        ((FeedApplication) mActivity.getApplication()).getFeed().readLater(item);
+
+    }
+
+    public void rightSwipe(FeedItem item) {
+
+        mFeedList.remove(mFeedList.indexOf(item));
+        notifyDataSetChanged();
+
+        ((FeedApplication) mActivity.getApplication()).getFeed().markAsRead(item);
 
     }
 
