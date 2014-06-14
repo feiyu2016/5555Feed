@@ -33,16 +33,30 @@ public class SwipeTouchListener implements OnTouchListener {
     private float mDownX;
     private int mSwipeSlop;
 
+    /**
+     * Constructor for the class SwipeTouchListener.
+     *
+     * @param activity   An Activity-pointer. 
+     * @param viewParent The ViewGroup that contains the View. 
+     */
     public SwipeTouchListener(Activity activity, ViewGroup viewParent) {  
         mActivity = activity;
         mViewParent = viewParent;
     }
 
+    /**
+     * Called when the View has recieved a touch event. 
+     * Contains a switch() that controls what should happen 
+     * when the user performs certain actions.
+     *
+     * @param view  The View that recieved the touch event
+     * @param event A MotionEvent-object containing info about the event 
+     */
     @Override
     public boolean onTouch(View view, MotionEvent event) {
 
         mSwipeSlop = ViewConfiguration.get(mActivity)
-            .getScaledTouchSlop();
+                .getScaledTouchSlop();
 
         switch (event.getAction()) {
 
@@ -89,7 +103,7 @@ public class SwipeTouchListener implements OnTouchListener {
                 break;
 
             /** The hold on the View has been cancelled 
-             *  for some other reason. */
+             *  for some reason. */
             case MotionEvent.ACTION_CANCEL:
 
                 mViewPressed = false;
@@ -141,14 +155,14 @@ public class SwipeTouchListener implements OnTouchListener {
         float deltaX = currentX - mDownX;
         float velocityX = Math.abs(mVelocityTracker.getXVelocity());
 
-        float fractionCovered, endX, endAlpha;
+        float outOfView, endX, endAlpha;
         boolean dismiss = false;
 
         // The user has performed a swipe-gesture at the specified velocity, or over 
         // a third of the Views width has been dragged out of its initial position.
         if (velocityX > SWIPE_VELOCITY_MIN || Math.abs(deltaX) > mView.getWidth() / 3) {
 
-            fractionCovered = Math.abs(deltaX) / mView.getWidth();
+            outOfView = Math.abs(deltaX) / mView.getWidth();
             endX = deltaX < 0 ? -mView.getWidth() : mView.getWidth();
             endAlpha = 0;
             dismiss = true;
@@ -156,7 +170,7 @@ public class SwipeTouchListener implements OnTouchListener {
         // The user has released the hold on the View before it should be dismissed.
         } else {
 
-            fractionCovered = 1 - (Math.abs(deltaX) / mView.getWidth());
+            outOfView = 1 - (Math.abs(deltaX) / mView.getWidth());
             endX = 0;
             endAlpha = 1;
 
@@ -164,11 +178,11 @@ public class SwipeTouchListener implements OnTouchListener {
 
         mViewParent.setEnabled(false);
 
-        long duration = (int) ((1 - fractionCovered) * SWIPE_DURATION);
+        long duration = (int) ((1 - outOfView) * SWIPE_DURATION);
 
         mView.animate().setDuration(duration)
-            .alpha(endAlpha).translationX(endX)
-            .setListener(new SlideOutListener(dismiss, endX));
+                .alpha(endAlpha).translationX(endX)
+                .setListener(new SlideOutListener(dismiss, endX));
 
     }
 
