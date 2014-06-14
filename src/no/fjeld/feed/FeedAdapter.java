@@ -3,6 +3,7 @@ package no.fjeld.feed;
 import android.app.*;
 import android.content.*;
 import android.view.*;
+import android.view.animation.*;
 import android.widget.*;
 
 class FeedAdapter extends ArrayAdapter <FeedItem> {
@@ -15,13 +16,13 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
      *
      * @param activity     FeedActivity-pointer.
      * @param resourceView The layout-id for the FeedItem.
-     * @param drawerList   The list which contains FeedItems.
+     * @param feedList     The list which contains FeedItems.
      */
     public FeedAdapter(Activity activity, int resourceView, FeedList feedList) {
 
         super(activity, resourceView, feedList);
-        this.mActivity = activity;
-        this.mFeedList = feedList;    
+        mActivity = activity;
+        mFeedList = feedList;    
 
     }
 
@@ -61,18 +62,19 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
 
         FeedItem feedItem = mFeedList.get(position);
 
-        /* Sets the values for the views in the FeedItem-layout. */
+        /* Sets the values for the View */
         if (feedItem != null)
             setItemView(viewHolder, feedItem);
 
-        setSwipeListener(view, parent, feedItem);
+        /* Provides a SwipeTouchListener for the View. */
+        view.setOnTouchListener(getSwipeListener(parent, feedItem));
 
         return view;
 
     }
 
     /**
-     * Sets the text and bitmaps for the FeedItem.
+     * Sets the TextViews and BitMap for the FeedItem.
      *
      * If the Bitmap in the FeedItem is null, the 
      * ImageView-visibility is set to View.GONE.
@@ -90,30 +92,42 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
 
     }
 
-    public void setSwipeListener(View view, ViewGroup parent, final FeedItem item) {
+    /**
+     * Creates a SwipeTouchListener for the View.
+     *
+     * @param  parent The ListView that contains the View
+     * @param  item   The FeedItem
+     * @return        A new SwipeTouchListener
+     */
+    private SwipeTouchListener getSwipeListener(ViewGroup parent, final FeedItem feedItem) {
 
-        view.setOnTouchListener(new SwipeTouchListener(mActivity, parent) {
+        return new SwipeTouchListener(mActivity, parent) {
 
             @Override
             public boolean onClick() {
-                click(item);
+                click(feedItem);
                 return super.onClick();
             }
 
             @Override
             public void onSwipeLeft() {
-                leftSwipe(item); 
+                leftSwipe(feedItem); 
             }
 
             @Override
             public void onSwipeRight() {
-                rightSwipe(item);
+                rightSwipe(feedItem);
             }  
 
-        }); 
+        }; 
 
     }
 
+    /**
+     * Is called when the View is clicked.
+     *
+     * @param item The FeedItem clicked
+     */
     private void click(FeedItem item) {
 
         FeedApplication app = (FeedApplication) mActivity.getApplication();
@@ -123,7 +137,12 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
 
     }
 
-    public void leftSwipe(FeedItem item) {
+    /**
+     * Is called when the View is swiped to the left.
+     *
+     * @param item The FeedItem swiped
+     */
+    private void leftSwipe(FeedItem item) {
 
         mFeedList.remove(mFeedList.indexOf(item));
         notifyDataSetChanged();
@@ -132,7 +151,12 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
 
     }
 
-    public void rightSwipe(FeedItem item) {
+    /**
+     * Is called when the View is swiped to the right.
+     *
+     * @param item The FeedItem swiped
+     */
+    private void rightSwipe(FeedItem item) {
 
         mFeedList.remove(mFeedList.indexOf(item));
         notifyDataSetChanged();
@@ -142,9 +166,9 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
     }
 
     /**
-     * Returns the adapters ArrayList.
+     * Returns the adapters FeedList.
      *
-     * @return mFeedList The ArrayList with the FeedItems.
+     * @return mFeedList The FeedList with the FeedItems.
      */
     public FeedList getFeedList() {
 
