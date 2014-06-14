@@ -20,26 +20,19 @@ public class DrawerItem {
     }
 
     public String getFeedName() {
-
         return mFeedName;
     }
 
     public String getUrl() {
-
         return mUrl;
-
     }
 
     public String getEncoding() {
-
         return mEncoding;
-
     }
 
     public ArrayList <FeedItem> getFeedList() {
-
         return mFeedList;
-
     }
 
     public void setFeedName(String name) {
