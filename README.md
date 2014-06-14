@@ -1,8 +1,5 @@
-Feed
-====
-
-A beautiful reader for your favorite RSS-feeds.
------------------------------------------------
+Feed - A beautiful reader for your favorite RSS-feeds.
+------------------------------------------------------
 
 **TODO**
 - Implement image caching
