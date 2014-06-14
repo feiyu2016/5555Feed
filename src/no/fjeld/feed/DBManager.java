@@ -1,12 +1,12 @@
 package no.fjeld.feed;
 
-import java.util.*;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.*;
 
 public class DBManager extends SQLiteOpenHelper {
 
@@ -25,7 +25,7 @@ public class DBManager extends SQLiteOpenHelper {
     /**
      * Constructor for the class DBManager.
      *
-     * @param context The 'FeedActivity'-context.
+     * @param context The app-context.
      */
     public DBManager(Context context) {
 
@@ -57,6 +57,7 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
 
+    //TODO Needs functionality for updating the tables when the database changes.
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
@@ -70,8 +71,7 @@ public class DBManager extends SQLiteOpenHelper {
 
     /**
      * Deletes a row from a table if an url is provided
-     * and matched.
-     * If not the whole table is cleared.
+     * and matched. If not, the whole table is cleared.
      *
      * @param table The table to delete from.
      * @param url   The url-value in the row to delete.
@@ -166,8 +166,7 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     /**
-     * Is called when the user chooses to mark all
-     * articles as read.
+     * Adds a list of urls to the list of read articles.
      *
      * @param list The list which contains the articles.
      */
@@ -247,7 +246,7 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     /**
-     * Returns a list of urls the user has marked as 'read'.
+     * Returns a list with the urls of read articles. 
      *
      * @return readItems The list with the urls.
      */
