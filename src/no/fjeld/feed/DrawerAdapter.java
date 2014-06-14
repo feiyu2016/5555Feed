@@ -51,12 +51,11 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
                         R.layout.drawer_item, null);
 
             viewHolder = new ViewHolder();
-            
+
             viewHolder.mFeedName = (TextView) view.findViewById(
                     R.id.drawer_item_text);
 
             view.setTag(viewHolder);
-
 
         } else
             viewHolder = (ViewHolder) view.getTag();
@@ -70,14 +69,15 @@ public class DrawerAdapter extends ArrayAdapter <DrawerItem> {
         /* If the DrawerItem is a newly added item that has not loaded
          * all it's values yet, it displays the title 'Loading feed..'
          * and sets the ProgressBar as visible. */
-        if (drawerItem.getFeedName().equals(mActivity.getString(
-                        R.string.drawer_item_loading))) 
-            ((LinearLayout) view.findViewById(R.id.drawer_item_progress))
-                .setVisibility(View.VISIBLE);
-        else    
-            ((LinearLayout) view.findViewById(R.id.drawer_item_progress))
-                .setVisibility(View.GONE);
+        LinearLayout progressLayout = (LinearLayout) view
+                .findViewById(R.id.drawer_item_progress);
 
+        if (drawerItem.getFeedName().equals(mActivity
+                .getString(R.string.drawer_item_loading))) { 
+            progressLayout.setVisibility(View.VISIBLE);
+        } else {    
+            progressLayout.setVisibility(View.GONE);
+        }
 
         return view;
 
