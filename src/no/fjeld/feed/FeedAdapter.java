@@ -14,9 +14,9 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
     /**
      * Constructor for the class FeedAdapter.
      *
-     * @param activity     FeedActivity-pointer.
-     * @param resourceView The layout-id for the FeedItem.
-     * @param feedList     The list which contains FeedItems.
+     * @param activity     FeedActivity-pointer
+     * @param resourceView The resource id for the FeedItem's layout
+     * @param feedList     The FeedList which contains FeedItems
      */
     public FeedAdapter(Activity activity, int resourceView, FeedList feedList) {
 
