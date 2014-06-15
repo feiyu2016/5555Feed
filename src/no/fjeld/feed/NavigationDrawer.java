@@ -14,8 +14,8 @@ import java.util.*;
 
 public class NavigationDrawer {
 
-    private View mView;
     private FeedApplication mApp;
+    private View mView;
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -25,13 +25,13 @@ public class NavigationDrawer {
     /**
      * Constructor for the class NavgigationDrawer.
      *
-     * @param view  The FeedActivity content view.
      * @param app   The Application-object for this app.
+     * @param view  The FeedActivity content view.
      */
-    public NavigationDrawer(View view, FeedApplication app) {
+    public NavigationDrawer(FeedApplication app, View view) {
 
-        this.mView = view;
-        this.mApp = app;
+        mApp = app;
+        mView = view;
 
         initDrawerLayout();
         initDrawerToggle();
