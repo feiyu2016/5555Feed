@@ -9,13 +9,13 @@ public class DrawerItem {
     private String mEncoding;
     private ArrayList <FeedItem> mFeedList;
 
-    public DrawerItem(String mFeedName, String mUrl, String mEncoding, 
-            ArrayList <FeedItem> mFeedList) {
+    public DrawerItem(String feedName, String url, String encoding, 
+            ArrayList <FeedItem> feedList) {
 
-        this.mFeedName = mFeedName;
-        this.mUrl = mUrl;
-        this.mEncoding = mEncoding;
-        this.mFeedList = mFeedList;
+        mFeedName = feedName;
+        mUrl = url;
+        mEncoding = encoding;
+        mFeedList = feedList;
 
     }
 
