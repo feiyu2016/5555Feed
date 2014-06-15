@@ -6,8 +6,8 @@ import android.view.*;
 
 public class FeedActivity extends Activity {
 
-    private View mView;
     private FeedApplication mApp;
+    private View mView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,9 +85,9 @@ public class FeedActivity extends Activity {
 
         mApp.mFeedActivity = this; 
         mApp.mActionBar = getActionBar();
-        mApp.mNavDrawer = new NavigationDrawer(mView, mApp);
-        mApp.mSwipeRefresh = new SwipeRefresh(mView, mApp);
-        mApp.mFeed = new Feed(mView, mApp);
+        mApp.mNavDrawer = new NavigationDrawer(mApp, mView);
+        mApp.mSwipeRefresh = new SwipeRefresh(mApp, mView);
+        mApp.mFeed = new Feed(mApp, mView);
 
     }
 
