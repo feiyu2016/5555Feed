@@ -55,13 +55,15 @@ public class WebViewActivity extends Activity {
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.setWebChromeClient(new MyWebChromeClient());
 
+        /* Loads the url provided as an 'extra' to the WebView-intent. */
         mWebView.loadUrl(getIntent().getExtras().getString("url"));
 
     }
 
     /**
-     * The custom WebViewClient which sets the ProgressBars visibility
+     * The custom WebViewClient which sets the ProgressBar visibility
      * when a page starts to load, and when it has finished loading.
+     * The subtitle of the Action Bar is also set to the title of the page.
      */
     private class MyWebViewClient extends android.webkit.WebViewClient {
 
