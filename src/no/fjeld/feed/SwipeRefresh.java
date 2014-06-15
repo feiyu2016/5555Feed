@@ -5,21 +5,21 @@ import android.view.*;
 
 public class SwipeRefresh implements SwipeRefreshLayout.OnRefreshListener {
 
-    private View mView;
     private FeedApplication mApp;
+    private View mView;
 
     private SwipeRefreshLayout mSwipeLayout;
 
     /**
      * Constructor for the class "SwipeToRefresh".
      *
-     * @param view  The apps main-view.
      * @param app  The Application-object for this app.
+     * @param view The apps main-view.
      */
-    public SwipeRefresh(View view, FeedApplication app) {
+    public SwipeRefresh(FeedApplication app, View view) {
 
-        this.mView = view;
-        this.mApp = app;
+        mApp = app;
+        mView = view;
 
         initSwipeLayout();
         setSwipeLayoutListener();
@@ -37,7 +37,7 @@ public class SwipeRefresh implements SwipeRefreshLayout.OnRefreshListener {
     }
 
     /**
-     * Sets a RefresListener for the SwipeRefreshLayout.
+     * Sets a RefreshListener for the SwipeRefreshLayout.
      */
     private void setSwipeLayoutListener() {
 
@@ -46,7 +46,7 @@ public class SwipeRefresh implements SwipeRefreshLayout.OnRefreshListener {
     }
 
     /**
-     * Sets the colors for the Layout.
+     * Sets the Progress Bar's colors.
      */
     private void setSwipeLayoutAppearance() {
 
