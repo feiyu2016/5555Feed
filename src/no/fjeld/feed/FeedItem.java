@@ -12,15 +12,15 @@ public class FeedItem implements Comparable <FeedItem> {
     private Bitmap mImage;
     private String mFeed;
 
-    public FeedItem(String mTitle, String mDescription, String mUrl, 
-            Date mPubDate, Bitmap mImage, String mFeed) {
+    public FeedItem(String title, String description, String url, 
+            Date pubDate, Bitmap image, String feed) {
 
-        this.mTitle = mTitle.trim();
-        this.mDescription = mDescription;
-        this.mUrl = mUrl;
-        this.mPubDate = mPubDate;
-        this.mImage = mImage;
-        this.mFeed = mFeed;
+        mTitle = title.trim();
+        mDescription = description;
+        mUrl = url;
+        mPubDate = pubDate;
+        mImage = image;
+        mFeed = feed;
 
     }
 
