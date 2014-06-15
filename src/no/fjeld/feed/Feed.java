@@ -13,8 +13,8 @@ import java.util.*;
 
 public class Feed {
 
-    private View mView;
     private FeedApplication mApp;
+    private View mView;
 
     private ListView mFeedListView;
     private FeedAdapter mFeedAdapter;
@@ -26,13 +26,13 @@ public class Feed {
     /**
      * Constructor for the class Feed.
      *
-     * @param view The FeedActivity content view.
      * @param app  The Application-object for this app.
+     * @param view The FeedActivity content view.
      */
-    public Feed(View view, FeedApplication app) {
+    public Feed(FeedApplication app, View view) {
 
-        this.mView = view;
-        this.mApp = app;
+        mApp = app;
+        mView = view;
 
         initFeedListView();
         initFeedAdapter();
