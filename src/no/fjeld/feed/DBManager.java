@@ -232,7 +232,8 @@ public class DBManager extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
 
-                savedItems.add(new FeedItem(cursor.getString(0), cursor.getString(1), 
+                savedItems.add(new FeedItem(cursor.getString(0), 
+                            cursor.getString(1), 
                             cursor.getString(2), null, null, null));
 
             } while(cursor.moveToNext());
