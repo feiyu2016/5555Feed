@@ -85,9 +85,9 @@ public class FeedActivity extends Activity {
 
         mApp.mFeedActivity = this; 
         mApp.mActionBar = getActionBar();
-        mApp.mNavDrawer = new NavigationDrawer(mApp, mView);
-        mApp.mSwipeRefresh = new SwipeRefresh(mApp, mView);
-        mApp.mFeed = new Feed(mApp, mView);
+        mApp.mNavDrawer = new NavigationDrawer(this, mView);
+        mApp.mSwipeRefresh = new SwipeRefresh(this, mView);
+        mApp.mFeed = new Feed(this, mView);
 
     }
 

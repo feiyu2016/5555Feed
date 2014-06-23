@@ -26,12 +26,12 @@ public class Feed {
     /**
      * Constructor for the class Feed.
      *
-     * @param app  The Application-object for this app.
-     * @param view The FeedActivity content view.
+     * @param activity The main activity for this app.
+     * @param view     The FeedActivity content view.
      */
-    public Feed(FeedApplication app, View view) {
+    public Feed(Activity activity, View view) {
 
-        mApp = app;
+        mApp = (FeedApplication)activity.getApplication();
         mView = view;
 
         initFeedListView();
@@ -40,7 +40,7 @@ public class Feed {
         mFeedListView.setAdapter(mFeedAdapter);
 
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(
-                app.getFeedActivity().getBaseContext());
+                mApp.getFeedActivity().getBaseContext());
 
     }
 

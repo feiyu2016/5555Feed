@@ -15,6 +15,7 @@ import java.util.*;
 public class NavigationDrawer {
 
     private FeedApplication mApp;
+    private Activity mActivity;
     private View mView;
 
     private DrawerLayout mDrawerLayout;
@@ -25,12 +26,13 @@ public class NavigationDrawer {
     /**
      * Constructor for the class NavgigationDrawer.
      *
-     * @param app   The Application-object for this app.
-     * @param view  The FeedActivity content view.
+     * @param activity The main activity for this app.
+     * @param view     The FeedActivity content view.
      */
-    public NavigationDrawer(FeedApplication app, View view) {
+    public NavigationDrawer(Activity activity, View view) {
 
-        mApp = app;
+        mApp = (FeedApplication)activity.getApplication();
+        mActivity = activity;
         mView = view;
 
         initDrawerLayout();
@@ -41,7 +43,7 @@ public class NavigationDrawer {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerListView.setAdapter(mDrawerAdapter);
 
-        app.getActionBar().setDisplayHomeAsUpEnabled(true);
+        mApp.getActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -93,7 +95,7 @@ public class NavigationDrawer {
         addViews(); 
 
         mDrawerListView.setOnItemClickListener(new DrawerClickListener());
-        mDrawerListView.setOnItemLongClickListener(new DrawerLongClick(mApp, mDrawerAdapter));
+        mDrawerListView.setOnItemLongClickListener(new DrawerLongClick(mActivity, mDrawerAdapter));
 
     }
 

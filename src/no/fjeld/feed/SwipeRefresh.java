@@ -1,5 +1,6 @@
 package no.fjeld.feed;
 
+import android.app.Activity;
 import android.support.v4.widget.*;
 import android.view.*;
 
@@ -13,12 +14,12 @@ public class SwipeRefresh implements SwipeRefreshLayout.OnRefreshListener {
     /**
      * Constructor for the class "SwipeToRefresh".
      *
-     * @param app  The Application-object for this app.
+     * @param activity The main activity for this app.
      * @param view The apps main-view.
      */
-    public SwipeRefresh(FeedApplication app, View view) {
+    public SwipeRefresh(Activity activity, View view) {
 
-        mApp = app;
+        mApp = (FeedApplication)activity.getApplication();
         mView = view;
 
         initSwipeLayout();
