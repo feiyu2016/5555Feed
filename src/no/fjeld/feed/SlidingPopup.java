@@ -14,10 +14,9 @@ public class SlidingPopup {
     private final static int ANIMATION_TIME = 300;
 
     private static SlidingPopup sInstance;
-    private static boolean sVisible;
 
     private Activity mActivity;
-
+    
     private ViewGroup mParentView;
     private View mFadingView;
     private View mChildView;
@@ -50,7 +49,7 @@ public class SlidingPopup {
         sInstance = this;
 
         setCancelListener();
-        slideDown();
+        slideIn();
 
     } 
 
@@ -58,23 +57,24 @@ public class SlidingPopup {
      * Starts the fading (transition) of the background
      * and animates mChildView (sliding in).
      */
-    private void slideDown() {
+    private void slideIn() {
 
         Animation anim = AnimationUtils.loadAnimation(
                 mActivity, R.anim.slide_in_top); 
         
         mChildView.startAnimation(anim);
         mTransition.startTransition(ANIMATION_TIME);
-        
-        sVisible = true;
 
     }
 
     /**
      * Reverse the fading (transition) of the background
      * and animates mChildView (sliding out).
+     *
+     * Has a public modifier in case it needs to be accessed
+     * from other classes.
      */
-    private void slideUp() {
+    public void slideOut() {
 
         Animation anim = AnimationUtils.loadAnimation(
                 mActivity, R.anim.slide_out_top); 
@@ -114,7 +114,7 @@ public class SlidingPopup {
         mFadingView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                slideUp();
+                slideOut();
             }
         });
 
@@ -128,12 +128,10 @@ public class SlidingPopup {
     }
 
     /**
-     * Returns true or false depending on if the View is 
-     * visible or not.
-     */ 
-    public static boolean isVisible() {
-        return sVisible;
-    }
+     * Is ment to be overridden if any desired functionality
+     * is wanted when the View has slided out of the screen.
+     */
+    public void onSlideOutFinished() {}
 
     /**
      * AnimationListener for the animation that slides the
@@ -152,7 +150,9 @@ public class SlidingPopup {
 
             mParentView.removeView(mFadingView);
             mParentView.removeView(mChildView);
-            sVisible = false; 
+            sInstance = null;
+
+            onSlideOutFinished();
 
         }
 
