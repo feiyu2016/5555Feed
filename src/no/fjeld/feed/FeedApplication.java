@@ -2,7 +2,6 @@ package no.fjeld.feed;
 
 public class FeedApplication extends android.app.Application {
 
-    public android.app.Activity mFeedActivity;
     public android.app.ActionBar mActionBar;
     public NavigationDrawer mNavDrawer;
     public SwipeRefresh mSwipeRefresh;
@@ -13,10 +12,6 @@ public class FeedApplication extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
-    }
-
-    public android.app.Activity getFeedActivity() {
-        return mFeedActivity;
     }
 
     public android.app.ActionBar getActionBar() {

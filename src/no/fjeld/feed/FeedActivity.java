@@ -83,7 +83,6 @@ public class FeedActivity extends Activity {
 
         mApp.mDatabase = new DBManager(this);
 
-        mApp.mFeedActivity = this; 
         mApp.mActionBar = getActionBar();
         mApp.mNavDrawer = new NavigationDrawer(this, mView);
         mApp.mSwipeRefresh = new SwipeRefresh(this, mView);
