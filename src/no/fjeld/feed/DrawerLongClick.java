@@ -9,7 +9,7 @@ import android.widget.*;
 import android.widget.AdapterView.*;
 
 /** 
- * The LongClickListener for the Navigation Drawers ListView.
+ * The OnItemLongClickListener for the Navigation Drawers ListView.
  * This will display the options for a DrawerItem which is either
  * to rename the title, or delete it.
  */
@@ -21,7 +21,7 @@ public class DrawerLongClick implements OnItemLongClickListener {
     private static final int CANCEL = 2;
     private int action;
 
-    private FeedApplication mApp;
+    private Activity mActivity;
     private DrawerAdapter mDrawerAdapter;
     private DrawerItem mDrawerItem;
 
@@ -41,12 +41,12 @@ public class DrawerLongClick implements OnItemLongClickListener {
     /**
      * Constructor for the class DrawerLongClick.
      *
-     * @param app           The app-pointer used to access global pointers.
+     * @param activity      The main activity for this app.
      * @param drawerAdapter The adapter for the NavigationDrawer list.
      */
-    public DrawerLongClick(FeedApplication app, DrawerAdapter drawerAdapter) {
+    public DrawerLongClick(Activity activity, DrawerAdapter drawerAdapter) {
 
-        mApp = app;
+        mActivity = activity;
         mDrawerAdapter = drawerAdapter;
 
     }
@@ -86,7 +86,7 @@ public class DrawerLongClick implements OnItemLongClickListener {
         mDrawerText.startAnimation(mSlideIn);
 
     }
-    
+
     /** 
      * Hides the options of the previous clicked item.
      */
@@ -94,7 +94,7 @@ public class DrawerLongClick implements OnItemLongClickListener {
 
         mDrawerOptions.setVisibility(View.INVISIBLE);
         mDrawerText.setVisibility(View.VISIBLE);
-        mDrawerText.startAnimation(AnimationUtils.loadAnimation(mApp.getFeedActivity().
+        mDrawerText.startAnimation(AnimationUtils.loadAnimation(mActivity.
                     getBaseContext(), R.anim.slide_in_left));
 
     }
@@ -104,9 +104,9 @@ public class DrawerLongClick implements OnItemLongClickListener {
      */
     private void initAnims() {
 
-        mSlideIn = AnimationUtils.loadAnimation(mApp.getFeedActivity().
+        mSlideIn = AnimationUtils.loadAnimation(mActivity.
                 getBaseContext(), R.anim.slide_in_left);
-        mSlideOut = AnimationUtils.loadAnimation(mApp.getFeedActivity().
+        mSlideOut = AnimationUtils.loadAnimation(mActivity.
                 getBaseContext(), R.anim.slide_out_left);
 
         mSlideIn.setAnimationListener(new SlideInListener());
@@ -183,7 +183,8 @@ public class DrawerLongClick implements OnItemLongClickListener {
                 mDrawerAdapter.notifyDataSetChanged(); 
 
                 /* Deletes the DrawerItem from the database. */
-                mApp.getDatabase().delete("drawerItems", mDrawerItem.getUrl()); 
+                ((FeedApplication)mActivity.getApplication())
+                        .getDatabase().delete("drawerItems", mDrawerItem.getUrl()); 
 
             }
 
@@ -196,8 +197,7 @@ public class DrawerLongClick implements OnItemLongClickListener {
         private void changeName() {
 
             /* Some 'final'-fields necessary for inner class access. */
-            final Activity activity = mApp.getFeedActivity();
-            final EditText input = new EditText(activity);
+            final EditText input = new EditText(mActivity);
             input.setHint(mDrawerItem.getFeedName());
 
             /* Shows the keyboard */
@@ -205,7 +205,7 @@ public class DrawerLongClick implements OnItemLongClickListener {
 
                 @Override
                 public void run() {
-                    ((InputMethodManager) activity.getSystemService(
+                    ((InputMethodManager) mActivity.getSystemService(
                         Context.INPUT_METHOD_SERVICE)).showSoftInput(input, 0);
                 }
 
@@ -213,7 +213,7 @@ public class DrawerLongClick implements OnItemLongClickListener {
 
             /* The dialog */
             AlertDialog.Builder dialog = new AlertDialog.Builder(
-                    new ContextThemeWrapper(activity, R.style.DefaultTheme));
+                    new ContextThemeWrapper(mActivity, R.style.DefaultTheme));
             dialog.setTitle(R.string.drawer_item_change_title);
             dialog.setView(input);
 
@@ -229,7 +229,8 @@ public class DrawerLongClick implements OnItemLongClickListener {
                             mDrawerAdapter.notifyDataSetChanged();
 
                             /* Updates the title for the DrawerItem. */
-                            mApp.getDatabase().update(mDrawerItem);
+                            ((FeedApplication)mActivity.getApplication())
+                                     .getDatabase().update(mDrawerItem);
 
                         }
 
