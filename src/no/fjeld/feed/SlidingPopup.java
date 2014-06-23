@@ -14,14 +14,13 @@ public class SlidingPopup {
     private final static int ANIMATION_TIME = 300;
 
     private static SlidingPopup sInstance;
+    private TransitionDrawable mTransition;
 
     private Activity mActivity;
     
     private ViewGroup mParentView;
-    private View mFadingView;
     private View mChildView;
-
-    private TransitionDrawable mTransition;
+    private View mFadingView;
 
     /**
      * Public constructor for SlidingPopup.
@@ -33,20 +32,18 @@ public class SlidingPopup {
     public SlidingPopup(Activity activity, ViewGroup parentView, 
             View childView) {
 
+        sInstance = this;
+        mTransition = getTransitionDrawable();
+        
         mActivity = activity;
 
         mParentView = parentView;
         mChildView = childView;
-
-        mTransition = getTransitionDrawable();
-
         mFadingView = new View(mActivity); 
         mFadingView.setBackground(mTransition);
 
         mParentView.addView(mFadingView);
         mParentView.addView(mChildView);
-
-        sInstance = this;
 
         setCancelListener();
         slideIn();
@@ -100,7 +97,7 @@ public class SlidingPopup {
                 Color.parseColor("#99000000"));
 
         return new TransitionDrawable(new Drawable [] {
-            layerOne, layerTwo
+                layerOne, layerTwo
         });
 
     }
