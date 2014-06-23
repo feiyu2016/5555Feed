@@ -61,7 +61,7 @@ public class NavigationDrawer {
      */
     private void initDrawerToggle() {
 
-        mDrawerToggle = new ActionBarDrawerToggle(mApp.getFeedActivity(), mDrawerLayout, 
+        mDrawerToggle = new ActionBarDrawerToggle(mActivity, mDrawerLayout, 
                 R.drawable.ic_navigation_drawer, R.string.drawer_open, R.string.drawer_closed) {
 
             public void onDrawerClosed(View mainView) {
@@ -71,14 +71,14 @@ public class NavigationDrawer {
                 if (drawerItem != null)
                     mApp.getActionBar().setSubtitle(drawerItem.getFeedName());
 
-                mApp.getFeedActivity().invalidateOptionsMenu();
+                mActivity.invalidateOptionsMenu();
 
             }
 
             public void onDrawerOpened(View drawerView) {
 
                 mApp.getActionBar().setSubtitle(R.string.drawer_open);
-                mApp.getFeedActivity().invalidateOptionsMenu();
+                mActivity.invalidateOptionsMenu();
 
             }
 
@@ -105,7 +105,7 @@ public class NavigationDrawer {
      */
     private void addViews() {
 
-        LayoutInflater inflater = (LayoutInflater) mApp.getFeedActivity()
+        LayoutInflater inflater = (LayoutInflater) mActivity
             .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         /* Headers */
@@ -139,7 +139,7 @@ public class NavigationDrawer {
                 R.layout.drawer_item, null);
 
         TextView itemText = (TextView) item.findViewById(R.id.drawer_item_text);
-        itemText.setText(mApp.getFeedActivity().getResources()
+        itemText.setText(mActivity.getResources()
                 .getString(stringResId));
 
         return item;
@@ -162,7 +162,7 @@ public class NavigationDrawer {
 
         TextView itemText = (TextView) item.findViewById(
                 R.id.drawer_footer_text);
-        itemText.setText(mApp.getFeedActivity().getResources()
+        itemText.setText(mActivity.getResources()
                 .getString(stringResId));
 
         ImageView itemImage = (ImageView) item.findViewById(
@@ -202,7 +202,7 @@ public class NavigationDrawer {
     private void initDrawerAdapter() {
 
         mDrawerAdapter = new DrawerAdapter(
-                mApp.getFeedActivity(), R.layout.drawer_item, 
+                mActivity, R.layout.drawer_item, 
                 mApp.getDatabase().getDrawerItems());
 
     }
@@ -248,8 +248,8 @@ public class NavigationDrawer {
 
         } else if (position == drawerSize - 2) {    // Preferences
 
-            mApp.getFeedActivity().startActivity(new Intent(
-                        mApp.getFeedActivity(), PreferencesActivity.class));
+            mActivity.startActivity(new Intent(
+                        mActivity, PreferencesActivity.class));
 
         } else if (position == drawerSize - 1) {    // About
 
@@ -276,15 +276,14 @@ public class NavigationDrawer {
     public void newFeed() {
 
         /* Some final-modifiers needed for inner class access. */
-        final Activity activity = mApp.getFeedActivity();
-        final EditText input = new EditText(activity);
+        final EditText input = new EditText(mActivity);
         input.setHint(R.string.new_feed_hint);
 
         /* Shows the keyboard */
         input.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ((InputMethodManager) activity.getSystemService(
+                ((InputMethodManager) mActivity.getSystemService(
                     Context.INPUT_METHOD_SERVICE)).showSoftInput(input, 0);
             }
 
@@ -292,7 +291,7 @@ public class NavigationDrawer {
 
         /* The dialog */
         AlertDialog.Builder dialog = new AlertDialog.Builder(
-                new ContextThemeWrapper(activity, R.style.DefaultTheme));
+                new ContextThemeWrapper(mActivity, R.style.DefaultTheme));
         dialog.setTitle(R.string.new_feed_title);
         dialog.setView(input);
 
@@ -325,7 +324,7 @@ public class NavigationDrawer {
      */
     public void addFeed(String url) {
 
-        DrawerItem newItem = new DrawerItem(mApp.getFeedActivity()
+        DrawerItem newItem = new DrawerItem(mActivity
                 .getString(R.string.drawer_item_loading), null, null, 
                 new ArrayList <FeedItem> ());
         mDrawerAdapter.getDrawerList().add(newItem); 
