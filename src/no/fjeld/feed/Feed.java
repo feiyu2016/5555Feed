@@ -122,11 +122,11 @@ public class Feed {
             } else {
 
                 mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(true);
-                new GetFeed(mApp, drawerItem).execute(drawerItem.getUrl());
+                new GetFeed(mActivity, drawerItem).execute(drawerItem.getUrl());
 
             }
 
-                } 
+        } 
 
     }
 
@@ -189,7 +189,7 @@ public class Feed {
                 && item.getUrl() != null) {
 
             mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(true);
-            new GetFeed(mApp, item).execute(item.getUrl()); 
+            new GetFeed(mActivity, item).execute(item.getUrl()); 
 
                 }
 

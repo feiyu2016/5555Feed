@@ -1,5 +1,6 @@
 package no.fjeld.feed;
 
+import android.app.Activity;
 import android.content.*;
 import android.graphics.*;
 import android.os.*;
@@ -32,12 +33,12 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
     /**
      * Constructor for the class "GetFeed".
      *
-     * @param app        The application-object for this app.
+     * @param activity   The main activity for this app.
      * @param drawerItem The DrawerItem-object clicked.
      */
-    public GetFeed(FeedApplication app, DrawerItem drawerItem) {
+    public GetFeed(Activity activity, DrawerItem drawerItem) {
 
-        this.mApp = app;
+        this.mApp = (FeedApplication)activity.getApplication();
         this.mFeedName = drawerItem.getFeedName();
         this.mEncoding = drawerItem.getEncoding();
         this.mFeedList = drawerItem.getFeedList();
