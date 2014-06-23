@@ -140,12 +140,6 @@ public class SlidingPopup {
     private class SlideOutListener implements AnimationListener {
 
         @Override
-        public void onAnimationStart(Animation animation) {}
-
-        @Override
-        public void onAnimationRepeat(Animation animation) {}
-
-        @Override
         public void onAnimationEnd(Animation animation) {
 
             mParentView.removeView(mFadingView);
@@ -155,6 +149,12 @@ public class SlidingPopup {
             onSlideOutFinished();
 
         }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {}
+
+        @Override
+        public void onAnimationStart(Animation animation) {}
 
     }
 
