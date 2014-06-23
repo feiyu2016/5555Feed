@@ -14,7 +14,7 @@ Clone the android_debug script with `git clone https://gist.github.com/fjeld/998
 follow the instructions in android_debug.sh.
 
 **TODO**
-
+- Setting for automatic 'Mark all as read'
 - Implement image caching
 - Fix all imports (remove dotASTERIX's)
 - Clean up field names in all .java
