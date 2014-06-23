@@ -23,9 +23,9 @@ public class NewFeed extends AsyncTask <String, Integer, String> {
     DrawerItem newItem;
     String mUrl;
 
-    NewFeed(FeedApplication app, DrawerItem newItem) {
+    NewFeed(Activity activity, DrawerItem newItem) {
 
-        this.mApp = app;
+        this.mApp = (FeedApplication)activity.getApplication();
         this.newItem = newItem;
         
     }

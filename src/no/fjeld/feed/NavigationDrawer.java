@@ -330,7 +330,7 @@ public class NavigationDrawer {
         mDrawerAdapter.getDrawerList().add(newItem); 
         mDrawerAdapter.notifyDataSetChanged();
 
-        NewFeed newFeed = new NewFeed(mApp, newItem);
+        NewFeed newFeed = new NewFeed(mActivity, newItem);
         newFeed.execute(url);
 
     }
