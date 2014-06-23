@@ -14,6 +14,7 @@ import java.util.*;
 public class Feed {
 
     private FeedApplication mApp;
+    private Activity mActivity;
     private View mView;
 
     private ListView mFeedListView;
@@ -32,6 +33,7 @@ public class Feed {
     public Feed(Activity activity, View view) {
 
         mApp = (FeedApplication)activity.getApplication();
+        mActivity = activity;
         mView = view;
 
         initFeedListView();
@@ -40,7 +42,7 @@ public class Feed {
         mFeedListView.setAdapter(mFeedAdapter);
 
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(
-                mApp.getFeedActivity().getBaseContext());
+                mActivity.getBaseContext());
 
     }
 
@@ -51,7 +53,7 @@ public class Feed {
 
         mFeedListView = (ListView) mView.findViewById(R.id.feed_list);
 
-        View listMargin = ((LayoutInflater) mApp.getFeedActivity()
+        View listMargin = ((LayoutInflater) mActivity 
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE))
             .inflate(R.layout.list_margin, null);
 
@@ -65,7 +67,7 @@ public class Feed {
      */
     private void initFeedAdapter() {
 
-        mFeedAdapter = new FeedAdapter(mApp.getFeedActivity(), 
+        mFeedAdapter = new FeedAdapter(mActivity,
                 R.layout.list_item, new FeedList());
 
     }
@@ -92,7 +94,7 @@ public class Feed {
      */
     public void allFeeds() {
 
-        lastDrawerItem = new DrawerItem(mApp.getFeedActivity().getString(
+        lastDrawerItem = new DrawerItem(mActivity.getString(
                     R.string.drawer_header_all_feeds), "", null, new FeedList());
 
         mFeedAdapter.getFeedList().clear();
@@ -133,7 +135,7 @@ public class Feed {
      */
     public void savedFeeds() {
 
-        DrawerItem drawerItem = new DrawerItem(mApp.getFeedActivity()
+        DrawerItem drawerItem = new DrawerItem(mActivity
                 .getString(R.string.drawer_header_saved_items), null, null, 
                 mApp.getDatabase().getSavedItems());
 
@@ -199,16 +201,14 @@ public class Feed {
      */
     public void readNow(String title, String url) {
 
-        Activity activity = mApp.getFeedActivity();
-
         /* Loads the url in the WebView-class displayed in the app. */ 
         if (mSharedPrefs.getBoolean("preference_open_in", true)) 
-            activity.startActivity(new Intent(activity, WebViewActivity.class)
+            mActivity.startActivity(new Intent(mActivity, WebViewActivity.class)
                     .putExtra("title", title).putExtra("url", url));
 
         /* Loads the url in the default browser. */
         else
-            activity.startActivity(new Intent(Intent.ACTION_VIEW, 
+            mActivity.startActivity(new Intent(Intent.ACTION_VIEW, 
                         Uri.parse(url)));
 
     }
