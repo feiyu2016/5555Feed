@@ -24,6 +24,8 @@ import org.xml.sax.*;
 public class GetFeed extends AsyncTask <String, Integer, String> {
 
     private FeedApplication mApp;
+    private Activity mActivity;
+
     private String mFeedName;
     private String mEncoding;
     private ArrayList <FeedItem> mFeedList;
@@ -38,10 +40,12 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
      */
     public GetFeed(Activity activity, DrawerItem drawerItem) {
 
-        this.mApp = (FeedApplication)activity.getApplication();
-        this.mFeedName = drawerItem.getFeedName();
-        this.mEncoding = drawerItem.getEncoding();
-        this.mFeedList = drawerItem.getFeedList();
+        mApp = (FeedApplication)activity.getApplication();
+        mActivity = activity;
+
+        mFeedName = drawerItem.getFeedName();
+        mEncoding = drawerItem.getEncoding();
+        mFeedList = drawerItem.getFeedList();
 
     }
 
@@ -100,7 +104,7 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
         String imgUrl;
 
         SharedPreferences sharedPrefs = PreferenceManager
-            .getDefaultSharedPreferences(mApp.getFeedActivity()
+            .getDefaultSharedPreferences(mActivity
                     .getBaseContext());
 
         try {

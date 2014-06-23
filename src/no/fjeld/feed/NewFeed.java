@@ -18,14 +18,16 @@ import org.xml.sax.*;
 
 public class NewFeed extends AsyncTask <String, Integer, String> {
 
-    FeedApplication mApp;
+    private FeedApplication mApp;
+    private Activity mActivity;
+        
+    private DrawerItem newItem;
+    private String mUrl;
 
-    DrawerItem newItem;
-    String mUrl;
+    public NewFeed(Activity activity, DrawerItem newItem) {
 
-    NewFeed(Activity activity, DrawerItem newItem) {
-
-        this.mApp = (FeedApplication)activity.getApplication();
+        mApp = (FeedApplication)activity.getApplication();
+        mActivity = activity;
         this.newItem = newItem;
         
     }
@@ -161,7 +163,7 @@ public class NewFeed extends AsyncTask <String, Integer, String> {
      */
     private void invalidFeed() {
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(mApp.getFeedActivity());
+        AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
         dialog.setTitle(R.string.invalid_feed_message);
 
         dialog.setNeutralButton(R.string.invalid_feed_ok, new DialogInterface.
