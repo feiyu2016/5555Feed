@@ -133,7 +133,7 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
         FeedApplication app = (FeedApplication) mActivity.getApplication();
 
         if (!FeedItemPopup.isVisible())
-            new FeedItemPopup(app, item).initView();
+            new FeedItemPopup(mActivity, item).initView();
 
     }
 

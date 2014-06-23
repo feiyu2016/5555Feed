@@ -2,6 +2,7 @@ package no.fjeld.feed;
 
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
+import android.app.Activity;
 import android.content.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
@@ -24,7 +25,7 @@ public class FeedItemPopup {
     private static boolean sVisible;
     private static FeedItemPopup sInstance;
 
-    private FeedApplication mApp;
+    private Activity mActivity;
     private FeedItem mFeedItem;
 
     private LinearLayout mPopupView;
@@ -34,9 +35,9 @@ public class FeedItemPopup {
     private TextView mTitle;
     private TextView mDescription;
 
-    public FeedItemPopup(FeedApplication app, FeedItem item) {
+    public FeedItemPopup(Activity activity, FeedItem item) {
 
-        mApp = app;
+        mActivity = activity;
         mFeedItem = item;
 
         sInstance = this;
@@ -57,9 +58,9 @@ public class FeedItemPopup {
 
     public void initView() {
 
-        mPopupView = (LinearLayout) mApp.getFeedActivity().findViewById(
+        mPopupView = (LinearLayout) mActivity.findViewById(
                 R.id.popup_view); 
-        mBackground = (TransitionDrawable) mApp.getFeedActivity().findViewById(
+        mBackground = (TransitionDrawable) mActivity.findViewById(
                 R.id.fading_background).getBackground();
 
         mImage = (ImageView) mPopupView.findViewById(R.id.popup_image);
@@ -123,7 +124,7 @@ public class FeedItemPopup {
     private void showView() {
 
         Animation anim = AnimationUtils.loadAnimation(
-                mApp.getFeedActivity(), R.anim.slide_in_top);
+                mActivity, R.anim.slide_in_top);
 
         mPopupView.startAnimation(anim);
         mBackground.startTransition(300);
@@ -136,7 +137,7 @@ public class FeedItemPopup {
     public void hideView() {
 
         Animation anim = AnimationUtils.loadAnimation(
-                mApp.getFeedActivity(), R.anim.slide_out_top);
+                mActivity, R.anim.slide_out_top);
         anim.setAnimationListener(new SlideOutListener());
 
         mPopupView.startAnimation(anim);
@@ -154,19 +155,19 @@ public class FeedItemPopup {
     private void read() {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(
-                mApp.getFeedActivity());
+               mActivity); 
 
         if (prefs.getBoolean("preference_open_in", true)) {
 
-            Intent appIntent = new Intent(mApp.getFeedActivity(), 
+            Intent appIntent = new Intent(mActivity,
                     WebViewActivity.class).putExtra("url", mFeedItem.getUrl());
-            mApp.getFeedActivity().startActivity(appIntent);
+            mActivity.startActivity(appIntent);
 
         } else {
 
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, 
                     Uri.parse(mFeedItem.getUrl()));
-            mApp.getFeedActivity().startActivity(browserIntent);
+            mActivity.startActivity(browserIntent);
 
         }
 
