@@ -210,12 +210,6 @@ public class SwipeTouchListener implements OnTouchListener {
         }
 
         @Override
-        public void onAnimationStart(Animator anim) {}
-
-        @Override
-        public void onAnimationRepeat(Animator anim) {}
-
-        @Override
         public void onAnimationEnd(Animator anim) {
 
             mView.setAlpha(1);
@@ -235,7 +229,13 @@ public class SwipeTouchListener implements OnTouchListener {
 
         @Override
         public void onAnimationCancel(Animator anim) {}
+        
+        @Override
+        public void onAnimationRepeat(Animator anim) {}
 
+        @Override
+        public void onAnimationStart(Animator anim) {}
+   
     }
 
 }
