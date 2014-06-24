@@ -66,8 +66,8 @@ public class FeedActivity extends Activity {
     @Override
     public void onBackPressed() {
    
-        if (FeedItemPopup.isVisible())
-            FeedItemPopup.getInstance().hideView();
+        if (SlidingView.getInstance() != null)
+            SlidingView.getInstance().slideOut();
         else
             super.onBackPressed();
 
