@@ -138,7 +138,9 @@ public class SlidingPopup {
     }
 
     /** 
-     * Returns the current instance of the visible View.
+     * Returns the instance for SlidingPopup.
+     * Is used to determine if there is any "active" Views that
+     * has been slided in, but not yet slided out again.
      */
     public static SlidingPopup getInstance() {
         return sInstance;
