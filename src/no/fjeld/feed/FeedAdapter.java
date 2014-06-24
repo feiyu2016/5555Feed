@@ -130,10 +130,13 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
      */
     private void click(FeedItem item) {
 
-        FeedApplication app = (FeedApplication) mActivity.getApplication();
+        ViewGroup parentView = (ViewGroup) mActivity.getWindow()
+                .getDecorView().findViewById(R.id.content_view);
+        
+        if (SlidingView.getInstance() == null) 
+           new SlidingFeedItem(mActivity, parentView, item); 
 
-        if (!FeedItemPopup.isVisible())
-            new FeedItemPopup(mActivity, item).initView();
+        
 
     }
 
