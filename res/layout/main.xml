@@ -30,18 +30,6 @@
 
         </android.support.v4.widget.SwipeRefreshLayout>
 
-        <!-- The bakground that fades when the user does a long
-             click on a FeedItem -->
-        <LinearLayout
-            android:id="@+id/fading_background"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" 
-            android:background="@drawable/bg_fading" />
-
-        <!-- The view that becomes visible when the user does
-             a long click on a FeedItem -->
-        <include layout="@layout/popup_view" />
-
     </FrameLayout>
 
     <!-- The list that contains the items in the Navigation Drawer -->
