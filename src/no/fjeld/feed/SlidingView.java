@@ -23,8 +23,8 @@ import android.view.animation.AnimationUtils;
  *
  * @Override
  * public void onBackPressed() {
- *     if (SlidingPopup.getInstance() != null)
- *         SlidingPopup.getInstance().slideOut();
+ *     if (SlidingView.getInstance() != null)
+ *         SlidingView.getInstance().slideOut();
  *     else
  *         super.onBackPressed();
  * }
@@ -32,11 +32,11 @@ import android.view.animation.AnimationUtils;
  * If any functionality is desired when the View has slided
  * out of the screen, override 'onSlideOutFinished()'.
  */
-public class SlidingPopup {
+public class SlidingView {
 
     private final static int ANIMATION_TIME = 300;
 
-    private static SlidingPopup sInstance;
+    private static SlidingView sInstance;
     private TransitionDrawable mTransition;
 
     private Activity mActivity;
@@ -46,13 +46,13 @@ public class SlidingPopup {
     private View mFadingView;
 
     /**
-     * Public constructor for SlidingPopup.
+     * Public constructor for SlidingView.
      *
      * @param activity   An Activity-pointer.
      * @param parentView The ViewGroup which will show the sliding View.
      * @param childView  The View that will slide down.
      */
-    public SlidingPopup(Activity activity, ViewGroup parentView, 
+    public SlidingView(Activity activity, ViewGroup parentView, 
             View childView) {
 
         sInstance = this;
@@ -142,11 +142,11 @@ public class SlidingPopup {
     }
 
     /** 
-     * Returns the instance for SlidingPopup.
+     * Returns the instance for SlidingView.
      * Is used to determine if there is any "active" Views that
      * has been slided in, but not yet slided out again.
      */
-    public static SlidingPopup getInstance() {
+    public static SlidingView getInstance() {
         return sInstance;
     }
 
