@@ -196,8 +196,8 @@ public class SwipeTouchListener implements OnTouchListener {
     public void onSwipeRight() {}
 
     /**
-     * The AnimatorListener for the animation that is executed on the 
-     * View after it has been swiped. 
+     * The AnimatorListener for the animation that is executed on the View 
+     * after it has been swiped. 
      */
     private class SlideOutListener implements AnimatorListener {
 
@@ -219,10 +219,8 @@ public class SwipeTouchListener implements OnTouchListener {
             mViewParent.setEnabled(true);
 
             if (mDismiss) { 
-                if (mEndX < 0)
-                    onSwipeLeft();
-                else
-                    onSwipeRight(); 
+                if (mEndX < 0) onSwipeLeft();
+                else onSwipeRight(); 
             }
 
         }
