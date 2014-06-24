@@ -1,10 +1,13 @@
 package no.fjeld.feed;
 
 import android.app.Activity;
-import android.view.*;
-import android.view.View.*;
-import android.graphics.*;
-import android.graphics.drawable.*;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
@@ -37,7 +40,7 @@ public class SlidingPopup {
     private TransitionDrawable mTransition;
 
     private Activity mActivity;
-    
+
     private ViewGroup mParentView;
     private View mChildView;
     private View mFadingView;
@@ -76,10 +79,10 @@ public class SlidingPopup {
      */
     private void slideIn() {
 
-        Animation anim = AnimationUtils.loadAnimation(
+        Animation slideIn = AnimationUtils.loadAnimation(
                 mActivity, R.anim.slide_in_top); 
 
-        mChildView.startAnimation(anim);
+        mChildView.startAnimation(slideIn);
         mTransition.startTransition(ANIMATION_TIME);
 
     }
@@ -93,11 +96,12 @@ public class SlidingPopup {
      */
     public void slideOut() {
 
-        Animation anim = AnimationUtils.loadAnimation(
+        Animation slideOut = AnimationUtils.loadAnimation(
                 mActivity, R.anim.slide_out_top); 
-        anim.setAnimationListener(new SlideOutListener());
+        slideOut.setAnimationListener((AnimationListener) 
+                new SlideOutListener());
 
-        mChildView.startAnimation(anim);
+        mChildView.startAnimation(slideOut);
         mTransition.reverseTransition(ANIMATION_TIME);
 
     }
@@ -117,7 +121,7 @@ public class SlidingPopup {
                 Color.parseColor("#99000000"));
 
         return new TransitionDrawable(new Drawable [] {
-                layerOne, layerTwo
+            layerOne, layerTwo
         });
 
     }
