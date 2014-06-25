@@ -14,40 +14,72 @@ import java.util.*;
 public class ShareView {
 
     private Activity mActivity;
-    private ViewGroup mParentView;
 
-    public ShareView(Activity activity, ViewGroup parentView) {
-        
+    private ViewGroup mParentView;
+    private FeedItem mFeedItem;
+    private GridView mShareView;
+
+    public ShareView(Activity activity, ViewGroup parentView, FeedItem feedItem) {
+
         mActivity = activity;
         mParentView = parentView;
-        
+        mFeedItem = feedItem;
+
+        initView();
         showView();
-   
+
     }
 
-    private void showView() {
+    private void initView() {
 
         LayoutInflater inflater = (LayoutInflater) mActivity
             .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        GridView shareView = (GridView) inflater.inflate(R.layout.share_view, null); 
+        mShareView = (GridView) inflater.inflate(R.layout.share_view, null); 
 
         PackageManager pacMan = mActivity.getPackageManager();
         List <ResolveInfo> apps = pacMan.queryIntentActivities(
                 new Intent(Intent.ACTION_SEND).setType("text/plain"), 0);
 
-        ShareAdapter shareAdapter = new ShareAdapter(pacMan, apps);
-        shareView.setAdapter(shareAdapter);
+        final ShareAdapter shareAdapter = new ShareAdapter(pacMan, apps);
+        mShareView.setAdapter(shareAdapter);
 
-        shareView.setOnItemClickListener(new OnItemClickListener() {
+        mShareView.setOnItemClickListener(getOnItemClickListener());
+
+    }
+
+    private OnItemClickListener getOnItemClickListener(final ShareAdapter 
+            shareAdapter) {
+
+        return new OnItemClickListener() {
+       
             @Override
             public void onItemClick(AdapterView <?> parent, View view, 
                 int position, long id) {
 
-            }
-        });
+                ActivityInfo activity = shareAdapter.getItem(position)
+                        .activityInfo;
+                ComponentName app = new ComponentName(activity
+                        .applicationInfo.packageName, activity.name);
 
-        new SlidingView(mActivity, mParentView, shareView);    
+                Intent share_intent = new Intent(Intent.ACTION_SEND);
+                share_intent.setComponent(app).setType("text/plain");
+
+                share_intent.putExtra(Intent.EXTRA_TEXT, 
+                        mFeedItem.getTitle() + "\n\n" + 
+                        mFeedItem.getDescription());
+                
+                mActivity.startActivity(share_intent);
+
+            }
+        
+        };
+
+    }
+
+    private void showView() {
+
+        new SlidingView(mActivity, mParentView, mShareView);    
 
     }
 
@@ -70,11 +102,13 @@ public class ShareView {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             if (view == null) 
-                imageView = (ImageView) inflater.inflate(R.layout.share_view_item, null);
+                imageView = (ImageView) inflater.inflate(
+                        R.layout.share_view_item, null);
             else 
                 imageView = (ImageView) view;
 
-            imageView.setImageDrawable(getItem(position).loadIcon(mPacMan));
+            imageView.setImageDrawable(getItem(position)
+                    .loadIcon(mPacMan));
 
             return imageView;
 
