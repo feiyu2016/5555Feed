@@ -1,8 +1,10 @@
 #Feed#
 
-##A beautiful reader for your favorite RSS-feeds.##
+A beautiful reader for your favorite RSS-feeds.
+-----------------------------------------------
 
 **Clone repository and generate local files**
+
 ```bash
 git clone https://github.com/fjeld/Feed.git   # Clone the repository to your computer
 cd Feed                                       # Go to the project directory
