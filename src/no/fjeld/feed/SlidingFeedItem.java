@@ -130,7 +130,7 @@ public class SlidingFeedItem {
 
     private void share() {
 
-        new ShareView(mActivity, mParentView);
+        new ShareView(mActivity, mParentView, mFeedItem);
 
     }
 
