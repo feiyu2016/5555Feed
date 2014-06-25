@@ -1,6 +1,8 @@
+
 #Feed#
 
-A beautiful reader for your favorite RSS-feeds.
+##A beautiful reader for your favorite RSS-feeds.##
+
 -----------------------------------------------
 
 **Clone repository and generate local files**
