@@ -39,7 +39,7 @@ public class ShareView {
     private void initView() {
 
         LayoutInflater inflater = (LayoutInflater) mActivity
-            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         mShareView = (GridView) inflater.inflate(R.layout.share_view, null); 
 
@@ -116,7 +116,7 @@ public class ShareView {
             ImageView imageView;
 
             LayoutInflater inflater = (LayoutInflater) mActivity
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             if (view == null) 
                 imageView = (ImageView) inflater.inflate(
