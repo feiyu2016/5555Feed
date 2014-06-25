@@ -62,13 +62,13 @@ public class ShareView {
             @Override
             public void onItemClick(AdapterView <?> parent, View view, 
                     int position, long id) {
-            
+
                 mActivityInfo = mShareAdapter.getItem(position)
                         .activityInfo;
                 mShare = true;
 
                 SlidingView.getInstance().slideOut();
-            
+
             }
 
         };
@@ -80,7 +80,7 @@ public class ShareView {
         new SlidingView(mActivity, mParentView, mShareView) {
             @Override
             public void onSlideOutFinished() {
-                
+
                 if (!mShare) return;
 
                 ComponentName app = new ComponentName(mActivityInfo
@@ -116,7 +116,7 @@ public class ShareView {
             ImageView imageView;
 
             LayoutInflater inflater = (LayoutInflater) mActivity
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             if (view == null) 
                 imageView = (ImageView) inflater.inflate(
