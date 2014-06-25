@@ -18,6 +18,7 @@ follow the instructions in android_debug.sh.
 
 **Todo**
 
+- Replace ArrayList for "Read items" with HashSet
 - Implement image caching
 - Implements parsing for atom-feeds
 - Setting for automatic 'Mark all as read'
