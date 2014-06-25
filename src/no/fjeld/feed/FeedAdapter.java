@@ -136,8 +136,6 @@ class FeedAdapter extends ArrayAdapter <FeedItem> {
         if (SlidingView.getInstance() == null) 
            new SlidingFeedItem(mActivity, parentView, item); 
 
-        
-
     }
 
     /**
