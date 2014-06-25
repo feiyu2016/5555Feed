@@ -1,10 +1,10 @@
+bin
+gen
+
+*.swp
+*.swo
+
 ant.properties
 build.xml
 local.properties
 proguard-project.txt
-bin/*
-gen/*
-
-*~
-*.swp
-*.swo
