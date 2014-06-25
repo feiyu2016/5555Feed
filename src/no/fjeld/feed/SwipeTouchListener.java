@@ -64,7 +64,7 @@ public class SwipeTouchListener implements OnTouchListener {
 
         switch (event.getAction()) {
 
-            /* The View has received its first TouchEvent. */ 
+            /* The View has received its first touch event. */ 
             case MotionEvent.ACTION_DOWN:
                 if (mViewPressed)
                     return false;
@@ -103,6 +103,14 @@ public class SwipeTouchListener implements OnTouchListener {
 
     }
 
+    /**
+     * Is called from 'onTouch()' when the View has recieved its 
+     * first touch event.
+     *
+     * @param view  The View that recieved the touch event
+     * @param event A MotionEvent-object containing info about
+     *              the event 
+     */
     private void actionDown(View view, MotionEvent event) {
 
         if (mVelocityTracker == null)
@@ -120,8 +128,9 @@ public class SwipeTouchListener implements OnTouchListener {
     /**
      * Is called from 'onTouch()' when the View has been dragged 
      * to a location. 
-     * 
-     * @param event The MotionEvent-object from onTouch()
+     *
+     * @param event A MotionEvent-object containing info about
+     *              the event 
      */
     private void actionMove(MotionEvent event) {
 
@@ -148,8 +157,9 @@ public class SwipeTouchListener implements OnTouchListener {
     /**
      * Is called from 'onTouch()' when the View has been released
      * and a swipe-gesture has been performed on the View. 
-     * 
-     * @param event The MotionEvent-object from onTouch() 
+     *
+     * @param event A MotionEvent-object containing info about
+     *              the event 
      */
     private void onSwipe(MotionEvent event) {
 
@@ -190,6 +200,15 @@ public class SwipeTouchListener implements OnTouchListener {
 
     }
 
+    /**
+     * Is called from 'onSwipe()', and animates the View to the 
+     * correct alpha- and x levels based on the direction of the swipe.
+     *
+     * @param duration The duration of the animation.
+     * @param endAlpha The final alpha level of the View.
+     * @param fEndX    The final x-position of the View.
+     * @param fDismiss If the View should be dismissed from the list.
+     */
     private void endSwipe(long duration, float endAlpha, final float 
             fEndX, final boolean fDismiss) {
 
