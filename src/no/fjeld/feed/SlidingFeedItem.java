@@ -2,10 +2,14 @@ package no.fjeld.feed;
 
 import android.app.Activity;
 import android.content.*;
+import android.content.pm.*;
 import android.net.*;
 import android.preference.PreferenceManager;
 import android.view.*;
 import android.widget.*;
+import android.widget.AdapterView.*;
+
+import java.util.*;
 
 public class SlidingFeedItem {
 
@@ -125,6 +129,8 @@ public class SlidingFeedItem {
     }
 
     private void share() {
+
+        new ShareView(mActivity, mParentView);
 
     }
 
