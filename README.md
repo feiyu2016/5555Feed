@@ -11,14 +11,10 @@ cd Feed                                       # Go to the project directory
 android update project -p .                   # Generate local files for the project
 ```
 
------------------------------------------------------
-
 **Command-line debugging and building**
 
 Clone [this](https://gist.github.com/fjeld/9989959) gist with `git clone https://gist.github.com/fjeld/9989959`, and  
 follow the instructions in android_debug.sh.
-
------------------------------------------------------
 
 **Todo**
 
