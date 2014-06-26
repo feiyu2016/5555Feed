@@ -128,6 +128,12 @@ public class SlidingFeedItem {
 
     }
 
+    /**
+     * Creates a new instance of the ShareView class.
+     * It will display a number of icons representing apps
+     * that can share the data from the FeedItem-pointer
+     * passed to the SlidingFeedItem-constructor.
+     */ 
     private void share() {
 
         new ShareView(mActivity, mParentView, mFeedItem);
