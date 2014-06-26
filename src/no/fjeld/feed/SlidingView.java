@@ -5,12 +5,14 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 
 /**
  * Applies a background that fades into a darker color while
@@ -31,9 +33,13 @@ import android.view.animation.AnimationUtils;
  *
  * If any functionality is desired when the View has slided
  * out of the screen, override 'onSlideOutFinished()'.
+ *
+ * Note: The parent of the sliding view should be a 
+ * View of the class FrameLayout.
  */
 public class SlidingView {
 
+    private final static String LOG_TAG = "SlidingView";
     private final static int ANIMATION_TIME = 300;
 
     private static SlidingView sInstance;
@@ -55,6 +61,8 @@ public class SlidingView {
     public SlidingView(Activity activity, ViewGroup parentView, 
             View childView) {
 
+        if (!isCorrectLayout(parentView)) return;
+    
         sInstance = this;
         mTransition = getTransitionDrawable();
 
@@ -181,4 +189,26 @@ public class SlidingView {
 
     }
 
+    /**
+     * Checks that the provided ViewGroup is an instance of
+     * the FrameLayout class.
+     * This is necessary in order to add the sliding View on
+     * top of the parent View. 
+     */
+    private boolean isCorrectLayout(ViewGroup parentView) {
+
+        if (!(parentView instanceof FrameLayout)) {
+
+            Log.e(LOG_TAG, "SlidingView will not display properly on " 
+                    + parentView.getClass().getName()
+                    + ", use android.widget.FrameLayout."); 
+
+            return false;
+
+        }
+
+        return true;
+
+    }
+ 
 }
