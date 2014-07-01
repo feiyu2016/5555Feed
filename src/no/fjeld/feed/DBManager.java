@@ -247,13 +247,13 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     /**
-     * Returns a list with the urls of read articles. 
+     * Returns a HashSet with the urls of read articles. 
      *
-     * @return readItems The list with the urls.
+     * @return readItems The set with the urls.
      */
-    public ArrayList <String> getReadItems() {
+    public HashSet <String> getReadItems() {
 
-        ArrayList <String> readItems = new ArrayList <String> ();
+        HashSet <String> readItems = new HashSet <String> ();
         SQLiteDatabase db = getWritableDatabase();
 
         Cursor cursor = db.query(TABLE_READ_ITEMS,
