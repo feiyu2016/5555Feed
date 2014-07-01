@@ -5,7 +5,7 @@ import java.util.*;
 public class FeedList extends ArrayList <FeedItem> {
 
     private static final long serialVersionUID = -6728285211029336860L;
-    public ArrayList <String> readItems;
+    public HashSet <String> readItems;
     public ArrayList <FeedItem> savedItems;
 
     // TODO: This function needs some serious optimization.
@@ -22,15 +22,8 @@ public class FeedList extends ArrayList <FeedItem> {
 
         while(looping) {
 
-            if (i == super.size() && j == readItems.size() && k == savedItems.size())
-                looping = false;
-
             if (i < super.size())
                 if (item.getUrl().equals(super.get(i++).getUrl()))
-                    return false;
-
-            if (j < readItems.size())
-                if (item.getUrl().equals(readItems.get(j++)))
                     return false;
 
             if (k < savedItems.size())
@@ -38,6 +31,9 @@ public class FeedList extends ArrayList <FeedItem> {
                     return false;
 
         }
+        
+        if (readItems.contains(item.getUrl()))
+            return false;
 
         for (i = 0; i < super.size(); i++) {
             if (item.compareTo(super.get(i)) >= 0) {
