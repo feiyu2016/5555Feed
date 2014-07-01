@@ -246,6 +246,11 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Returns a set of all saved articles.
+     *
+     * @return savedItems The list with the saved urls.
+     */
     public HashSet <String> getSavedItemsSet() {
 
           HashSet <String> savedItems = new HashSet <String> ();
@@ -262,7 +267,7 @@ public class DBManager extends SQLiteOpenHelper {
      *
      * @return readItems The set with the urls.
      */
-    public HashSet <String> getReadItems() {
+    public HashSet <String> getReadItemsSet() {
 
         HashSet <String> readItems = new HashSet <String> ();
         SQLiteDatabase db = getWritableDatabase();
