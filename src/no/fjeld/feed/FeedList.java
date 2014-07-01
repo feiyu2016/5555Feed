@@ -16,19 +16,21 @@ public class FeedList extends ArrayList <FeedItem> {
         if (item.getFeed() == null) 
             super.add(item);
 
-
+        /* If the item is marked as read */
         if (readItems.contains(item.getUrl()))
             return false;
     
+        /* If the item is saved. */
         if (savedItems.contains(item.getUrl()))
             return false;
         
+        /* If the item already is in the list */
         for (FeedItem iterItem : this)
             if (item.getUrl().equals(iterItem.getUrl()))
                 return false;
 
-        boolean added = false;
-        
+        /* Add the item at the correct position in
+         * the list. (Sorted by time and date) */
         for (int i = 0; i < super.size(); i++) {
             if (item.compareTo(super.get(i)) >= 0) {
                 super.add(i, item);
