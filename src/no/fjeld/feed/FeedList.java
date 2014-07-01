@@ -16,31 +16,27 @@ public class FeedList extends ArrayList <FeedItem> {
         if (item.getFeed() == null) 
             super.add(item);
 
-        int i = 0;
-        boolean added = false;
-        boolean looping = true;
-
-        for (FeedItem iterItem : this)
-            if (item.getUrl().equals(iterItem.getUrl()))
-                return false;
 
         if (readItems.contains(item.getUrl()))
             return false;
     
         if (savedItems.contains(item.getUrl()))
             return false;
+        
+        for (FeedItem iterItem : this)
+            if (item.getUrl().equals(iterItem.getUrl()))
+                return false;
 
-        for (i = 0; i < super.size(); i++) {
+        boolean added = false;
+        
+        for (int i = 0; i < super.size(); i++) {
             if (item.compareTo(super.get(i)) >= 0) {
                 super.add(i, item);
-                added = true;
-                break;
+                return true;
             }
         }
 
-        if (!added) 
-            super.add(item);
-
+        super.add(item);
         return true;
 
     }
