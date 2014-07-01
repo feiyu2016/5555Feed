@@ -247,9 +247,9 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     /**
-     * Returns a set of all saved articles.
+     * Returns a HashSet with the urls of saved articles.
      *
-     * @return savedItems The list with the saved urls.
+     * @return savedItems The set with the urls.
      */
     public HashSet <String> getSavedItemsSet() {
 
