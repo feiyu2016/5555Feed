@@ -100,7 +100,7 @@ public class Feed {
         mFeedAdapter.getFeedList().clear();
         mFeedAdapter.notifyDataSetChanged();
 
-        mFeedAdapter.getFeedList().readItems = mApp.getDatabase().getReadItems();
+        mFeedAdapter.getFeedList().readItems = mApp.getDatabase().getReadItemsSet();
         mFeedAdapter.getFeedList().savedItems = mApp.getDatabase().getSavedItemsSet();
 
         mApp.getSwipeRefresh().getSwipeLayout().setEnabled(true);
@@ -171,7 +171,7 @@ public class Feed {
         /* Updates the 'readItems' and 'savedItems' lists in 
          * the FeedList-class. */
         mFeedAdapter.getFeedList().readItems 
-            = mApp.getDatabase().getReadItems();
+            = mApp.getDatabase().getReadItemsSet();
         mFeedAdapter.getFeedList().savedItems 
             = mApp.getDatabase().getSavedItemsSet();
 
