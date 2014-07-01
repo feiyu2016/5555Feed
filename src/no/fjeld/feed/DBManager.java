@@ -246,6 +246,17 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
 
+    public HashSet <String> getSavedItemsSet() {
+
+          HashSet <String> savedItems = new HashSet <String> ();
+
+          for (FeedItem item : getSavedItems())
+              savedItems.add(item.getUrl());
+
+          return savedItems;
+
+    }
+
     /**
      * Returns a HashSet with the urls of read articles. 
      *

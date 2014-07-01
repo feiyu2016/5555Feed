@@ -101,7 +101,7 @@ public class Feed {
         mFeedAdapter.notifyDataSetChanged();
 
         mFeedAdapter.getFeedList().readItems = mApp.getDatabase().getReadItems();
-        mFeedAdapter.getFeedList().savedItems = mApp.getDatabase().getSavedItems();
+        mFeedAdapter.getFeedList().savedItems = mApp.getDatabase().getSavedItemsSet();
 
         mApp.getSwipeRefresh().getSwipeLayout().setEnabled(true);
 
@@ -173,7 +173,7 @@ public class Feed {
         mFeedAdapter.getFeedList().readItems 
             = mApp.getDatabase().getReadItems();
         mFeedAdapter.getFeedList().savedItems 
-            = mApp.getDatabase().getSavedItems();
+            = mApp.getDatabase().getSavedItemsSet();
 
         /* If the items FeedList has items, and we have chosen
          * not to download anything new, fill the ListView with
