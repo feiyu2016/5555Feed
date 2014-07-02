@@ -1,6 +1,7 @@
 package no.fjeld.feed;
 
 import android.app.*;
+import android.content.*;
 import android.os.*;
 import android.view.*;
 
@@ -14,11 +15,29 @@ public class FeedActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
+        
         initApp();
+        handleIntent(getIntent());
 
         mApp.getNavDrawer().getDrawerLayout().openDrawer(Gravity.START);
 
+    }
+
+    /**
+     * Checks if this intent contains a StringExtra, which means
+     * that (hopefully) an RSS-url has been passed to the app.
+     * In that case, the URL will be passed to addFeed() in 
+     * NavigationDrawer, and it will be added to the list of feeds.
+     */
+    private void handleIntent(Intent intent) {
+
+        if (intent.getAction().equals(Intent.ACTION_SEND)) {
+            if (intent.getType().equals("text/plain")) {
+                String url = intent.getStringExtra(Intent.EXTRA_TEXT);
+                mApp.getNavDrawer().addFeed(url);
+            }
+        }
+   
     }
 
     @Override
@@ -65,7 +84,7 @@ public class FeedActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-   
+
         if (SlidingView.getInstance() != null)
             SlidingView.getInstance().slideOut();
         else
