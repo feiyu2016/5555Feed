@@ -89,8 +89,8 @@ public class ShareView {
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setComponent(app).setType("text/plain");
 
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, mFeedItem.getTitle());
                 shareIntent.putExtra(Intent.EXTRA_TEXT, 
-                        mFeedItem.getTitle()       + "\n\n" + 
                         mFeedItem.getDescription() + "\n\n" +
                         mFeedItem.getUrl());
 
