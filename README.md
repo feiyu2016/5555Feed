@@ -13,7 +13,7 @@ android update project -p .                   # Generate local files for the pro
 
 **Command-line debugging and building**
 
-Clone [this](https://gist.github.com/fjeld/9989959) gist with `git clone https://gist.github.com/fjeld/9989959`, and  
+Clone [this](https://gist.github.com/fjeld/1952fad17ea27cd23db8) gist with `git clone https://gist.github.com/fjeld/1952fad17ea27cd23db8`, and  
 follow the instructions in android_debug.sh.
 
 **Todo**
