@@ -16,12 +16,4 @@ android update project -p .                   # Generate local files for the pro
 Clone [this](https://gist.github.com/fjeld/1952fad17ea27cd23db8) gist with `git clone https://gist.github.com/fjeld/1952fad17ea27cd23db8`, 
 and follow the instructions in android_debug.py.
 
-**Todo**
-
-- Update the database on new version.
-- Implement image caching
-- Implements parsing for atom-feeds
-- Setting for automatic 'Mark all as read'
-- Fix all imports (remove dotASTERIX's)
-- Clean up field names in all .java/.xml
-- Clean up / add comments in all .java/.xml
+** For development, check out the "development" branch.**
