@@ -16,4 +16,6 @@ android update project -p .                   # Generate local files for the pro
 Clone [this](https://gist.github.com/fjeld/1952fad17ea27cd23db8) gist with `git clone https://gist.github.com/fjeld/1952fad17ea27cd23db8`, 
 and follow the instructions in android_debug.py.
 
+-----------------------------------------------------
+
 ** For development, check out the "development" branch.**
