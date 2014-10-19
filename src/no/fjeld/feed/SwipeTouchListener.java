@@ -61,6 +61,9 @@ public class SwipeTouchListener implements OnTouchListener {
 
         mSwipeSlop = ViewConfiguration
                 .get(mActivity).getScaledTouchSlop();
+        
+        ((FeedApplication)mActivity.getApplication()).getSwipeRefresh()
+                .getSwipeLayout().setEnabled(false);
 
         switch (event.getAction()) {
 
