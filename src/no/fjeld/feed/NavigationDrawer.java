@@ -92,107 +92,8 @@ public class NavigationDrawer {
     private void initDrawerListView() {
 
         mDrawerListView = (ListView) mView.findViewById(R.id.drawer_list);
-        addViews(); 
-
         mDrawerListView.setOnItemClickListener(new DrawerClickListener());
         mDrawerListView.setOnItemLongClickListener(new DrawerLongClick(mActivity, mDrawerAdapter));
-
-    }
-
-    /**
-     * Adds header- and footer-views to the ListView in the
-     * NavigationDrawer.
-     */
-    private void addViews() {
-
-        LayoutInflater inflater = (LayoutInflater) mActivity
-            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        /* Headers */
-        mDrawerListView.addHeaderView(getItemView(inflater,
-                    R.string.drawer_header_all_feeds));
-        mDrawerListView.addHeaderView(getItemView(inflater,
-                    R.string.drawer_header_saved_items));
-        mDrawerListView.addHeaderView(getItemView(inflater));
-
-        /* Footers */
-        mDrawerListView.addFooterView(inflater.inflate(
-                    R.layout.drawer_footer_divider, null));
-        mDrawerListView.addFooterView(getItemView(inflater,
-                    R.drawable.ic_icon_settings,
-                    R.string.drawer_footer_preferences));
-        mDrawerListView.addFooterView(getItemView(inflater,
-                    R.drawable.ic_icon_about,
-                    R.string.drawer_footer_about));
-
-    } 
-
-    /**
-     * Inflates a view with the standard DrawerItem-layout.
-     *
-     * @param  stringResId The resource id for the String to use for the TextView.
-     * @return item        The FrameLayout for the drawerlistitem.
-     */
-    private FrameLayout getItemView(LayoutInflater inflater, int stringResId) {
-
-        FrameLayout item = (FrameLayout) inflater.inflate(
-                R.layout.drawer_item, null);
-
-        TextView itemText = (TextView) item.findViewById(R.id.drawer_item_text);
-        itemText.setText(mActivity.getResources()
-                .getString(stringResId));
-
-        return item;
-
-    }
-
-    /**
-     * Inflates the drawer_footer.xml-view.
-     *
-     * @param inflater    The LayoutInflater-object.
-     * @param imgResId    The resource id for the image.
-     * @param stringResId The resource id for the string.
-     *
-     * @return item       The LinearLayout for the drawerlistitem.
-     */
-    private LinearLayout getItemView(LayoutInflater inflater, int imgResId, int stringResId){
-
-        LinearLayout item = (LinearLayout) inflater.inflate(
-                R.layout.drawer_footer, null);
-
-        TextView itemText = (TextView) item.findViewById(
-                R.id.drawer_footer_text);
-        itemText.setText(mActivity.getResources()
-                .getString(stringResId));
-
-        ImageView itemImage = (ImageView) item.findViewById(
-                R.id.drawer_footer_image);
-        itemImage.setImageResource(imgResId);
-
-        return item;
-
-    }
-
-    /**
-     * Inflates the group-view with the 'Add feed'-button.
-     *
-     * @param  inflater The LayoutInflater-object.
-     * @return group    The LinearLayout for the group-view.
-     */
-    private LinearLayout getItemView(LayoutInflater inflater) { 
-
-        LinearLayout group = (LinearLayout) inflater.inflate(
-                R.layout.drawer_group, null);
-
-        ((LinearLayout) group.findViewById(R.id.drawer_group_new_feed))
-            .setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view){
-                    newFeed();
-                }
-            });
-
-        return group;
 
     }
 
@@ -234,36 +135,12 @@ public class NavigationDrawer {
      */
     private void drawerItemClicked(int position) {
 
-        int drawerSize = mDrawerListView.getChildCount();
+        mDrawerLayout.closeDrawer(Gravity.LEFT);
 
-        if (position == 0) {                        // All feeds
+        DrawerItem drawerItem = mDrawerAdapter
+            .getDrawerList().get(position);
 
-            mDrawerLayout.closeDrawer(Gravity.LEFT);
-            mApp.getFeed().allFeeds();
-
-        } else if (position == 1) {                 // Saved items 
-
-            mDrawerLayout.closeDrawer(Gravity.LEFT);
-            mApp.getFeed().savedFeeds();
-
-        } else if (position == drawerSize - 2) {    // Preferences
-
-            mActivity.startActivity(new Intent(
-                        mActivity, PreferencesActivity.class));
-
-        } else if (position == drawerSize - 1) {    // About
-
-
-        } else if (position > 2 && position < drawerSize - 2) { // Feed
-
-            mDrawerLayout.closeDrawer(Gravity.LEFT);
-
-            DrawerItem drawerItem = mDrawerAdapter
-                .getDrawerList().get(position - 3);
-
-            mApp.getFeed().loadFeed(drawerItem, false); 
-
-        }
+        mApp.getFeed().loadFeed(drawerItem, false); 
 
     }
 
@@ -359,25 +236,21 @@ public class NavigationDrawer {
 
             int listSize = mDrawerListView.getCount();
 
-            if (position != 2 && position <= listSize - 3) {
+            if (mLastItemView != null) {
 
-                if (mLastItemView != null) {
-
-                    TextView textView = (TextView) mLastItemView.findViewById(
-                            R.id.drawer_item_text);
-                    textView.setTypeface(((TextView) view.findViewById(
-                                    R.id.drawer_item_text)).getTypeface(), 
-                            Typeface.NORMAL);
-
-                }
-
-                TextView textView = (TextView) view.findViewById(
+                TextView textView = (TextView) mLastItemView.findViewById(
                         R.id.drawer_item_text);
-                textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
-
-                mLastItemView = view;
+                textView.setTypeface(((TextView) view.findViewById(
+                                R.id.drawer_item_text)).getTypeface(), 
+                        Typeface.NORMAL);
 
             }
+
+            TextView textView = (TextView) view.findViewById(
+                    R.id.drawer_item_text);
+            textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+
+            mLastItemView = view;
 
         }
 
