@@ -55,15 +55,11 @@ public class PreferencesActivity extends PreferenceActivity {
 
             clearRead.setOnPreferenceClickListener(
                     new OnPreferenceClickListener() {
-
                         @Override
                         public boolean onPreferenceClick(Preference preference) {
-
                             mApp.getDatabase().delete("readItems", null);
                             return true;
-
                         }
-
                     });
 
         }
