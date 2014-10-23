@@ -32,14 +32,7 @@
 
     </FrameLayout>
 
-    <!-- The list that contains the items in the Navigation Drawer -->
-    <ListView
-        android:id="@+id/drawer_list"
-        android:layout_width="300dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:divider="@android:color/transparent"
-        android:choiceMode="singleChoice"
-        android:background="@color/background_secondary" />
+    <!-- The navigation drawer -->
+    <include android:id="@+id/drawer_view" layout="@layout/drawer"/>
 
 </android.support.v4.widget.DrawerLayout>
