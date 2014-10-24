@@ -12,7 +12,7 @@
 
             <stroke
                 android:width="2dp"
-                android:color="@color/accent_dark" />
+                android:color="@color/accent_light" />
 
         </shape>
     </item>
