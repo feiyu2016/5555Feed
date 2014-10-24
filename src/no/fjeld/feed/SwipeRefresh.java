@@ -52,9 +52,9 @@ public class SwipeRefresh implements SwipeRefreshLayout.OnRefreshListener {
     private void setSwipeLayoutAppearance() {
 
         mSwipeLayout.setColorScheme(
-                android.R.color.holo_blue_light,
+                R.color.accent_dark,
                 R.color.background,
-                android.R.color.holo_blue_light,
+                R.color.accent_dark,
                 R.color.background);
 
     }
