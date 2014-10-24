@@ -56,23 +56,19 @@ public class DrawerLongClick implements OnItemLongClickListener {
             int position, long id) {
 
         mView = view;
-        mPosition = position - 3;
 
-        /* Checks if the position is a RSS-item, and not 'All feeds', or 'Saved items'. */
-        if (mPosition > -1 && mPosition < mDrawerAdapter.getDrawerList().size()) {
+        /* Means that another item has its options visible. */
+        if(mDrawerText != null && mDrawerText.getVisibility() == View.INVISIBLE) 
+            closeLast();
 
-            /* Means that another item has its options visible. */
-            if(mDrawerText != null && mDrawerText.getVisibility() == View.INVISIBLE) 
-                closeLast();
+        initAnims();
+        initViews();
 
-            initAnims();
-            initViews();
+        mPosition = position;
 
-            mDrawerOptions.setVisibility(View.VISIBLE);
-            mDrawerText.setVisibility(View.INVISIBLE);
-            mDrawerText.startAnimation(mSlideOut);
-
-        }
+        mDrawerOptions.setVisibility(View.VISIBLE);
+        mDrawerText.setVisibility(View.INVISIBLE);
+        mDrawerText.startAnimation(mSlideOut);
 
         return true;
 
@@ -184,7 +180,7 @@ public class DrawerLongClick implements OnItemLongClickListener {
 
                 /* Deletes the DrawerItem from the database. */
                 ((FeedApplication)mActivity.getApplication())
-                        .getDatabase().delete("drawerItems", mDrawerItem.getUrl()); 
+                    .getDatabase().delete("drawerItems", mDrawerItem.getUrl()); 
 
             }
 
@@ -230,7 +226,7 @@ public class DrawerLongClick implements OnItemLongClickListener {
 
                             /* Updates the title for the DrawerItem. */
                             ((FeedApplication)mActivity.getApplication())
-                                     .getDatabase().update(mDrawerItem);
+                .getDatabase().update(mDrawerItem);
 
                         }
 
