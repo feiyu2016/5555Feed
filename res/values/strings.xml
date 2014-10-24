@@ -6,18 +6,16 @@
     <string name="preference_title">Preferences</string>
 
     <string name="drawer_closed">All feeds</string>
+    <string name="drawer_footer_saved_lower">Saved items</string>
     <string name="drawer_open">Options</string>
 
     <!-- Action Bar-strings for the overflow-menu -->
     <string name="action_mark_all">Mark all as read</string>
 
     <!-- DrawerList Strings -->
-    <string name="drawer_header_all_feeds">All feeds</string>
-    <string name="drawer_header_saved_items">Saved items</string>
-    
-    <string name="drawer_group_subfeeds">MY FEEDS</string>
-    <string name="drawer_group_new_feed">ADD FEED</string>
+    <string name="drawer_group_subfeeds">My Feeds</string>
 
+    <string name="drawer_footer_saved">SAVED ITEMS</string>
     <string name="drawer_footer_preferences">PREFERENCES</string>
     <string name="drawer_footer_about">ABOUT</string>   
 
