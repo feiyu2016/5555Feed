@@ -16,17 +16,14 @@
 
     <!-- Styles for the Action Bar -->
     <style name="ActionBar_Style" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
+        <item name="android:height">56dp</item>
         <item name="android:background">@drawable/bg_action_bar</item>
         <item name="android:titleTextStyle">@style/ActionBar_Title</item>
-        <item name="android:subtitleTextStyle">@style/ActionBar_Subtitle</item>
     </style>
 
     <style name="ActionBar_Title" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">@color/accent_text</item>
-    </style>
-
-    <style name="ActionBar_Subtitle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle">
-        <item name="android:textColor">@color/accent_text</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="ActionBar_Overflow" parent="@android:style/Widget.Holo.ActionButton.Overflow">
