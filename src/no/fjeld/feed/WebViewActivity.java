@@ -76,7 +76,7 @@ public class WebViewActivity extends Activity {
         @Override
         public void onPageFinished(WebView view, String url) {
             mProgressBar.setVisibility(View.GONE);
-            getActionBar().setSubtitle(view.getTitle());
+            getActionBar().setTitle(view.getTitle());
         }
 
     }
