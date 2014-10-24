@@ -3,8 +3,8 @@
     <!-- Main colors -->
     <color name="background">#FFE5E5E5</color>
     <color name="background_secondary">#FFF3F3F3</color>
-    <color name="accent_light">#FFFFA00E</color>
-    <color name="accent_dark">#FFFF8A00</color>
+    <color name="accent_light">#FFFF9800</color>
+    <color name="accent_dark">#FFF57C00</color>
     <color name="accent_text">#FFFFFFFF</color>
 
     <!-- Transition colors -->
