@@ -39,11 +39,12 @@ public class NavigationDrawer {
         initDrawerToggle();
         initDrawerAdapter();
         initDrawerListView();
+        initDrawerItems();
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerListView.setAdapter(mDrawerAdapter);
 
-        mApp.getActionBar().setDisplayHomeAsUpEnabled(true);
+        mActivity.getActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -62,22 +63,24 @@ public class NavigationDrawer {
     private void initDrawerToggle() {
 
         mDrawerToggle = new ActionBarDrawerToggle(mActivity, mDrawerLayout, 
-                R.drawable.ic_navigation_drawer, R.string.drawer_open, R.string.drawer_closed) {
+                android.R.color.transparent, R.string.app_name, R.string.app_name) {
 
             public void onDrawerClosed(View mainView) {
 
                 DrawerItem drawerItem = mApp.getFeed().lastDrawerItem;
 
                 if (drawerItem != null)
-                    mApp.getActionBar().setSubtitle(drawerItem.getFeedName());
+                    mApp.setActionBarTitle(drawerItem.getFeedName());
 
+                mApp.setActionBarIndicator();
                 mActivity.invalidateOptionsMenu();
 
             }
 
             public void onDrawerOpened(View drawerView) {
 
-                mApp.getActionBar().setSubtitle(R.string.drawer_open);
+                mApp.setActionBarTitle(mActivity.getResources().getString(R.string.app_name));
+                mApp.setActionBarIndicator();
                 mActivity.invalidateOptionsMenu();
 
             }
