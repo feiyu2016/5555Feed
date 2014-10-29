@@ -51,4 +51,7 @@
     <string name="preference_clear_read_title">Clear read articles</string>
     <string name="preference_clear_read_summary">Deletes your \"Marked as read\" articles</string>
 
+    <!-- WebView strings -->
+    <string name="webview_loading">Loading..</string>
+
 </resources>
