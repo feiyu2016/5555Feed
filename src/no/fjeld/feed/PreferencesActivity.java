@@ -1,10 +1,13 @@
 package no.fjeld.feed;
 
 import android.annotation.SuppressLint;
+import android.app.*;
+import android.content.*;
 import android.os.*;
 import android.preference.*;
 import android.preference.Preference.*;
 import android.view.*;
+import android.widget.*;
 
 public class PreferencesActivity extends PreferenceActivity {
 
@@ -15,12 +18,46 @@ public class PreferencesActivity extends PreferenceActivity {
 
         super.onCreate(savedInstanceState);     
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-
         mApp = (FeedApplication) getApplication();
+        initActionBar();
 
         getFragmentManager().beginTransaction().replace(
                 android.R.id.content, new PreferenceFrag()).commit();
+
+    }
+
+    /**
+     * Initializes the custom ActionBar.
+     */
+    private void initActionBar() {
+
+        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+
+        LayoutInflater inflater = (LayoutInflater) getSystemService(
+                Context.LAYOUT_INFLATER_SERVICE);
+        getActionBar().setCustomView(inflater.inflate(
+                    R.layout.action_bar, null));
+
+        int abResId = getResources().getIdentifier(
+                "action_bar_container", "id", "android");
+
+        TextView mActionBarTitle = (android.widget.TextView) 
+            getWindow().getDecorView().findViewById(abResId)
+            .findViewById(R.id.ab_title);
+
+        ImageView mABIndicator = (android.widget.ImageView) 
+            getWindow().getDecorView().findViewById(abResId)
+            .findViewById(R.id.drawer_indicator);
+
+        mABIndicator.setImageResource(R.drawable.ic_action_navigation_arrow_back);
+        mActionBarTitle.setText((getResources().getString(R.string.preference_title)));
+
+        mABIndicator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 
