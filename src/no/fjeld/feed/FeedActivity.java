@@ -103,8 +103,8 @@ public class FeedActivity extends Activity {
 
         initActionBar();
 
+        mApp.mActionBar = getActionBar().getCustomView();
         mApp.mDatabase = new DBManager(this);
-        mApp.mActionBar = getActionBar(); 
         mApp.mNavDrawer = new NavigationDrawer(this, mView);
         mApp.mSwipeRefresh = new SwipeRefresh(this, mView);
         mApp.mFeed = new Feed(this, mView);
