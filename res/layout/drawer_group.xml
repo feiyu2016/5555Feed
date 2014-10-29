@@ -17,43 +17,36 @@
         <TextView
             android:id="@+id/drawer_group_text"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:paddingLeft="8dp"
-            android:paddingTop="8dp"
-            android:textAppearance="?android:attr/textAppearanceSmall" 
+            android:padding="8dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" 
+            android:textColor="@android:color/white"
             android:text="@string/drawer_group_subfeeds" /> 
 
         <!-- The "New Feed"-layout. -->
         <LinearLayout
             android:id="@+id/drawer_group_new_feed"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="right" 
-            android:background="@color/bg_drawer_item" >
-            
-            <ImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:layout_gravity="bottom"
-                android:paddingBottom="4dp"
-                android:src="@drawable/ic_action_new_feed" />
+            android:gravity="right" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="4dp"
-                android:paddingTop="8dp"
-                android:paddingRight="8dp"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/drawer_group_new_feed" /> 
+            <Button
+                android:id="@+id/new_feed"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="4dp"
+                android:layout_gravity="center_vertical"
+                android:text="+"
+                android:gravity="center"
+                android:textAlignment="gravity"
+                android:textAppearance="?android:attr/textAppearanceLarge" 
+                android:textColor="@android:color/white"
+                android:background="@color/btn_new_feed"/>
 
         </LinearLayout>
 
     </LinearLayout>
-
-    <include 
-        layout="@layout/drawer_group_divider" />
 
 </LinearLayout>
