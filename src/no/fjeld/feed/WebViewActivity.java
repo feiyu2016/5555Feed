@@ -1,6 +1,7 @@
 package no.fjeld.feed;
 
 import android.app.*;
+import android.content.*;
 import android.graphics.*;
 import android.os.*;
 import android.view.*;
@@ -10,6 +11,7 @@ import android.widget.*;
 public class WebViewActivity extends Activity {
 
     private WebView mWebView;
+    private FeedApplication mApp;
     private ProgressBar mProgressBar;
 
     @Override
@@ -17,11 +19,49 @@ public class WebViewActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
-
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        
+        mApp = (FeedApplication) getApplication();
+        
         mProgressBar = (ProgressBar) findViewById (R.id.webview_progress);
 
+        initActionBar();
         initWebView();
+
+    }
+
+    /**
+     * Initializes the custom ActionBar.
+     */
+    private void initActionBar() {
+
+        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+
+        LayoutInflater inflater = (LayoutInflater) getSystemService(
+                Context.LAYOUT_INFLATER_SERVICE);
+        getActionBar().setCustomView(inflater.inflate(
+                    R.layout.action_bar, null));
+
+        int abResId = getResources().getIdentifier(
+                "action_bar_container", "id", "android");
+
+        mApp.mActionBarTitle = (android.widget.TextView) 
+            getWindow().getDecorView().findViewById(abResId)
+            .findViewById(R.id.ab_title);
+
+        mApp.mABIndicator = (android.widget.ImageView) 
+            getWindow().getDecorView().findViewById(abResId)
+            .findViewById(R.id.drawer_indicator);
+        
+        mApp.mABIndicator.setTag(R.drawable.ic_action_navigation_menu);
+        mApp.setActionBarIndicator();
+
+        mApp.mABIndicator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mWebView.destroy();
+                finish();
+            }
+        });
 
     }
 
@@ -76,7 +116,7 @@ public class WebViewActivity extends Activity {
         @Override
         public void onPageFinished(WebView view, String url) {
             mProgressBar.setVisibility(View.GONE);
-            getActionBar().setTitle(view.getTitle());
+            mApp.setActionBarTitle(view.getTitle());
         }
 
     }
