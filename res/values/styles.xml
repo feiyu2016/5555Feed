@@ -4,6 +4,7 @@
     <style name="DefaultTheme" parent="@android:style/Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/ActionBar_Style</item>
         <item name="android:actionOverflowButtonStyle">@style/ActionBar_Overflow</item>
+        <item name="android:selectableItemBackground">@color/bg_ab_item</item>
         <item name="android:itemTextAppearance">@style/Text_Style_Medium</item>
         <item name="android:itemBackground">@color/bg_drawer_item</item>
         <item name="android:textAppearanceSmall">@style/Text_Style_Small</item>
@@ -11,19 +12,12 @@
         <item name="android:textAppearanceLarge">@style/Text_Style_Large</item>
         <item name="android:textColorPrimary">#FF000000</item>
         <item name="android:textColorSecondary">#FF878787</item>
-        <item name="android:selectableItemBackground">@color/bg_ab_item</item>
     </style>
 
     <!-- Styles for the Action Bar -->
     <style name="ActionBar_Style" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
         <item name="android:height">56dp</item>
         <item name="android:background">@color/accent_light</item>
-        <item name="android:titleTextStyle">@style/ActionBar_Title</item>
-    </style>
-
-    <style name="ActionBar_Title" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/accent_text</item>
-        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="ActionBar_Overflow" parent="@android:style/Widget.Holo.ActionButton.Overflow">
