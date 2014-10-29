@@ -95,7 +95,7 @@ public class Feed {
     public void allFeeds() {
 
         lastDrawerItem = new DrawerItem(mActivity.getString(
-                    R.string.drawer_header_all_feeds), "", null, new FeedList());
+                    R.string.app_name), "", null, new FeedList());
 
         mFeedAdapter.getFeedList().clear();
         mFeedAdapter.notifyDataSetChanged();
@@ -136,11 +136,8 @@ public class Feed {
     public void savedFeeds() {
 
         DrawerItem drawerItem = new DrawerItem(mActivity
-                .getString(R.string.drawer_header_saved_items), null, null, 
+                .getString(R.string.drawer_footer_saved_lower), null, null, 
                 mApp.getDatabase().getSavedItems());
-
-        /* No need for the 'Refresh'-functionality here. */
-        mApp.getSwipeRefresh().getSwipeLayout().setEnabled(false);
 
         loadFeed(drawerItem, false);
 
@@ -161,10 +158,11 @@ public class Feed {
             mFeedAdapter.notifyDataSetChanged();
         }
 
-        /* Means that this item has an url, and we can refresh
-         * the list if we want to. */
-        if (item.getUrl() != null) 
+        if (item.getUrl() == null) 
+            mApp.getSwipeRefresh().getSwipeLayout().setEnabled(false);
+        else
             mApp.getSwipeRefresh().getSwipeLayout().setEnabled(true);
+
 
         lastDrawerItem = item;
 
