@@ -30,7 +30,10 @@
 
     </LinearLayout>
 
-    <!-- The divider between the items -->
-    <include layout="@layout/drawer_footer_divider" />
+    <!-- Divider between the footers --> 
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
 
 </LinearLayout>
