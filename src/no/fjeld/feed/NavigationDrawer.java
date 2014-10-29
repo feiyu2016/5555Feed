@@ -112,6 +112,81 @@ public class NavigationDrawer {
     }
 
     /**
+     * Initializes the drawer footers (settings and about).
+     */
+    private void initDrawerItems() {
+
+        LayoutInflater inflater = (LayoutInflater) mActivity.getSystemService(
+                    Context.LAYOUT_INFLATER_SERVICE);
+
+
+        View myFeeds = inflater.inflate(R.layout.drawer_group, null);
+
+        View savedFeeds = getFooter(inflater, R.drawable.ic_icon_saved, 
+                R.string.drawer_footer_saved);
+        View preferences = getFooter(inflater, R.drawable.ic_icon_settings, 
+                R.string.drawer_footer_preferences);
+        View about = getFooter(inflater, R.drawable.ic_icon_about, 
+                R.string.drawer_footer_about);
+
+        mDrawerListView.addHeaderView(myFeeds);
+        mDrawerListView.addFooterView(savedFeeds);
+        mDrawerListView.addFooterView(preferences);
+        mDrawerListView.addFooterView(about);
+
+        setOnClickListeners(myFeeds, savedFeeds, preferences, about);
+    
+    }
+
+   
+    private View getFooter(LayoutInflater inflater, int iconResId, 
+            int stringResId) {
+
+        View footer = inflater.inflate(R.layout.drawer_footer, null); 
+        ((ImageView) footer.findViewById(R.id.drawer_footer_image))
+            .setImageResource(iconResId);
+        ((TextView) footer.findViewById(R.id.drawer_footer_text))
+            .setText(mActivity.getResources().getString(stringResId));
+
+        return footer; 
+
+    }
+
+    private void setOnClickListeners(View ... views) {
+
+        views[0].findViewById(R.id.new_feed)
+            .setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    newFeed();            
+                }
+            });
+
+        views[1].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mDrawerLayout.closeDrawer(Gravity.LEFT);
+                    mApp.getFeed().savedFeeds(); 
+                }
+            });
+
+        views[2].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mActivity.startActivity(new Intent(mActivity, PreferencesActivity.class));
+                }
+            });
+
+        views[3].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
+    }
+
+    /**
      * Returns the DrawerLayout for the NavDrawer.
      */
     public DrawerLayout getDrawerLayout() {
@@ -226,8 +301,8 @@ public class NavigationDrawer {
         public void onItemClick(AdapterView <?> parent, View view, 
                 int position, long id) {
 
-            setItemView(view, position);
-            drawerItemClicked(position);
+            setItemView(view, position - 1);
+            drawerItemClicked(position - 1);
 
         }
 
