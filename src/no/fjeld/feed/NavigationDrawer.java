@@ -138,7 +138,15 @@ public class NavigationDrawer {
     
     }
 
-   
+    /**
+     * Inflates a footer and sets the correct values for 
+     * the footer based on the parameters.
+     *
+     * @param inflater    The LayoutInflater used to inflate
+     *                    the layout.
+     * @param iconResId   The resource id for the icon.
+     * @param stringResId The resource id for the String.
+     */ 
     private View getFooter(LayoutInflater inflater, int iconResId, 
             int stringResId) {
 
@@ -152,6 +160,13 @@ public class NavigationDrawer {
 
     }
 
+    /**
+     * Adds OnClickListeners to the items in the Navgation
+     * Drawer.
+     *
+     * @param views A View array with all the views that should
+     *              get click listeners.
+     */
     private void setOnClickListeners(View ... views) {
 
         views[0].findViewById(R.id.new_feed)
