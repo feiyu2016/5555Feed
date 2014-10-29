@@ -16,8 +16,9 @@
         android:id="@+id/webview_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-7dp"
+        android:layout_marginTop="-13dp"
         android:background="@android:color/transparent"
+        android:progressDrawable="@drawable/progress_bar"
         android:indeterminate="false"
         android:max="100" />
 
