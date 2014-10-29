@@ -55,6 +55,7 @@ public class DrawerLongClick implements OnItemLongClickListener {
     public boolean onItemLongClick(AdapterView <?> parent, View view,
             int position, long id) {
 
+        position -= 1;
         mView = view;
 
         /* Means that another item has its options visible. */
