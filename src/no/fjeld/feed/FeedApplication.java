@@ -2,7 +2,7 @@ package no.fjeld.feed;
 
 public class FeedApplication extends android.app.Application {
 
-    public android.app.ActionBar mActionBar;
+    public android.view.View mActionBar;
     public android.widget.TextView mActionBarTitle;
     public android.widget.ImageView mABIndicator;
     public NavigationDrawer mNavDrawer;
@@ -30,7 +30,7 @@ public class FeedApplication extends android.app.Application {
         }
     }
 
-    public android.app.ActionBar getActionBar() {
+    public android.view.View getActionBar() {
         return mActionBar;
     }
 
