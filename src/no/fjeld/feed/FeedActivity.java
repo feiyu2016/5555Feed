@@ -15,11 +15,12 @@ public class FeedActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        
+
         initApp();
         handleIntent(getIntent());
 
         mApp.getNavDrawer().getDrawerLayout().openDrawer(Gravity.START);
+
 
     }
 
@@ -37,14 +38,14 @@ public class FeedActivity extends Activity {
                 mApp.getNavDrawer().addFeed(url);
             }
         }
-   
+
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
 
+        mApp.getNavDrawer().getDrawerToggle().syncState();
         super.onPostCreate(savedInstanceState);
-        mApp.mNavDrawer.getDrawerToggle().syncState();
 
     }
 
@@ -100,12 +101,66 @@ public class FeedActivity extends Activity {
         mView = getWindow().getDecorView();
         mApp = (FeedApplication) getApplication();
 
-        mApp.mDatabase = new DBManager(this);
+        initActionBar();
 
-        mApp.mActionBar = getActionBar();
+        mApp.mDatabase = new DBManager(this);
+        mApp.mActionBar = getActionBar(); 
         mApp.mNavDrawer = new NavigationDrawer(this, mView);
         mApp.mSwipeRefresh = new SwipeRefresh(this, mView);
         mApp.mFeed = new Feed(this, mView);
+
+    }
+
+    /**
+     * Initializes the custom ActionBar.
+     */
+    private void initActionBar() {
+
+        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+
+        LayoutInflater inflater = (LayoutInflater) getSystemService(
+                Context.LAYOUT_INFLATER_SERVICE);
+        getActionBar().setCustomView(inflater.inflate(
+                    R.layout.action_bar, null));
+
+        int abResId = getResources().getIdentifier(
+                "action_bar_container", "id", "android");
+
+        mApp.mActionBarTitle = (android.widget.TextView) 
+            getWindow().getDecorView().findViewById(abResId)
+            .findViewById(R.id.ab_title);
+
+        mApp.mABIndicator = (android.widget.ImageView) 
+            getWindow().getDecorView().findViewById(abResId)
+            .findViewById(R.id.drawer_indicator);
+        
+        mApp.mABIndicator.setTag(R.drawable.ic_action_navigation_menu);
+        mApp.setActionBarIndicator();
+
+        setOnClickListeners();
+
+    }
+
+    /**
+     * Sets the onclicklistener for the navdrawer indicator.
+     */
+    private void setOnClickListeners() {
+
+        mApp.mABIndicator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                
+                android.support.v4.widget.DrawerLayout drawer 
+                        = mApp.getNavDrawer().getDrawerLayout();
+                
+                if (drawer.isDrawerOpen(Gravity.START)) {
+                    drawer.closeDrawer(Gravity.START);
+                } else {
+                    drawer.openDrawer(Gravity.START);
+                }
+
+            }
+        });
 
     }
 
