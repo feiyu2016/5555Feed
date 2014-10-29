@@ -3,6 +3,8 @@ package no.fjeld.feed;
 public class FeedApplication extends android.app.Application {
 
     public android.app.ActionBar mActionBar;
+    public android.widget.TextView mActionBarTitle;
+    public android.widget.ImageView mABIndicator;
     public NavigationDrawer mNavDrawer;
     public SwipeRefresh mSwipeRefresh;
     public Feed mFeed;
@@ -12,6 +14,20 @@ public class FeedApplication extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
+    }
+
+    public void setActionBarTitle(String title) {
+        mActionBarTitle.setText(title);
+    }
+
+    public void setActionBarIndicator() {
+        if ((Integer) mABIndicator.getTag() == R.drawable.ic_action_navigation_menu) {
+            mABIndicator.setImageResource(R.drawable.ic_action_navigation_arrow_back);
+            mABIndicator.setTag(R.drawable.ic_action_navigation_arrow_back);
+        } else {
+            mABIndicator.setImageResource(R.drawable.ic_action_navigation_menu);
+            mABIndicator.setTag(R.drawable.ic_action_navigation_menu);
+        }
     }
 
     public android.app.ActionBar getActionBar() {
