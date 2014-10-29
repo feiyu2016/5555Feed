@@ -11,16 +11,14 @@ import android.widget.*;
 public class WebViewActivity extends Activity {
 
     private WebView mWebView;
-    private FeedApplication mApp;
     private ProgressBar mProgressBar;
+    private TextView mActionBarTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
-        
-        mApp = (FeedApplication) getApplication();
         
         mProgressBar = (ProgressBar) findViewById (R.id.webview_progress);
 
@@ -44,21 +42,20 @@ public class WebViewActivity extends Activity {
         int abResId = getResources().getIdentifier(
                 "action_bar_container", "id", "android");
 
-        mApp.mActionBarTitle = (android.widget.TextView) 
+        mActionBarTitle = (android.widget.TextView) 
             getWindow().getDecorView().findViewById(abResId)
             .findViewById(R.id.ab_title);
 
-        mApp.mABIndicator = (android.widget.ImageView) 
+        ImageView abIndicator = (android.widget.ImageView) 
             getWindow().getDecorView().findViewById(abResId)
             .findViewById(R.id.drawer_indicator);
-        
-        mApp.mABIndicator.setTag(R.drawable.ic_action_navigation_menu);
-        mApp.setActionBarIndicator();
 
-        mApp.mABIndicator.setOnClickListener(new View.OnClickListener() {
+        abIndicator.setImageResource(R.drawable.ic_action_navigation_arrow_back);
+        mActionBarTitle.setText((getResources().getString(R.string.webview_loading)));
+
+        abIndicator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mWebView.destroy();
                 finish();
             }
         });
@@ -116,7 +113,7 @@ public class WebViewActivity extends Activity {
         @Override
         public void onPageFinished(WebView view, String url) {
             mProgressBar.setVisibility(View.GONE);
-            mApp.setActionBarTitle(view.getTitle());
+            mActionBarTitle.setText(view.getTitle());
         }
 
     }
