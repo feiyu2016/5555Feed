@@ -17,7 +17,7 @@
     <!-- Styles for the Action Bar -->
     <style name="ActionBar_Style" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
         <item name="android:height">56dp</item>
-        <item name="android:background">@drawable/bg_action_bar</item>
+        <item name="android:background">@color/accent_light</item>
         <item name="android:titleTextStyle">@style/ActionBar_Title</item>
     </style>
 
