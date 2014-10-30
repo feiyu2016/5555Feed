@@ -265,16 +265,19 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
 
             /* Just in case of an empty item. */
             if (mTitle.length() > 5) { 
-    
+
                 FeedItem newItem = new FeedItem(mTitle, mDescription,
-                    mUrl, mPubDate, image, mFeedName);    
+                        mUrl, mPubDate, image, mFeedName);    
 
                 /* Add the new FeedItem to the DrawerItems mFeedList, and to the
                  * FeedAdapters mFeedList. */
                 mFeedList.add(newItem);
                 mApp.getFeed().getFeedAdapter().getFeedList().add(newItem);
-                
                 mApp.getFeed().getFeedAdapter().notifyDataSetChanged();
+
+                if (PreferenceManager.getDefaultSharedPreferences(mActivity
+                            .getBaseContext()).getBoolean("preference_mark_as_read", true))
+                    mApp.getFeed().markAsRead(newItem);
 
             }
 
