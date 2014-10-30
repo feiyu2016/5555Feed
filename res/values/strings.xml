@@ -48,6 +48,9 @@
     <string name="preference_images_title">Download images</string>
     <string name="preference_images_summary">Reduce data usage by not downloading images</string>
 
+    <string name="preference_mark_as_read_title">Mark all as read</string>
+    <string name="preference_mark_as_read_summary">Automatically mark all articles as read after loading</string>
+
     <string name="preference_clear_read_title">Clear read articles</string>
     <string name="preference_clear_read_summary">Deletes your \"Marked as read\" articles</string>
 
