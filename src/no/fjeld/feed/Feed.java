@@ -87,51 +87,7 @@ public class Feed {
     }
 
     /**
-     * Loads all the feeds.
-     * If any of the DrawerItems feedItems-list is empty,
-     * the data will be downloaded and the list will be
-     * populated.
-     */
-    public void allFeeds() {
-
-        lastDrawerItem = new DrawerItem(mActivity.getString(
-                    R.string.app_name), "", null, new FeedList());
-
-        mFeedAdapter.getFeedList().clear();
-        mFeedAdapter.notifyDataSetChanged();
-
-        mFeedAdapter.getFeedList().readItems = mApp.getDatabase().getReadItemsSet();
-        mFeedAdapter.getFeedList().savedItems = mApp.getDatabase().getSavedItemsSet();
-
-        mApp.getSwipeRefresh().getSwipeLayout().setEnabled(true);
-
-        for (DrawerItem drawerItem : mApp.getNavDrawer().getDrawerAdapter()
-                .getDrawerList()) {
-
-            /* If the DrawerItems list already has items, fill the 
-             * ListView with these. */
-            if (drawerItem.getFeedList().size() > 0) {
-
-                for(FeedItem feedItem : drawerItem.getFeedList()) 
-                    mFeedAdapter.getFeedList().add(feedItem);
-
-                mFeedAdapter.notifyDataSetChanged();
-
-                /* If the DrawerItems list is empty, create a new AsyncTask
-                 * to download items. */
-            } else {
-
-                mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(true);
-                new GetFeed(mActivity, drawerItem).execute(drawerItem.getUrl());
-
-            }
-
-        } 
-
-    }
-
-    /**
-     * Loads the saved articles and disables the SwipeRefreshLayout.
+     * Displays the saved articles. 
      */
     public void savedFeeds() {
 
