@@ -275,16 +275,19 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
                 mApp.getFeed().getFeedAdapter().getFeedList().add(newItem);
                 mApp.getFeed().getFeedAdapter().notifyDataSetChanged();
 
-                if (PreferenceManager.getDefaultSharedPreferences(mActivity
-                            .getBaseContext()).getBoolean("preference_mark_as_read", true))
-                    mApp.getFeed().markAsRead(newItem);
-
             }
 
             /* If this is the last item from the feed, 
              * set the refresh-state of the progressbar to false. */
-            if (itemNumber == mNodeListLength - 1)
+            if (itemNumber == mNodeListLength - 1) {
+
+                if (PreferenceManager.getDefaultSharedPreferences(mActivity
+                        .getBaseContext()).getBoolean("preference_mark_as_read", true))
+                    mApp.getFeed().markAllAsRead();
+
                 mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(false);
+
+            }
 
         }
 
