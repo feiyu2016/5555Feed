@@ -3,6 +3,7 @@ package no.fjeld.feed;
 import android.app.Activity;
 import android.content.*;
 import android.graphics.*;
+import android.media.*;
 import android.os.*;
 import android.preference.*;
 import android.text.*;
@@ -265,6 +266,8 @@ public class GetFeed extends AsyncTask <String, Integer, String> {
 
             /* Just in case of an empty item. */
             if (mTitle.length() > 5) { 
+
+                image = ThumbnailUtils.extractThumbnail(image, 160, 160);
 
                 FeedItem newItem = new FeedItem(mTitle, mDescription,
                         mUrl, mPubDate, image, mFeedName);    
