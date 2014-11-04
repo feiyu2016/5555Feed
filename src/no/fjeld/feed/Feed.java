@@ -158,10 +158,6 @@ public class Feed {
             mFeedAdapter.notifyDataSetChanged();
         }
 
-        if (item.getUrl() == null) 
-            mApp.getSwipeRefresh().getSwipeLayout().setEnabled(false);
-        else
-            mApp.getSwipeRefresh().getSwipeLayout().setEnabled(true);
 
 
         lastDrawerItem = item;
