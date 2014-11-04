@@ -21,9 +21,7 @@ and follow the instructions in android_debug.py.
 **Todo**
 
 - Update the database on new version.
-- Implement image caching
 - Implements parsing for atom-feeds
-- Setting for automatic 'Mark all as read'
 - Fix all imports (remove dotASTERIX's)
 - Clean up field names in all .java/.xml
 - Clean up / add comments in all .java/.xml
