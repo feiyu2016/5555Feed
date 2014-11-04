@@ -79,7 +79,7 @@ public class FeedActivity extends Activity {
         if (item.getItemId() == R.id.action_mark_all) {
             mApp.getFeed().markAllAsRead();
             mApp.getFeed().getFeedAdapter().getFeedList().clear();
-            mFeedAdapter.notifyDataSetChanged();
+            mApp.getFeed().getFeedAdapter().notifyDataSetChanged();
         }
 
         return super.onOptionsItemSelected(item);
