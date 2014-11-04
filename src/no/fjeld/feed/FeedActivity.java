@@ -76,8 +76,11 @@ public class FeedActivity extends Activity {
         if (mApp.mNavDrawer.getDrawerToggle().onOptionsItemSelected(item))
             return true;
 
-        if (item.getItemId() == R.id.action_mark_all) 
+        if (item.getItemId() == R.id.action_mark_all) {
             mApp.getFeed().markAllAsRead();
+            mApp.getFeed().getFeedAdapter().getFeedList().clear();
+            mFeedAdapter.notifyDataSetChanged();
+        }
 
         return super.onOptionsItemSelected(item);
 

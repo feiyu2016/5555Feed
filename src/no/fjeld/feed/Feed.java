@@ -114,8 +114,6 @@ public class Feed {
             mFeedAdapter.notifyDataSetChanged();
         }
 
-
-
         lastDrawerItem = item;
 
         /* Updates the 'readItems' and 'savedItems' lists in 
@@ -141,7 +139,7 @@ public class Feed {
             mApp.getSwipeRefresh().getSwipeLayout().setRefreshing(true);
             new GetFeed(mActivity, item).execute(item.getUrl()); 
 
-                }
+        }
 
     }
 
@@ -179,9 +177,6 @@ public class Feed {
     public void markAllAsRead() {
 
         mApp.getDatabase().add(mFeedAdapter.getFeedList());
-
-        mFeedAdapter.getFeedList().clear();
-        mFeedAdapter.notifyDataSetChanged();
 
         if (lastDrawerItem.getUrl() == null)
             mApp.getDatabase().delete("savedItems", null);
