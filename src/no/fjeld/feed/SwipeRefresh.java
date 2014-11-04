@@ -66,7 +66,7 @@ public class SwipeRefresh implements SwipeRefreshLayout.OnRefreshListener {
 
         DrawerItem drawerItem = mApp.getFeed().lastDrawerItem;
 
-        if (drawerItem != null)
+        if (drawerItem != null && drawerItem.getUrl() != null)
             mApp.getFeed().loadFeed(drawerItem, true);
         else
             mSwipeLayout.setRefreshing(false);
