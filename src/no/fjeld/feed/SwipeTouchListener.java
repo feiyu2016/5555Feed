@@ -45,7 +45,7 @@ public class SwipeTouchListener implements OnTouchListener {
         mActivity = activity;
         mViewParent = viewParent;
 
-    }
+            }
 
     /**
      * Is called when the View has recieved a touch event. 
@@ -60,10 +60,7 @@ public class SwipeTouchListener implements OnTouchListener {
     public boolean onTouch(View view, MotionEvent event) {
 
         mSwipeSlop = ViewConfiguration
-                .get(mActivity).getScaledTouchSlop();
-        
-        ((FeedApplication)mActivity.getApplication()).getSwipeRefresh()
-                .getSwipeLayout().setEnabled(false);
+            .get(mActivity).getScaledTouchSlop();
 
         switch (event.getAction()) {
 
@@ -76,12 +73,12 @@ public class SwipeTouchListener implements OnTouchListener {
                 actionDown(view, event);
                 break;
 
-            /* The View has been dragged to a location. */
+                /* The View has been dragged to a location. */
             case MotionEvent.ACTION_MOVE: 
                 actionMove(event);
                 break;
 
-            /* The hold on the View has been released. */ 
+                /* The hold on the View has been released. */ 
             case MotionEvent.ACTION_UP: 
                 mViewPressed = false;
 
@@ -91,7 +88,7 @@ public class SwipeTouchListener implements OnTouchListener {
                     return onClick(); 
                 break;
 
-            /* The hold on the View has been cancelled. */ 
+                /* The hold on the View has been cancelled. */ 
             case MotionEvent.ACTION_CANCEL:
                 mViewPressed = false;
                 mVelocityTracker = null;
@@ -102,7 +99,7 @@ public class SwipeTouchListener implements OnTouchListener {
 
         }
 
-        return true;
+        return true; 
 
     }
 
@@ -151,6 +148,10 @@ public class SwipeTouchListener implements OnTouchListener {
         }
 
         if (mSwiping) {
+
+            ((FeedApplication)mActivity.getApplication()).getSwipeRefresh()
+                .getSwipeLayout().setEnabled(false);
+
             mView.setTranslationX(currentX - mDownX);
             mView.setAlpha(1 - Math.abs(deltaX) / mView.getWidth());
         }
@@ -181,13 +182,13 @@ public class SwipeTouchListener implements OnTouchListener {
 
             outOfView = Math.abs(deltaX) / mView.getWidth();
             endX      = (deltaX < 0)
-                        ? -mView.getWidth() 
-                        : mView.getWidth();
+                ? -mView.getWidth() 
+                : mView.getWidth();
             endAlpha  = 0;
             dismiss   = true;
 
-        /* The user has released the hold on the View before it 
-         * should be dismissed. */
+            /* The user has released the hold on the View before it 
+             * should be dismissed. */
         } else {
 
             outOfView = 1 - (Math.abs(deltaX) / mView.getWidth());
@@ -216,8 +217,8 @@ public class SwipeTouchListener implements OnTouchListener {
             fEndX, final boolean fDismiss) {
 
         mView.animate().setDuration(duration)
-                .alpha(endAlpha).translationX(fEndX)
-                .setListener(new AnimatorListener() {
+            .alpha(endAlpha).translationX(fEndX)
+            .setListener(new AnimatorListener() {
 
                 @Override
                 public void onAnimationEnd(Animator anim) {
@@ -227,25 +228,28 @@ public class SwipeTouchListener implements OnTouchListener {
                     mSwiping = false;
                     mViewParent.setEnabled(true);
 
+                    ((FeedApplication)mActivity.getApplication()).getSwipeRefresh()
+                            .getSwipeLayout().setEnabled(true);
+
                     if (fDismiss) {
                         if (fEndX < 0) onSwipeLeft();
                         else           onSwipeRight();
                     }
-                
+
                 }
-            
-                @Override
-                public void onAnimationCancel(Animator anim) {}
 
-                @Override
-                public void onAnimationRepeat(Animator anim) {}
+            @Override
+            public void onAnimationCancel(Animator anim) {}
 
-                @Override
-                public void onAnimationStart(Animator anim) {}
+            @Override
+            public void onAnimationRepeat(Animator anim) {}
+
+            @Override
+            public void onAnimationStart(Animator anim) {}
 
             });
 
-    }
+            }
 
     /** 
      * Is called when the user has performed a single click on the View. 
