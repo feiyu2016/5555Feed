@@ -1,8 +1,6 @@
-#Feed# 
+#Feed
 
-A beautiful reader for your favorite RSS-feeds. 
-
------------------------------------------------------
+**A beautiful reader for your favorite RSS-feeds.**
 
 ##Clone repository and generate local files##
 
@@ -19,4 +17,4 @@ and follow the instructions in android_debug.py.
 
 -----------------------------------------------------
 
-** For development, check out the "development" branch.**
+**For development, check out the "development" branch.**
